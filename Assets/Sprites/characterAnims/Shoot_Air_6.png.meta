@@ -1,7 +1,91 @@
 fileFormatVersion: 2
 guid: 3221077529f85c84282fb8d6f628690d
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 5710738136624001864
+    second: Shoot_Air_6_0
+  - first:
+      213: 5220411317018194310
+    second: Shoot_Air_6_1
+  - first:
+      213: 820565237914329583
+    second: Shoot_Air_6_2
+  - first:
+      213: -1264595076682406083
+    second: Shoot_Air_6_3
+  - first:
+      213: 8898510121765102609
+    second: Shoot_Air_6_4
+  - first:
+      213: -6059018548306547554
+    second: Shoot_Air_6_5
+  - first:
+      213: -6392257965321846877
+    second: Shoot_Air_6_6
+  - first:
+      213: 824972295343132068
+    second: Shoot_Air_6_7
+  - first:
+      213: -2879286619027842709
+    second: Shoot_Air_6_8
+  - first:
+      213: -5993872506482446192
+    second: Shoot_Air_6_9
+  - first:
+      213: 6271547034989434483
+    second: Shoot_Air_6_10
+  - first:
+      213: -9201342435970332773
+    second: Shoot_Air_6_11
+  - first:
+      213: -5739391226163042588
+    second: Shoot_Air_6_12
+  - first:
+      213: -3694870442374187588
+    second: Shoot_Air_6_13
+  - first:
+      213: -8715590890770726748
+    second: Shoot_Air_6_14
+  - first:
+      213: -7311018134725871580
+    second: Shoot_Air_6_15
+  - first:
+      213: -5588630356222373970
+    second: Shoot_Air_6_16
+  - first:
+      213: 1172245451735114356
+    second: Shoot_Air_6_0
+  - first:
+      213: -1314436540441265417
+    second: Shoot_Air_6_1
+  - first:
+      213: 6139566617003576499
+    second: Shoot_Air_6_2
+  - first:
+      213: -6520009936363692853
+    second: Shoot_Air_6_3
+  - first:
+      213: -4165433187018861947
+    second: Shoot_Air_6_4
+  - first:
+      213: 6494769689295729197
+    second: Shoot_Air_6_5
+  - first:
+      213: -3798123504941593166
+    second: Shoot_Air_6_6
+  - first:
+      213: -2603096526239492072
+    second: Shoot_Air_6_7
+  - first:
+      213: -7635575496714793088
+    second: Shoot_Air_6_8
+  - first:
+      213: 1098729594151213998
+    second: Shoot_Air_6_9
+  - first:
+      213: -6049870775497104631
+    second: Shoot_Air_6_10
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +124,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 0
   spriteMeshType: 0
   alignment: 0
@@ -97,7 +181,238 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Shoot_Air_6_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4722d3c0707a44010800000000000000
+      internalID: 1172245451735114356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa743f3eee22cde0800000000000000
+      internalID: -1314436540441265417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bc48513f4f143550800000000000000
+      internalID: 6139566617003576499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcc5603e1854485a0800000000000000
+      internalID: -6520009936363692853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5821e18f5986136c0800000000000000
+      internalID: -4165433187018861947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2232742f9e022a50800000000000000
+      internalID: 6494769689295729197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd05eaabca5a4bc0800000000000000
+      internalID: -3798123504941593166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_7
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 818117d4081ffdbd0800000000000000
+      internalID: -2603096526239492072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_8
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08f43ae6a8cf80690800000000000000
+      internalID: -7635575496714793088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_9
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eab979b9eb87f3f00800000000000000
+      internalID: 1098729594151213998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_6_10
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9036a71559a8a0ca0800000000000000
+      internalID: -6049870775497104631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

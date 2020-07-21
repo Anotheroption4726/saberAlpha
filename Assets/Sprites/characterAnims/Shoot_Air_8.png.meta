@@ -1,7 +1,61 @@
 fileFormatVersion: 2
 guid: 7e92fbc98ec908c47a120a040996b4f9
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 7539462186518684529
+    second: Shoot_Air_8_0
+  - first:
+      213: -7559488697350955915
+    second: Shoot_Air_8_1
+  - first:
+      213: -2662688345713463315
+    second: Shoot_Air_8_2
+  - first:
+      213: -5035429531697258432
+    second: Shoot_Air_8_3
+  - first:
+      213: -1113060033140896084
+    second: Shoot_Air_8_4
+  - first:
+      213: -3286390789651821047
+    second: Shoot_Air_8_5
+  - first:
+      213: 864477845760534112
+    second: Shoot_Air_8_6
+  - first:
+      213: 1202560924743971699
+    second: Shoot_Air_8_7
+  - first:
+      213: 2670529779970266571
+    second: Shoot_Air_8_8
+  - first:
+      213: 6343627291532887987
+    second: Shoot_Air_8_0
+  - first:
+      213: 2480037910310460644
+    second: Shoot_Air_8_1
+  - first:
+      213: 7513799853286605958
+    second: Shoot_Air_8_2
+  - first:
+      213: -4027288578117558295
+    second: Shoot_Air_8_3
+  - first:
+      213: -3825820014868687825
+    second: Shoot_Air_8_4
+  - first:
+      213: 2401245491163147499
+    second: Shoot_Air_8_5
+  - first:
+      213: -1883557091372217649
+    second: Shoot_Air_8_6
+  - first:
+      213: 6794837138930728969
+    second: Shoot_Air_8_7
+  - first:
+      213: -5164945579075195457
+    second: Shoot_Air_8_8
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,7 +94,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 0
   spriteMeshType: 0
   alignment: 0
@@ -97,7 +151,196 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Shoot_Air_8_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b78a436967190850800000000000000
+      internalID: 6343627291532887987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ec9e81f65dda6220800000000000000
+      internalID: 2480037910310460644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 684c7802821664860800000000000000
+      internalID: 7513799853286605958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ef905d20623c18c0800000000000000
+      internalID: -4027288578117558295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f241c2f67f4f7eac0800000000000000
+      internalID: -3825820014868687825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beca9474d00f25120800000000000000
+      internalID: 2401245491163147499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fca479e0ec24cd5e0800000000000000
+      internalID: -1883557091372217649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9000994906c1c4e50800000000000000
+      internalID: 6794837138930728969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shoot_Air_8_8
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbdaff26c5d6258b0800000000000000
+      internalID: -5164945579075195457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
