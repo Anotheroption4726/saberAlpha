@@ -1,7 +1,70 @@
 fileFormatVersion: 2
 guid: 30c4d9bc7e2daed48b6b513a1ee69bc3
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -8853919526983106099
+    second: Melee_Air_2_0
+  - first:
+      213: 1784385343063805778
+    second: Melee_Air_2_1
+  - first:
+      213: -7720829857702279132
+    second: Melee_Air_2_2
+  - first:
+      213: -7210388204469117120
+    second: Melee_Air_2_3
+  - first:
+      213: -1158652683058346139
+    second: Melee_Air_2_4
+  - first:
+      213: 5264033535782638221
+    second: Melee_Air_2_5
+  - first:
+      213: 9040481015853065419
+    second: Melee_Air_2_6
+  - first:
+      213: -2907539122261314227
+    second: Melee_Air_2_7
+  - first:
+      213: 6935346976532145121
+    second: Melee_Air_2_8
+  - first:
+      213: -3112844522069739241
+    second: Melee_Air_2_9
+  - first:
+      213: 7806825996320025205
+    second: Melee_Air_2_10
+  - first:
+      213: 522474142911598300
+    second: Melee_Air_2_11
+  - first:
+      213: -3295905133357715052
+    second: Melee_Air_2_12
+  - first:
+      213: 2976493417102584939
+    second: Melee_Air_2_13
+  - first:
+      213: -550972220256921292
+    second: Melee_Air_2_0
+  - first:
+      213: 7209094714558887150
+    second: Melee_Air_2_1
+  - first:
+      213: 8295740471985264512
+    second: Melee_Air_2_2
+  - first:
+      213: 453370245187033861
+    second: Melee_Air_2_3
+  - first:
+      213: -5090623618949117387
+    second: Melee_Air_2_4
+  - first:
+      213: -2383886473366039104
+    second: Melee_Air_2_5
+  - first:
+      213: 2007283697849949091
+    second: Melee_Air_2_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -40,14 +103,14 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 0
   spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 8
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -61,7 +124,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 512
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -73,7 +136,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 512
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -85,7 +148,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 1024
+    maxTextureSize: 512
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -97,7 +160,154 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Melee_Air_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4395a725fad8a58f0800000000000000
+      internalID: -550972220256921292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4bd6d8279db0460800000000000000
+      internalID: 7209094714558887150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 087538da104602370800000000000000
+      internalID: 8295740471985264512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50bda1006d1ba4600800000000000000
+      internalID: 453370245187033861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53a03533ac87a59b0800000000000000
+      internalID: -5090623618949117387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c5982202ebbaeed0800000000000000
+      internalID: -2383886473366039104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Air_2_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab57cd53ed4bdb10800000000000000
+      internalID: 2007283697849949091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
