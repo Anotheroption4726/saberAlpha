@@ -13,18 +13,23 @@ public class CharacterScript : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void FixedUpdate()
+    {
+        //rigidbody.AddRelativeForce(Vector3.forward * 10);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
             SetAnimation("Run");
-            //rigidbody.AddForce(Vector2.right * 100);
             rigidbody.velocity = new Vector3(10, 0, 0);
         }
 
         if (Input.GetKeyUp("space"))
         {
             SetAnimation("Idle");
+            rigidbody.velocity = new Vector3(0, 0, 0);
         }
     }
 
