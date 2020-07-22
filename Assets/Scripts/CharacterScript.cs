@@ -4,16 +4,32 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    void Update()
+    [SerializeField] private Animator animator;
+    private string[] animationNamesTable = new string[]{"Idle", "Run"};
+
+    private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            print("space key was pressed");
+            SetAnimation("Run");
         }
 
         if (Input.GetKeyUp("space"))
         {
-            print("Space key was released");
+            SetAnimation("Idle");
         }
+    }
+
+    private void SetAnimation(string arg_animationName)
+    {
+        foreach (string lp_animation in animationNamesTable)
+        {
+            if (arg_animationName != lp_animation)
+            {
+                animator.SetBool(lp_animation, false);
+            }
+        }
+
+        animator.SetBool(arg_animationName, true);
     }
 }
