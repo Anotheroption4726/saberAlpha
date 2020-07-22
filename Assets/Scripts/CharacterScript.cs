@@ -5,12 +5,14 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     //  Movement
-    public int speed = 25;
+    private int speed = 25;
+    private float slideTime = 0.13f;
     private Rigidbody2D physics;
+    private bool isStopSliding = false;
 
     //  Animations
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide"};
 
     private void Awake()
     {
@@ -24,16 +26,20 @@ public class CharacterScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (!isStopSliding)
         {
-            SetAnimation("Run");
-            physics.velocity = new Vector3(speed, 0, 0);
-        }
+            if (Input.GetKeyDown("space"))
+            {
+                SetAnimation("Run");
+                physics.velocity = new Vector3(speed, 0, 0);
+            }
 
-        if (Input.GetKeyUp("space"))
-        {
-            SetAnimation("Idle");
-            physics.velocity = new Vector3(0, 0, 0);
+            if (Input.GetKeyUp("space"))
+            {
+                SetAnimation("Slide");
+                StartCoroutine("StopSlide");
+                isStopSliding = true;
+            }
         }
     }
 
@@ -48,5 +54,13 @@ public class CharacterScript : MonoBehaviour
         }
 
         animator.SetBool(arg_animationName, true);
+    }
+
+    private IEnumerator StopSlide()
+    {
+        yield return new WaitForSeconds(slideTime);
+        physics.velocity = new Vector3(0, 0, 0);
+        isStopSliding = false;
+        SetAnimation("Idle");
     }
 }
