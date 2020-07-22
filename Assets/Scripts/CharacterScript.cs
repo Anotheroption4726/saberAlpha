@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    private Rigidbody2D rigidbody;
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run"};
+
+    private void Awake()
+    {
+        rigidbody = GetComponent<Rigidbody2D>();
+    }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
             SetAnimation("Run");
+            rigidbody.AddForce(Vector2.right * 100);
         }
 
         if (Input.GetKeyUp("space"))
