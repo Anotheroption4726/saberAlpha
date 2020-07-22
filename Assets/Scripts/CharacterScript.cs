@@ -18,7 +18,8 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             SetAnimation("Run");
-            rigidbody.AddForce(Vector2.right * 100);
+            //rigidbody.AddForce(Vector2.right * 100);
+            rigidbody.velocity = new Vector3(10, 0, 0);
         }
 
         if (Input.GetKeyUp("space"))
