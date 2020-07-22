@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    private Rigidbody2D rigidbody;
+    //  Movement
+    public int speed = 25;
+    private Rigidbody2D physics;
+
+    //  Animations
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run"};
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        physics = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
-        //rigidbody.AddRelativeForce(Vector3.forward * 10);
+        
     }
 
     private void Update()
@@ -23,13 +27,13 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             SetAnimation("Run");
-            rigidbody.velocity = new Vector3(10, 0, 0);
+            physics.velocity = new Vector3(speed, 0, 0);
         }
 
         if (Input.GetKeyUp("space"))
         {
             SetAnimation("Idle");
-            rigidbody.velocity = new Vector3(0, 0, 0);
+            physics.velocity = new Vector3(0, 0, 0);
         }
     }
 
