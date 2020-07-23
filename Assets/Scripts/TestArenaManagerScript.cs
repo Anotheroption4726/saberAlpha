@@ -16,7 +16,7 @@ public class TestArenaManagerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            SceneManager.LoadScene("TestArenaScene");
+            //ceneManager.LoadScene("TestArenaScene");
         }
     }
 }
