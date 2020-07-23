@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
@@ -24,21 +23,21 @@ public class CharacterScript : MonoBehaviour
     {
         if (!isStopSliding)
         {
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
             {
                 sprite.flipX = false;
                 SetAnimation("Run");
                 physics.velocity = new Vector3(speed, 0, 0);
             }
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
             {
                 sprite.flipX = true;
                 SetAnimation("Run");
                 physics.velocity = new Vector3(-speed, 0, 0);
             }
 
-            if (!Input.anyKey)
+            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
             {
                 SetAnimation("Slide");
                 StartCoroutine("StopSlide");
@@ -63,7 +62,6 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator StopSlide()
     {
         yield return new WaitForSeconds(slideTime);
-        physics.velocity = new Vector3(0, 0, 0);
         isStopSliding = false;
         SetAnimation("Idle");
     }
