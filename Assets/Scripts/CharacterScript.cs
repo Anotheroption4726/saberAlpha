@@ -62,7 +62,6 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator StopSlide()
     {
         yield return new WaitForSeconds(slideTime);
-        physics.velocity = new Vector3(0, 0, 0);
         isStopSliding = false;
         SetAnimation("Idle");
     }
