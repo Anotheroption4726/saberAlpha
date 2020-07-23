@@ -11,6 +11,7 @@ public class CharacterScript : MonoBehaviour
     private bool isStopSliding = false;
 
     //  Animations
+    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide"};
 
@@ -21,20 +22,23 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-    }
-
-    private void Update()
-    {
         if (!isStopSliding)
         {
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
+                sprite.flipX = false;
                 SetAnimation("Run");
                 physics.velocity = new Vector3(speed, 0, 0);
             }
 
-            if (Input.GetKeyUp("space"))
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                sprite.flipX = true;
+                SetAnimation("Run");
+                physics.velocity = new Vector3(-speed, 0, 0);
+            }
+
+            if (!Input.anyKey)
             {
                 SetAnimation("Slide");
                 StartCoroutine("StopSlide");
