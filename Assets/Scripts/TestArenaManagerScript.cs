@@ -14,9 +14,9 @@ public class TestArenaManagerScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.R))
         {
-            //ceneManager.LoadScene("TestArenaScene");
+            SceneManager.LoadScene("TestArenaScene");
         }
     }
 }

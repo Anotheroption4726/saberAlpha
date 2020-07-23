@@ -25,28 +25,27 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = false;
-            physics.velocity = new Vector3(speed, 0, 0);
+            physics.velocity = new Vector3(speed, physics.velocity.y, 0);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = true;
-            physics.velocity = new Vector3(-speed, 0, 0);
+            physics.velocity = new Vector3(-speed, physics.velocity.y, 0);
         }
 
-        if (animState.Equals(CharaAnimStateEnum.Run))
+        if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0 && animState.Equals(CharaAnimStateEnum.Run))
         {
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                StartCoroutine("StopSlide");
-            }
+            SetAnimation("Slide", CharaAnimStateEnum.Slide);
+            StartCoroutine("StopSlide");
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && !animState.Equals(CharaAnimStateEnum.Jump))
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
+            //physics.AddForce(transform.up * 750);
+            physics.velocity = new Vector3(physics.velocity.x, 15, 0);
         }
     }
 
