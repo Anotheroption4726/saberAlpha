@@ -35,11 +35,6 @@ public class CharacterScript : MonoBehaviour
             physics.velocity = new Vector3(-speed, 0, 0);
         }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            SetAnimation("Jump", CharaAnimStateEnum.Jump);
-        }
-
         if (animState.Equals(CharaAnimStateEnum.Run))
         {
             if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
@@ -47,6 +42,11 @@ public class CharacterScript : MonoBehaviour
                 SetAnimation("Slide", CharaAnimStateEnum.Slide);
                 StartCoroutine("StopSlide");
             }
+        }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+            SetAnimation("Jump", CharaAnimStateEnum.Jump);
         }
     }
 
