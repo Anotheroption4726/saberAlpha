@@ -4,19 +4,46 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    //  Movement
+    private int speed = 25;
+    private float slideTime = 0.13f;
+    private Rigidbody2D physics;
+    private bool isStopSliding = false;
+
+    //  Animations
+    [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide"};
 
-    private void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown("space"))
-        {
-            SetAnimation("Run");
-        }
+        physics = GetComponent<Rigidbody2D>();
+    }
 
-        if (Input.GetKeyUp("space"))
+    private void FixedUpdate()
+    {
+        if (!isStopSliding)
         {
-            SetAnimation("Idle");
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                sprite.flipX = false;
+                SetAnimation("Run");
+                physics.velocity = new Vector3(speed, 0, 0);
+            }
+
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                sprite.flipX = true;
+                SetAnimation("Run");
+                physics.velocity = new Vector3(-speed, 0, 0);
+            }
+
+            if (!Input.anyKey)
+            {
+                SetAnimation("Slide");
+                StartCoroutine("StopSlide");
+                isStopSliding = true;
+            }
         }
     }
 
@@ -31,5 +58,13 @@ public class CharacterScript : MonoBehaviour
         }
 
         animator.SetBool(arg_animationName, true);
+    }
+
+    private IEnumerator StopSlide()
+    {
+        yield return new WaitForSeconds(slideTime);
+        physics.velocity = new Vector3(0, 0, 0);
+        isStopSliding = false;
+        SetAnimation("Idle");
     }
 }
