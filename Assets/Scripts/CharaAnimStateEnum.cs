@@ -4,4 +4,5 @@
     Run,
     Slide,
     Jump,
+    Fall_normal,
 }

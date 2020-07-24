@@ -6,7 +6,8 @@ public class CharacterScript : MonoBehaviour
     //  Movement
     private int speed = 25;
     private float slideTime = 0.13f;
-    private float jump = 8f;
+    private float jumpDistance = 8f;
+    private float fallNormalTimer = 0.5f;
     private Rigidbody2D rigidBody;
     [SerializeField] private GroundCheckerScript groundChecker;
 
@@ -14,7 +15,7 @@ public class CharacterScript : MonoBehaviour
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Fall_normal"};
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //  Run Right
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
@@ -30,6 +32,7 @@ public class CharacterScript : MonoBehaviour
             rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
         }
 
+        //  Run Left
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
@@ -37,32 +40,38 @@ public class CharacterScript : MonoBehaviour
             rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
         }
 
+        //  Slide after Run
         if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0 && animState.Equals(CharaAnimStateEnum.Run))
         {
             SetAnimation("Slide", CharaAnimStateEnum.Slide);
             StartCoroutine("StopSlide");
         }
 
+        //  Jump
         if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
-            //rigidBody.AddForce(new Vector2(0f, jumpValue), ForceMode2D.Impulse);
-            //rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpValue);
-            rigidBody.velocity = Vector2.up * jump;
+            rigidBody.velocity = Vector2.up * jumpDistance;
+            StartCoroutine("FallNormal");
         }
 
-        /*
-        if (groundChecker.GetIsGrounded())
+        //  Fall Normal
+        if (animState.Equals(CharaAnimStateEnum.Fall_normal) && groundChecker.GetIsGrounded())
         {
             SetAnimation("Idle", CharaAnimStateEnum.Idle);
         }
-        */
     }
 
     private IEnumerator StopSlide()
     {
         yield return new WaitForSeconds(slideTime);
         SetAnimation("Idle", CharaAnimStateEnum.Idle);
+    }
+
+    private IEnumerator FallNormal()
+    {
+        yield return new WaitForSeconds(fallNormalTimer);
+        SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
     }
 
     private void SetAnimation(string arg_animationName, CharaAnimStateEnum arg_charaAnimStateEnum)
