@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class GroundCheckerScript : MonoBehaviour
 {
-    [SerializeField] private CharacterScript characterScript;
+    private bool isGrounded;
+    [SerializeField] private LayerMask groundLayerMask;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public bool GetIsGrounded()
     {
-        Debug.Log("True");
+        return isGrounded;
+    }
+
+    private void OnTriggerStay2D(Collider2D collider)
+    {   
+        if (collider != null)
+        {
+            if (((1 << collider.gameObject.layer) & groundLayerMask) != 0)
+            {
+                isGrounded = true;
+                Debug.Log(isGrounded);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        isGrounded = false;
+        Debug.Log(isGrounded);
     }
 }
