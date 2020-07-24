@@ -6,7 +6,7 @@ public class CharacterScript : MonoBehaviour
     //  Movement
     private int speed = 25;
     private float slideTime = 0.13f;
-    private Rigidbody2D physics;
+    private Rigidbody2D rigidBody;
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
 
     //  Animations
@@ -16,7 +16,7 @@ public class CharacterScript : MonoBehaviour
 
     private void Awake()
     {
-        physics = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
@@ -25,14 +25,14 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = false;
-            physics.velocity = new Vector3(speed, physics.velocity.y, 0);
+            rigidBody.velocity = new Vector3(speed, rigidBody.velocity.y, 0);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = true;
-            physics.velocity = new Vector3(-speed, physics.velocity.y, 0);
+            rigidBody.velocity = new Vector3(-speed, rigidBody.velocity.y, 0);
         }
 
         if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0 && animState.Equals(CharaAnimStateEnum.Run))
@@ -44,9 +44,17 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && !animState.Equals(CharaAnimStateEnum.Jump))
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
-            //physics.AddForce(transform.up * 750);
-            physics.velocity = new Vector3(physics.velocity.x, 15, 0);
+            //rigidBody.AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);
+            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 15, 0);
         }
+
+        NormalizeRigidBodyVelocity();
+    }
+
+    private IEnumerator StopSlide()
+    {
+        yield return new WaitForSeconds(slideTime);
+        SetAnimation("Idle", CharaAnimStateEnum.Idle);
     }
 
     private void SetAnimation(string arg_animationName, CharaAnimStateEnum arg_charaAnimStateEnum)
@@ -63,9 +71,26 @@ public class CharacterScript : MonoBehaviour
         animState = arg_charaAnimStateEnum;
     }
 
-    private IEnumerator StopSlide()
+    private void NormalizeRigidBodyVelocity()
     {
-        yield return new WaitForSeconds(slideTime);
-        SetAnimation("Idle", CharaAnimStateEnum.Idle);
+        if (rigidBody.velocity.x > 25)
+        {
+            rigidBody.velocity = new Vector2(25, rigidBody.velocity.y);
+        }
+
+        if (rigidBody.velocity.x < -25)
+        {
+            rigidBody.velocity = new Vector2(-25, rigidBody.velocity.y);
+        }
+
+        if (rigidBody.velocity.y > 25)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 25);
+        }
+
+        if (rigidBody.velocity.y < -25)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, -25);
+        }
     }
 }
