@@ -4,7 +4,8 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     //  Movement
-    private int speed = 25;
+    private int groundSpeed = 25;
+    private int airSpeed = 10;
     private float slideTime = 0.13f;
     private float jumpDistance = 8f;
     private float fallNormalTimer = 0.5f;
@@ -24,20 +25,44 @@ public class CharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //  Run Right
+        //  Move Right
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
         {
-            SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = false;
-            rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
+            int loc_speed = 0;
+
+            if (groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Run", CharaAnimStateEnum.Run);
+                loc_speed = groundSpeed;
+            }
+
+            if (!groundChecker.GetIsGrounded())
+            {
+                loc_speed = airSpeed;
+            }
+
+            rigidBody.velocity = new Vector2(loc_speed, rigidBody.velocity.y);
         }
 
-        //  Run Left
+        //  Move Left
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
-            SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = true;
-            rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
+            int loc_speed = 0;
+
+            if (groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Run", CharaAnimStateEnum.Run);
+                loc_speed = groundSpeed;
+            }
+
+            if (!groundChecker.GetIsGrounded())
+            {
+                loc_speed = airSpeed;
+            }
+
+            rigidBody.velocity = new Vector2(-loc_speed, rigidBody.velocity.y);
         }
 
         //  Slide after Run
