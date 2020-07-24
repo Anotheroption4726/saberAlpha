@@ -7,9 +7,10 @@ public class CharacterScript : MonoBehaviour
     private int speed = 25;
     private float slideTime = 0.13f;
     private Rigidbody2D rigidBody;
-    private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
+    [SerializeField] private GroundCheckerScript groundChecker;
 
     //  Animations
+    private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump"};
@@ -41,14 +42,19 @@ public class CharacterScript : MonoBehaviour
             StartCoroutine("StopSlide");
         }
 
-        if (Input.GetKey(KeyCode.Space) && !animState.Equals(CharaAnimStateEnum.Jump))
+        if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
             //rigidBody.AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 6);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 8);
         }
 
-        NormalizeRigidBodyVelocity();
+        /*
+        if (groundChecker.GetIsGrounded())
+        {
+            SetAnimation("Idle", CharaAnimStateEnum.Idle);
+        }
+        */
     }
 
     private IEnumerator StopSlide()
@@ -69,28 +75,5 @@ public class CharacterScript : MonoBehaviour
 
         animator.SetBool(arg_animationName, true);
         animState = arg_charaAnimStateEnum;
-    }
-
-    private void NormalizeRigidBodyVelocity()
-    {
-        if (rigidBody.velocity.x > 25)
-        {
-            rigidBody.velocity = new Vector2(25, rigidBody.velocity.y);
-        }
-
-        if (rigidBody.velocity.x < -25)
-        {
-            rigidBody.velocity = new Vector2(-25, rigidBody.velocity.y);
-        }
-
-        if (rigidBody.velocity.y > 25)
-        {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 25);
-        }
-
-        if (rigidBody.velocity.y < -25)
-        {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, -25);
-        }
     }
 }

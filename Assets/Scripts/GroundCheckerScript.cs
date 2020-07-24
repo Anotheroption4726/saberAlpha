@@ -12,21 +12,19 @@ public class GroundCheckerScript : MonoBehaviour
         return isGrounded;
     }
 
-    private void OnTriggerStay2D(Collider2D collider)
+    private void OnTriggerStay2D(Collider2D arg_collider)
     {   
-        if (collider != null)
+        if (!isGrounded && arg_collider != null & ((1 << arg_collider.gameObject.layer) & groundLayerMask) != 0)
         {
-            if (((1 << collider.gameObject.layer) & groundLayerMask) != 0)
-            {
-                isGrounded = true;
-                Debug.Log(isGrounded);
-            }
+            isGrounded = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D arg_collider)
     {
-        isGrounded = false;
-        Debug.Log(isGrounded);
+        if (isGrounded && arg_collider != null & ((1 << arg_collider.gameObject.layer) & groundLayerMask) != 0)
+        {
+            isGrounded = false;
+        }
     }
 }
