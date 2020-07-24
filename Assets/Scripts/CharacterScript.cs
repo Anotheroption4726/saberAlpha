@@ -25,14 +25,14 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = false;
-            rigidBody.velocity = new Vector3(speed, rigidBody.velocity.y, 0);
+            rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
         }
 
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             SetAnimation("Run", CharaAnimStateEnum.Run);
             sprite.flipX = true;
-            rigidBody.velocity = new Vector3(-speed, rigidBody.velocity.y, 0);
+            rigidBody.velocity = new Vector2(-speed, rigidBody.velocity.y);
         }
 
         if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0 && animState.Equals(CharaAnimStateEnum.Run))
@@ -45,7 +45,7 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
             //rigidBody.AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);
-            rigidBody.velocity = new Vector3(rigidBody.velocity.x, 15, 0);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 15);
         }
 
         NormalizeRigidBodyVelocity();
