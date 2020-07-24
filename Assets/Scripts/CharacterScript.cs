@@ -6,6 +6,7 @@ public class CharacterScript : MonoBehaviour
     //  Movement
     private int speed = 25;
     private float slideTime = 0.13f;
+    private float jump = 8f;
     private Rigidbody2D rigidBody;
     [SerializeField] private GroundCheckerScript groundChecker;
 
@@ -45,8 +46,9 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
-            //rigidBody.AddForce(new Vector2(0f, 15f), ForceMode2D.Impulse);
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x, 8);
+            //rigidBody.AddForce(new Vector2(0f, jumpValue), ForceMode2D.Impulse);
+            //rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpValue);
+            rigidBody.velocity = Vector2.up * jump;
         }
 
         /*
