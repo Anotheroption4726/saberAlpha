@@ -41,29 +41,6 @@ public class CharacterScript : MonoBehaviour
             StartCoroutine("StopSlide");
         }
 
-
-        Debug.DrawRay(transform.position, -Vector2.up * 3, Color.red);
-        RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, -Vector2.up * 3);
-        //RaycastHit2D raycastHit;
-        //Physics.Raycast(transform.position, -Vector2.up, 3, LayerMask.NameToLayer("Ground"));
-
-        /*
-        if (Physics.Raycast(transform.position, -Vector2.up * 3, Mathf.Infinity, 1 << 8))
-        {
-            Debug.Log("Touching ground");
-        }
-        */
-
-        if (raycastHit.collider != null)
-        {
-            //Debug.Log("Raycast On");
-
-            if (raycastHit.collider.gameObject.name != "Character")
-            {
-                Debug.Log("Touching ground");
-            }
-        }
-
         if (Input.GetKey(KeyCode.Space) && !animState.Equals(CharaAnimStateEnum.Jump))
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
