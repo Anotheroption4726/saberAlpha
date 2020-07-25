@@ -31,12 +31,6 @@ public class CharacterScript : MonoBehaviour
         //
         if (animState.Equals(CharaAnimStateEnum.Idle))
         {
-            //  Run
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                SetAnimation("Run", CharaAnimStateEnum.Run);
-            }
-
             //  Jump
             if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
             {
@@ -64,13 +58,6 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
-            }
-
-            //  Slide
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                StartCoroutine("StopSlide");
             }
 
             //  Jump Forward
@@ -143,12 +130,6 @@ public class CharacterScript : MonoBehaviour
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
             }
-
-            //  Touch Ground
-            if (groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Idle", CharaAnimStateEnum.Idle);
-            }
         }
     }
 
@@ -156,11 +137,51 @@ public class CharacterScript : MonoBehaviour
     private void Update()
     {
         //
+        // Idle Actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Idle))
+        {
+            //  Run
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+            {
+                SetAnimation("Run", CharaAnimStateEnum.Run);
+            }
+        }
+
+
+        //
+        // Run Actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Run))
+        {
+            //  Slide
+            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+            {
+                SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                StartCoroutine("StopSlide");
+            }
+        }
+
+
+        //
         // Slide Actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Slide))
         {
             //rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+        }
+
+
+        //
+        // Fall normal actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Fall_normal))
+        {
+            //  Touch Ground
+            if (groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Idle", CharaAnimStateEnum.Idle);
+            }
         }
 
 
