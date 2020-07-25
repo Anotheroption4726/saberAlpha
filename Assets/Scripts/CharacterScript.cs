@@ -84,15 +84,6 @@ public class CharacterScript : MonoBehaviour
 
 
         //
-        // Slide Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Slide))
-        {
-            //rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
-        }
-
-
-        //
         // Jump actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Jump))
@@ -165,6 +156,15 @@ public class CharacterScript : MonoBehaviour
     private void Update()
     {
         //
+        // Slide Actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Slide))
+        {
+            //rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+        }
+
+
+        //
         // Fall forward actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Fall_forward))
@@ -180,6 +180,7 @@ public class CharacterScript : MonoBehaviour
             {
                 if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                 {
+                    //   IL NE SLIDE PAS ENCULE
                     SetAnimation("Slide", CharaAnimStateEnum.Slide);
                     StartCoroutine("StopSlide");
                 }
