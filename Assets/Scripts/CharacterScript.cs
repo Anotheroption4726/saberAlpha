@@ -159,15 +159,18 @@ public class CharacterScript : MonoBehaviour
                 SetAnimation("Idle", CharaAnimStateEnum.Idle);
             }
         }
+    }
 
 
+    private void Update()
+    {
         //
         // Fall forward actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Fall_forward))
         {
             //  Switch Direction
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+            if ((Input.GetKeyDown(KeyCode.LeftArrow) && rigidBody.velocity.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && rigidBody.velocity.x < 0) || (Input.GetAxisRaw("Horizontal") < 0 && rigidBody.velocity.x > 0) || (Input.GetAxisRaw("Horizontal") > 0 && rigidBody.velocity.x < 0))
             {
                 SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
             }
@@ -181,13 +184,14 @@ public class CharacterScript : MonoBehaviour
                     StartCoroutine("StopSlide");
                 }
 
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) /*|| Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0*/)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
                 }
             }
         }
     }
+
 
     private IEnumerator StopSlide()
     {
