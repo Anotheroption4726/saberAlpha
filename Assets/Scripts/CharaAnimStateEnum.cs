@@ -6,4 +6,5 @@
     Jump,
     Jump_forward,
     Fall_normal,
+    Fall_forward,
 }
