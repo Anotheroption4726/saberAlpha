@@ -175,8 +175,16 @@ public class CharacterScript : MonoBehaviour
             //  Touch Ground
             if (groundChecker.GetIsGrounded())
             {
-                SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                StartCoroutine("StopSlide");
+                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                    StartCoroutine("StopSlide");
+                }
+
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    SetAnimation("Run", CharaAnimStateEnum.Run);
+                }
             }
         }
     }
@@ -196,6 +204,7 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator FallForward()
     {
         yield return new WaitForSeconds(fallForwardTimer);
+        //Input.ResetInputAxes();
         SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
     }
 
