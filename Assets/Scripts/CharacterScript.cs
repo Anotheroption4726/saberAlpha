@@ -84,6 +84,27 @@ public class CharacterScript : MonoBehaviour
 
 
         //
+        // Jump actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Jump))
+        {
+            //  Air move Right
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+            {
+                sprite.flipX = false;
+                rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+            }
+
+            //  Air move Left
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+            {
+                sprite.flipX = true;
+                rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+            }
+        }
+
+
+        //
         // Fall normal actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Fall_normal))
