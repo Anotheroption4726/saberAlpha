@@ -9,6 +9,7 @@ public class CharacterScript : MonoBehaviour
     private float slideTime = 0.13f;
     private float jumpDistance = 8f;
     private float fallNormalTimer = 0.5f;
+    private float fallForwardTimer = 0.75f;
     private Rigidbody2D rigidBody;
     [SerializeField] private GroundCheckerScript groundChecker;
 
@@ -16,7 +17,7 @@ public class CharacterScript : MonoBehaviour
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward"};
 
     private void Awake()
     {
@@ -71,6 +72,14 @@ public class CharacterScript : MonoBehaviour
                 SetAnimation("Slide", CharaAnimStateEnum.Slide);
                 StartCoroutine("StopSlide");
             }
+
+            //  Jump Forward
+            if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                rigidBody.velocity = Vector2.up * jumpDistance;
+                StartCoroutine("FallForward");
+            }
         }
 
 
@@ -79,7 +88,7 @@ public class CharacterScript : MonoBehaviour
         //
         if (animState.Equals(CharaAnimStateEnum.Slide))
         {
-            
+            //rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
         }
 
 
@@ -100,6 +109,27 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+            }
+        }
+
+
+        //
+        //  Jump forward actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Jump_forward))
+        {
+            //  Jump move Right
+            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+            {
+                sprite.flipX = false;
+                rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+            }
+
+            //  Jump move Left
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+            {
+                sprite.flipX = true;
+                rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
             }
         }
 
@@ -131,95 +161,45 @@ public class CharacterScript : MonoBehaviour
         }
 
 
-
-        /*
-        //  Move Right
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+        //
+        // Fall forward actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Fall_forward))
         {
-            sprite.flipX = false;
-            int loc_currentSpeed = 0;
+            bool loc_directionChange = false;
 
+            //  Switch Direction
+            if (!loc_directionChange)
+            {
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    loc_directionChange = true;
+                }
+            }
+
+            //  Fall Right & Left
+            if (loc_directionChange)
+            {
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    sprite.flipX = false;
+                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+                }
+
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    sprite.flipX = true;
+                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+                }
+            }
+
+            //  Touch Ground
             if (groundChecker.GetIsGrounded())
             {
-                SetAnimation("Run", CharaAnimStateEnum.Run);
-                loc_currentSpeed = groundSpeed;
+                SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                StartCoroutine("StopSlide");
             }
-
-            if (!groundChecker.GetIsGrounded())
-            {
-                loc_currentSpeed = airSpeed;
-            }
-
-            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
-            {
-                loc_currentSpeed = groundSpeed;
-            }
-
-            rigidBody.velocity = new Vector2(loc_currentSpeed, rigidBody.velocity.y);
         }
-
-        //  Move Left
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-        {
-            sprite.flipX = true;
-            int loc_currentSpeed = 0;
-
-            if (groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Run", CharaAnimStateEnum.Run);
-                loc_currentSpeed = groundSpeed;
-            }
-
-            if (!groundChecker.GetIsGrounded())
-            {
-                loc_currentSpeed = airSpeed;
-            }
-
-            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
-            {
-                loc_currentSpeed = groundSpeed;
-            }
-
-            rigidBody.velocity = new Vector2(-loc_currentSpeed, rigidBody.velocity.y);
-        }
-
-        //  Slide after Run
-        if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0 && animState.Equals(CharaAnimStateEnum.Run))
-        {
-            SetAnimation("Slide", CharaAnimStateEnum.Slide);
-            StartCoroutine("StopSlide");
-        }
-
-        //  Jump
-        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
-        {
-            SetAnimation("Jump", CharaAnimStateEnum.Jump);
-            rigidBody.velocity = Vector2.up * jumpDistance;
-            StartCoroutine("FallNormal");
-        }
-
-        //  Jump Move Right
-        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
-        {
-            sprite.flipX = false;
-            SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-            rigidBody.velocity = Vector2.up * jumpDistance;
-        }
-
-        //  Jump Move Left
-        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
-        {
-            sprite.flipX = true;
-            SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-            rigidBody.velocity = Vector2.up * jumpDistance;
-        }
-
-        //  Fall Normal
-        if (animState.Equals(CharaAnimStateEnum.Fall_normal) && groundChecker.GetIsGrounded())
-        {
-            SetAnimation("Idle", CharaAnimStateEnum.Idle);
-        }
-        */
     }
 
     private IEnumerator StopSlide()
@@ -232,6 +212,12 @@ public class CharacterScript : MonoBehaviour
     {
         yield return new WaitForSeconds(fallNormalTimer);
         SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+    }
+
+    private IEnumerator FallForward()
+    {
+        yield return new WaitForSeconds(fallForwardTimer);
+        SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
     }
 
     private void SetAnimation(string arg_animationName, CharaAnimStateEnum arg_charaAnimStateEnum)
