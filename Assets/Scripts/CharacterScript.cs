@@ -16,7 +16,7 @@ public class CharacterScript : MonoBehaviour
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Fall_normal"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal"};
 
     private void Awake()
     {
@@ -29,40 +29,50 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
         {
             sprite.flipX = false;
-            int loc_speed = 0;
+            int loc_currentSpeed = 0;
 
             if (groundChecker.GetIsGrounded())
             {
                 SetAnimation("Run", CharaAnimStateEnum.Run);
-                loc_speed = groundSpeed;
+                loc_currentSpeed = groundSpeed;
             }
 
             if (!groundChecker.GetIsGrounded())
             {
-                loc_speed = airSpeed;
+                loc_currentSpeed = airSpeed;
             }
 
-            rigidBody.velocity = new Vector2(loc_speed, rigidBody.velocity.y);
+            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
+            {
+                loc_currentSpeed = groundSpeed;
+            }
+
+            rigidBody.velocity = new Vector2(loc_currentSpeed, rigidBody.velocity.y);
         }
 
         //  Move Left
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             sprite.flipX = true;
-            int loc_speed = 0;
+            int loc_currentSpeed = 0;
 
             if (groundChecker.GetIsGrounded())
             {
                 SetAnimation("Run", CharaAnimStateEnum.Run);
-                loc_speed = groundSpeed;
+                loc_currentSpeed = groundSpeed;
             }
 
             if (!groundChecker.GetIsGrounded())
             {
-                loc_speed = airSpeed;
+                loc_currentSpeed = airSpeed;
             }
 
-            rigidBody.velocity = new Vector2(-loc_speed, rigidBody.velocity.y);
+            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
+            {
+                loc_currentSpeed = groundSpeed;
+            }
+
+            rigidBody.velocity = new Vector2(-loc_currentSpeed, rigidBody.velocity.y);
         }
 
         //  Slide after Run
@@ -73,11 +83,27 @@ public class CharacterScript : MonoBehaviour
         }
 
         //  Jump
-        if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
+        if (!Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
         {
             SetAnimation("Jump", CharaAnimStateEnum.Jump);
             rigidBody.velocity = Vector2.up * jumpDistance;
             StartCoroutine("FallNormal");
+        }
+
+        //  Jump Move Right
+        if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
+        {
+            sprite.flipX = false;
+            SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+            rigidBody.velocity = Vector2.up * jumpDistance;
+        }
+
+        //  Jump Move Left
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
+        {
+            sprite.flipX = true;
+            SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+            rigidBody.velocity = Vector2.up * jumpDistance;
         }
 
         //  Fall Normal
