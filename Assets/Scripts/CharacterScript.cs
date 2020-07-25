@@ -166,31 +166,10 @@ public class CharacterScript : MonoBehaviour
         //
         if (animState.Equals(CharaAnimStateEnum.Fall_forward))
         {
-            bool loc_directionChange = false;
-
             //  Switch Direction
-            if (!loc_directionChange)
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
             {
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
-                {
-                    loc_directionChange = true;
-                }
-            }
-
-            //  Fall Right & Left
-            if (loc_directionChange)
-            {
-                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
-                {
-                    sprite.flipX = false;
-                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
-                }
-
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-                {
-                    sprite.flipX = true;
-                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
-                }
+                SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
             }
 
             //  Touch Ground
