@@ -109,6 +109,15 @@ public class CharacterScript : MonoBehaviour
                 rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
             }
         }
+
+
+        //
+        // Fall forward actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Fall_forward))
+        {
+            
+        }
     }
 
 
@@ -177,6 +186,12 @@ public class CharacterScript : MonoBehaviour
         {
             //  Switch Direction
             if ((Input.GetKeyDown(KeyCode.LeftArrow) && rigidBody.velocity.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && rigidBody.velocity.x < 0) || (Input.GetAxisRaw("Horizontal") < 0 && rigidBody.velocity.x > 0) || (Input.GetAxisRaw("Horizontal") > 0 && rigidBody.velocity.x < 0))
+            {
+                SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+            }
+
+            //  Air Control
+            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
             {
                 SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
             }
