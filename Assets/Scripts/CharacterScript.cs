@@ -35,204 +35,207 @@ public class CharacterScript : MonoBehaviour
 
     private void Update()
     {
-        //
-        // Idle Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Idle))
+        if (!Game.GetGamePaused())
         {
-            //  Run
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+            //
+            // Idle Actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Idle))
             {
-                SetAnimation("Run", CharaAnimStateEnum.Run);
-            }
-
-            //  Jump
-            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Jump", CharaAnimStateEnum.Jump);
-                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                StartCoroutine("FallNormal");
-            }
-        }
-
-
-        //
-        // Run Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Run))
-        {
-            //  Run Right
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                sprite.flipX = false;
-                rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
-
-                //  Jump Forward
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                    rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
-                    StartCoroutine("FallForward");
-                }
-            }
-
-            //  Run Left
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-            {
-                sprite.flipX = true;
-                rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
-
-                //  Jump Forward
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                    rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
-                    StartCoroutine("FallForward");
-                }
-            }
-
-            //  Slide
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                StartCoroutine("StopSlide");
-            }
-        }
-
-
-        //
-        // Jump actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Jump))
-        {
-            //  Air move Right
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                sprite.flipX = false;
-                rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
-            }
-
-            //  Air move Left
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-            {
-                sprite.flipX = true;
-                rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
-            }
-        }
-
-
-        //
-        //  Jump forward actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Jump_forward))
-        {
-            //  Jump move Right
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                sprite.flipX = false;
-
-                if (rigidBody.velocity.x < 0)
-                {
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                }
-
-                if (rigidBody.velocity.x > 0)
-                {
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-                }
-            }
-
-            //  Jump move Left
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-            {
-                sprite.flipX = true;
-
-                if (rigidBody.velocity.x < 0)
-                {
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-                }
-
-                if (rigidBody.velocity.x > 0)
-                {
-
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                }
-            }
-
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                if (rigidBody.velocity.x > 0)
-                {
-                    rigidBody.AddForce(-Vector2.right * jumpRunDrag_addForce);
-                }
-
-                if (rigidBody.velocity.x < 0)
-                {
-                    rigidBody.AddForce(Vector2.right * jumpRunDrag_addForce);
-                }
-            }
-        }
-
-
-        //
-        // Fall normal actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Fall_normal))
-        {
-            //  Fall Right
-            if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                sprite.flipX = false;
-                rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
-            }
-
-            //  Fall Left
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
-            {
-                sprite.flipX = true;
-                rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
-            }
-
-            //  Touch Ground
-            if (groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Idle", CharaAnimStateEnum.Idle);
-            }
-        }
-
-
-        //
-        // Fall forward actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Fall_forward))
-        {
-            //  Switch Direction
-            if ((Input.GetKeyDown(KeyCode.LeftArrow) && rigidBody.velocity.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && rigidBody.velocity.x < 0) || (Input.GetAxisRaw("Horizontal") < 0 && rigidBody.velocity.x > 0) || (Input.GetAxisRaw("Horizontal") > 0 && rigidBody.velocity.x < 0))
-            {
-                SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
-            }
-
-            //  Air Control
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
-            }
-
-            //  Touch Ground
-            if (groundChecker.GetIsGrounded())
-            {
-                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-                {
-                    //   IL NE SLIDE PAS ENCULE
-                    SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                    StartCoroutine("StopSlide");
-                }
-
+                //  Run
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
+                }
+
+                //  Jump
+                if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Jump", CharaAnimStateEnum.Jump);
+                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                    StartCoroutine("FallNormal");
+                }
+            }
+
+
+            //
+            // Run Actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Run))
+            {
+                //  Run Right
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    sprite.flipX = false;
+                    rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+
+                    //  Jump Forward
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                        rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                        rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
+                        StartCoroutine("FallForward");
+                    }
+                }
+
+                //  Run Left
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    sprite.flipX = true;
+                    rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
+
+                    //  Jump Forward
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                        rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                        rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
+                        StartCoroutine("FallForward");
+                    }
+                }
+
+                //  Slide
+                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                    StartCoroutine("StopSlide");
+                }
+            }
+
+
+            //
+            // Jump actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Jump))
+            {
+                //  Air move Right
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    sprite.flipX = false;
+                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+                }
+
+                //  Air move Left
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    sprite.flipX = true;
+                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+                }
+            }
+
+
+            //
+            //  Jump forward actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
+            {
+                //  Jump move Right
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    sprite.flipX = false;
+
+                    if (rigidBody.velocity.x < 0)
+                    {
+                        rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                    }
+
+                    if (rigidBody.velocity.x > 0)
+                    {
+                        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                    }
+                }
+
+                //  Jump move Left
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    sprite.flipX = true;
+
+                    if (rigidBody.velocity.x < 0)
+                    {
+                        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                    }
+
+                    if (rigidBody.velocity.x > 0)
+                    {
+
+                        rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                    }
+                }
+
+                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    if (rigidBody.velocity.x > 0)
+                    {
+                        rigidBody.AddForce(-Vector2.right * jumpRunDrag_addForce);
+                    }
+
+                    if (rigidBody.velocity.x < 0)
+                    {
+                        rigidBody.AddForce(Vector2.right * jumpRunDrag_addForce);
+                    }
+                }
+            }
+
+
+            //
+            // Fall normal actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Fall_normal))
+            {
+                //  Fall Right
+                if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
+                {
+                    sprite.flipX = false;
+                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+                }
+
+                //  Fall Left
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
+                {
+                    sprite.flipX = true;
+                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+                }
+
+                //  Touch Ground
+                if (groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Idle", CharaAnimStateEnum.Idle);
+                }
+            }
+
+
+            //
+            // Fall forward actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Fall_forward))
+            {
+                //  Switch Direction
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) && rigidBody.velocity.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && rigidBody.velocity.x < 0) || (Input.GetAxisRaw("Horizontal") < 0 && rigidBody.velocity.x > 0) || (Input.GetAxisRaw("Horizontal") > 0 && rigidBody.velocity.x < 0))
+                {
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
+
+                //  Air Control
+                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
+
+                //  Touch Ground
+                if (groundChecker.GetIsGrounded())
+                {
+                    if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                    {
+                        //   IL NE SLIDE PAS ENCULE
+                        SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                        StartCoroutine("StopSlide");
+                    }
+
+                    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+                    {
+                        SetAnimation("Run", CharaAnimStateEnum.Run);
+                    }
                 }
             }
         }
