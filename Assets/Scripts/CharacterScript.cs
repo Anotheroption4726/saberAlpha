@@ -3,14 +3,24 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    //  Movement
-    private int groundSpeed = 37;
+    //  Movement variables
+    private int groundSpeed = 40;
     private int airSpeed = 10;
-    private int forwardJumpSpeed = 30;
-    private float slideTime = 0.13f;
+
+    //  Movement Velocity variables
+    private int forwardJumpSpeed = 5;
     private float jumpImpulse = 24f;
+
+    //  Movement AddForce variables
+    private int forwardJumpSpeed_addForce = 250;
+    private float jumpImpulse_addForce = 1200;
+
+    //  Timers
+    private float slideTime = 0.13f;
     private float fallNormalTimer = 0.5f;
     private float fallForwardTimer = 0.75f;
+
+    //  Components
     private Rigidbody2D rigidBody;
     [SerializeField] private GroundCheckerScript groundChecker;
 
@@ -43,7 +53,8 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
             {
                 SetAnimation("Jump", CharaAnimStateEnum.Jump);
-                rigidBody.velocity = Vector2.up * jumpImpulse;
+                //rigidBody.velocity = Vector2.up * jumpImpulse;
+                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                 StartCoroutine("FallNormal");
             }
         }
@@ -59,6 +70,15 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = false;
                 rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+
+                //  Jump Forward
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                    rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
+                    StartCoroutine("FallForward");
+                }
             }
 
             //  Run Left
@@ -66,6 +86,15 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
+
+                //  Jump Forward
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                    rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
+                    StartCoroutine("FallForward");
+                }
             }
 
             //  Slide
@@ -78,9 +107,11 @@ public class CharacterScript : MonoBehaviour
             //  Jump Forward
             if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
             {
+                /*
                 SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                 rigidBody.velocity = Vector2.up * jumpImpulse;
                 StartCoroutine("FallForward");
+                */
             }
         }
 
@@ -115,14 +146,31 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
             {
                 sprite.flipX = false;
-                rigidBody.velocity = new Vector2(forwardJumpSpeed, rigidBody.velocity.y);
+                //rigidBody.velocity = new Vector2(forwardJumpSpeed, rigidBody.velocity.y);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
             }
 
             //  Jump move Left
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
             {
                 sprite.flipX = true;
-                rigidBody.velocity = new Vector2(-forwardJumpSpeed, rigidBody.velocity.y);
+                //rigidBody.velocity = new Vector2(-forwardJumpSpeed, rigidBody.velocity.y);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+            }
+
+            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+            {
+                if (rigidBody.velocity.x > 0)
+                {
+                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x - 0.185f, rigidBody.velocity.y);
+                    rigidBody.AddForce(-Vector2.right * 13);
+                }
+
+                if (rigidBody.velocity.x < 0)
+                {
+                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x - 0.185f, rigidBody.velocity.y);
+                    rigidBody.AddForce(Vector2.right * 13);
+                }
             }
         }
 
