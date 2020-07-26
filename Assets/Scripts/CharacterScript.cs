@@ -25,8 +25,30 @@ public class CharacterScript : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    private void FixedUpdate()
+
+    private void Update()
     {
+        //
+        // Idle Actions & Events
+        //
+        if (animState.Equals(CharaAnimStateEnum.Idle))
+        {
+            //  Run
+            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+            {
+                SetAnimation("Run", CharaAnimStateEnum.Run);
+            }
+
+            //  Jump
+            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Jump", CharaAnimStateEnum.Jump);
+                rigidBody.velocity = Vector2.up * jumpImpulse;
+                StartCoroutine("FallNormal");
+            }
+        }
+
+
         //
         // Run Actions & Events
         //
@@ -44,6 +66,21 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
+            }
+
+            //  Slide
+            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+            {
+                SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                StartCoroutine("StopSlide");
+            }
+
+            //  Jump Forward
+            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                rigidBody.velocity = Vector2.up * jumpImpulse;
+                StartCoroutine("FallForward");
             }
         }
 
@@ -108,69 +145,7 @@ public class CharacterScript : MonoBehaviour
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
             }
-        }
 
-
-        //
-        // Fall forward actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Fall_forward))
-        {
-            
-        }
-    }
-
-
-    private void Update()
-    {
-        //
-        // Idle Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Idle))
-        {
-            //  Run
-            if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
-            {
-                SetAnimation("Run", CharaAnimStateEnum.Run);
-            }
-
-            //  Jump
-            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Jump", CharaAnimStateEnum.Jump);
-                rigidBody.velocity = Vector2.up * jumpImpulse;
-                StartCoroutine("FallNormal");
-            }
-        }
-
-
-        //
-        // Run Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Run))
-        {
-            //  Slide
-            if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
-            {
-                SetAnimation("Slide", CharaAnimStateEnum.Slide);
-                StartCoroutine("StopSlide");
-            }
-
-            //  Jump Forward
-            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                rigidBody.velocity = Vector2.up * jumpImpulse;
-                StartCoroutine("FallForward");
-            }
-        }
-
-
-        //
-        // Fall normal actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Fall_normal))
-        {
             //  Touch Ground
             if (groundChecker.GetIsGrounded())
             {
