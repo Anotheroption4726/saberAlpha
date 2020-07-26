@@ -4,10 +4,11 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     //  Movement
-    private int groundSpeed = 25;
+    private int groundSpeed = 37;
     private int airSpeed = 10;
+    private int forwardJumpSpeed = 30;
     private float slideTime = 0.13f;
-    private float jumpDistance = 8f;
+    private float jumpImpulse = 24f;
     private float fallNormalTimer = 0.5f;
     private float fallForwardTimer = 0.75f;
     private Rigidbody2D rigidBody;
@@ -27,21 +28,6 @@ public class CharacterScript : MonoBehaviour
     private void FixedUpdate()
     {
         //
-        // Idle Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Idle))
-        {
-            //  Jump
-            if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Jump", CharaAnimStateEnum.Jump);
-                rigidBody.velocity = Vector2.up * jumpDistance;
-                StartCoroutine("FallNormal");
-            }
-        }
-
-
-        //
         // Run Actions & Events
         //
         if (animState.Equals(CharaAnimStateEnum.Run))
@@ -58,14 +44,6 @@ public class CharacterScript : MonoBehaviour
             {
                 sprite.flipX = true;
                 rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
-            }
-
-            //  Jump Forward
-            if (Input.GetKey(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                rigidBody.velocity = Vector2.up * jumpDistance;
-                StartCoroutine("FallForward");
             }
         }
 
@@ -100,14 +78,14 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
             {
                 sprite.flipX = false;
-                rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+                rigidBody.velocity = new Vector2(forwardJumpSpeed, rigidBody.velocity.y);
             }
 
             //  Jump move Left
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
             {
                 sprite.flipX = true;
-                rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
+                rigidBody.velocity = new Vector2(-forwardJumpSpeed, rigidBody.velocity.y);
             }
         }
 
@@ -146,6 +124,14 @@ public class CharacterScript : MonoBehaviour
             {
                 SetAnimation("Run", CharaAnimStateEnum.Run);
             }
+
+            //  Jump
+            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Jump", CharaAnimStateEnum.Jump);
+                rigidBody.velocity = Vector2.up * jumpImpulse;
+                StartCoroutine("FallNormal");
+            }
         }
 
 
@@ -160,15 +146,14 @@ public class CharacterScript : MonoBehaviour
                 SetAnimation("Slide", CharaAnimStateEnum.Slide);
                 StartCoroutine("StopSlide");
             }
-        }
 
-
-        //
-        // Slide Actions & Events
-        //
-        if (animState.Equals(CharaAnimStateEnum.Slide))
-        {
-            //rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+            //  Jump Forward
+            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+            {
+                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                rigidBody.velocity = Vector2.up * jumpImpulse;
+                StartCoroutine("FallForward");
+            }
         }
 
 
@@ -206,7 +191,7 @@ public class CharacterScript : MonoBehaviour
                     StartCoroutine("StopSlide");
                 }
 
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) /*|| Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0*/)
+                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
                 }
