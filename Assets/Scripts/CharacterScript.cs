@@ -140,16 +140,37 @@ public class CharacterScript : MonoBehaviour
             if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
             {
                 sprite.flipX = false;
+
+                if (rigidBody.velocity.x < 0)
+                {
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                }
+
+                if (rigidBody.velocity.x > 0)
+                {
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                }
+
                 //rigidBody.velocity = new Vector2(forwardJumpSpeed, rigidBody.velocity.y);
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
             }
 
             //  Jump move Left
             if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
             {
                 sprite.flipX = true;
+
+                if (rigidBody.velocity.x < 0)
+                {
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                }
+
+                if (rigidBody.velocity.x > 0)
+                {
+
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                }
+
                 //rigidBody.velocity = new Vector2(-forwardJumpSpeed, rigidBody.velocity.y);
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
             }
 
             if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
