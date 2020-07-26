@@ -175,6 +175,24 @@ public class CharacterScript : MonoBehaviour
             if (groundChecker.GetIsGrounded())
             {
                 SetAnimation("Idle", CharaAnimStateEnum.Idle);
+
+                /*
+                if (rigidBody.velocity.x == 0)
+                {
+                    SetAnimation("Idle", CharaAnimStateEnum.Idle);
+                }
+                
+                if (rigidBody.velocity.x > 0 || rigidBody.velocity.x < 0)
+                {
+                    SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                    StartCoroutine("StopSlide");
+                }
+                */
+
+                /*
+                SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                StartCoroutine("StopSlide");
+                */
             }
         }
 
