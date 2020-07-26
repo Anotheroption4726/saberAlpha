@@ -17,6 +17,7 @@ public class TestArenaManagerScript : MonoBehaviour
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("TestArenaScene");
@@ -34,5 +35,6 @@ public class TestArenaManagerScript : MonoBehaviour
             Time.timeScale = 1;
             gamePaused = false;
         }
+        */
     }
 }
