@@ -8,11 +8,13 @@ public class CharacterScript : MonoBehaviour
     private int airSpeed = 10;
 
     //  Movement Velocity variables
-    private int forwardJumpSpeed = 5;
+    private int forwardJumpSpeed = 40;
+    private float jumpRunDrag = 0.075f;
     private float jumpImpulse = 24f;
 
     //  Movement AddForce variables
     private int forwardJumpSpeed_addForce = 250;
+    private int jumpRunDrag_addForce = 13;
     private float jumpImpulse_addForce = 1200;
 
     //  Timers
@@ -75,6 +77,7 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                    //rigidBody.velocity = new Vector2(forwardJumpSpeed, jumpImpulse);
                     rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                     rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
                     StartCoroutine("FallForward");
@@ -91,6 +94,7 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
+                    //rigidBody.velocity = new Vector2(-forwardJumpSpeed, jumpImpulse);
                     rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                     rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
                     StartCoroutine("FallForward");
@@ -102,16 +106,6 @@ public class CharacterScript : MonoBehaviour
             {
                 SetAnimation("Slide", CharaAnimStateEnum.Slide);
                 StartCoroutine("StopSlide");
-            }
-
-            //  Jump Forward
-            if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
-            {
-                /*
-                SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                rigidBody.velocity = Vector2.up * jumpImpulse;
-                StartCoroutine("FallForward");
-                */
             }
         }
 
@@ -162,14 +156,14 @@ public class CharacterScript : MonoBehaviour
             {
                 if (rigidBody.velocity.x > 0)
                 {
-                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x - 0.185f, rigidBody.velocity.y);
-                    rigidBody.AddForce(-Vector2.right * 13);
+                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x - jumpRunDrag, rigidBody.velocity.y);
+                    rigidBody.AddForce(-Vector2.right * jumpRunDrag_addForce);
                 }
 
                 if (rigidBody.velocity.x < 0)
                 {
-                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x - 0.185f, rigidBody.velocity.y);
-                    rigidBody.AddForce(Vector2.right * 13);
+                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x + jumpRunDrag, rigidBody.velocity.y);
+                    rigidBody.AddForce(Vector2.right * jumpRunDrag_addForce);
                 }
             }
         }
@@ -271,7 +265,6 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator FallForward()
     {
         yield return new WaitForSeconds(fallForwardTimer);
-        //Input.ResetInputAxes();
         SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
     }
 
