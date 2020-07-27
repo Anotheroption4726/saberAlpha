@@ -4,10 +4,11 @@ using UnityEngine;
 public class CharacterScript : MonoBehaviour
 {
     private bool isFacingRight = true;
+    private CharaPhysicStateEnum physicState = CharaPhysicStateEnum.Stateless;
 
     //  Movement variables
-    private int groundSpeed = 40;
-    private int airSpeed = 10;
+    private int runGroundSpeed = 40;
+    private int slowAirSpeed = 10;
 
     //  Movement AddForce variables
     private float forwardJumpSpeed_addForce = 250;
@@ -37,6 +38,75 @@ public class CharacterScript : MonoBehaviour
     }
 
 
+    private void FixedUpdate()
+    {
+        if (!Game.GetGamePaused())
+        {
+            //  Run
+            if (physicState == CharaPhysicStateEnum.RunRight)
+            {
+                rigidBody.velocity = new Vector2(runGroundSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.RunLeft)
+            {
+                rigidBody.velocity = new Vector2(-runGroundSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+
+            // Jump
+            if (physicState == CharaPhysicStateEnum.IdleJump)
+            {
+                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.IdleJumpRight)
+            {
+                rigidBody.velocity = new Vector2(slowAirSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.IdleJumpLeft)
+            {
+                rigidBody.velocity = new Vector2(-slowAirSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+
+            //  Forward Jump
+            if (physicState == CharaPhysicStateEnum.ForwardJumpRight)
+            {
+                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.ForwardJumpLeft)
+            {
+                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+
+            //  Misc
+            if (physicState == CharaPhysicStateEnum.Reset)
+            {
+                rigidBody.velocity = new Vector2(0, 0);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.Stateless)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+            }
+        }
+    }
+
+
     private void Update()
     {
         if (!Game.GetGamePaused())
@@ -56,8 +126,8 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
                 {
                     SetAnimation("Jump", CharaAnimStateEnum.Jump);
-                    rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                     StartCoroutine("FallNormal");
+                    physicState = CharaPhysicStateEnum.IdleJump;
                 }
             }
 
@@ -71,15 +141,14 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
                     FaceRight();
-                    rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.RunRight;
 
                     //  Jump Forward
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                        rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                        rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
                         StartCoroutine("FallForward");
+                        physicState = CharaPhysicStateEnum.ForwardJumpRight;
                     }
                 }
 
@@ -87,15 +156,14 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
                     FaceLeft();
-                    rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.RunLeft;
 
                     //  Jump Forward
                     if (Input.GetKeyDown(KeyCode.Space))
                     {
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                        rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                        rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
                         StartCoroutine("FallForward");
+                        physicState = CharaPhysicStateEnum.ForwardJumpLeft;
                     }
                 }
 
@@ -117,14 +185,14 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
                     FaceRight();
-                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.IdleJumpRight;
                 }
 
                 //  Air move Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
                     FaceLeft();
-                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.IdleJumpLeft;
                 }
             }
 
@@ -192,14 +260,14 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
                     FaceRight();
-                    rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
+                    rigidBody.velocity = new Vector2(slowAirSpeed, rigidBody.velocity.y);
                 }
 
                 //  Fall Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
                     FaceLeft();
-                    rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
+                    rigidBody.velocity = new Vector2(-slowAirSpeed, rigidBody.velocity.y);
                 }
 
                 //  Touch Ground
