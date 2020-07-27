@@ -11,7 +11,7 @@ public class CharacterScript : MonoBehaviour
 
     //  Movement AddForce variables
     private float forwardJumpSpeed_addForce = 250;
-    private float forwardJumpSlideTreshold = 20;
+    private float forwardJumpSlideTreshold = 20;    // 20
     private float forwardJumpSlideSpeed = 1500;
     private float jumpRunDrag_addForce = 13;
     private float jumpImpulse_addForce = 1200;
@@ -215,13 +215,19 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
-                //  Switch Direction
-                /*
-                if ((Input.GetKeyDown(KeyCode.LeftArrow) && isFacingRight) || (Input.GetKeyDown(KeyCode.RightArrow) && !isFacingRight) || (Input.GetAxisRaw("Horizontal") < 0 && isFacingRight) || (Input.GetAxisRaw("Horizontal") > 0 && !isFacingRight))
+                //  Switch direction to Right
+                if ((Input.GetKeyDown(KeyCode.RightArrow) && !isFacingRight) || (Input.GetAxisRaw("Horizontal") > 0 && !isFacingRight))
                 {
-                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                    FaceRight();
                 }
-                */
+
+                //  Switch direction to Left
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) && isFacingRight) || (Input.GetAxisRaw("Horizontal") < 0 && isFacingRight))
+                {
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                    FaceLeft();
+                }
 
                 //  Slow Fall
                 if ((isFacingRight && rigidBody.velocity.x < forwardJumpSlideTreshold) || (!isFacingRight && rigidBody.velocity.x > -forwardJumpSlideTreshold))
