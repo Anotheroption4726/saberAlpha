@@ -7,7 +7,6 @@
     IdleJumpLeft,
     ForwardJumpRight,
     ForwardJumpLeft,
-    SwitchDirection,
     Reset,
     Stateless,
 }

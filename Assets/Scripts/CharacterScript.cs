@@ -93,12 +93,6 @@ public class CharacterScript : MonoBehaviour
 
 
             //  Misc
-            if (physicState == CharaPhysicStateEnum.SwitchDirection)
-            {
-                rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                physicState = CharaPhysicStateEnum.Stateless;
-            }
-
             if (physicState == CharaPhysicStateEnum.Reset)
             {
                 rigidBody.velocity = new Vector2(0, 0);
@@ -209,39 +203,16 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Jump_forward))
             {
                 //  Jump move Right
-                if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+                if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
-                    if (!isFacingRight)
-                    {
-                        rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                        //physicState = CharaPhysicStateEnum.SwitchDirection;
-                    }
-
-                    if (isFacingRight)
-                    {
-                        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-                        //physicState = CharaPhysicStateEnum.Stateless;
-                    }
-
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceRight();
                 }
 
                 //  Jump move Left
-                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
+                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
-                    if (!isFacingRight)
-                    {
-                        rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-                        //physicState = CharaPhysicStateEnum.Stateless;
-                    }
-
-                    if (isFacingRight)
-                    {
-
-                        rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                        //physicState = CharaPhysicStateEnum.SwitchDirection;
-                    }
-
+                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceLeft();
                 }
 
