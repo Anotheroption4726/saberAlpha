@@ -14,7 +14,7 @@ public class CharacterScript : MonoBehaviour
     private float forwardJumpSpeed_addForce = 250;
     private float forwardJumpSlideTreshold = 20;    // 20
     private float forwardJumpSlideSpeed = 1500;
-    private float jumpRunDrag_addForce = 13;
+    private float forwardJumpAirDrag_addForce = 13;
     private float jumpImpulse_addForce = 1200;
 
     //  Timers
@@ -84,12 +84,27 @@ public class CharacterScript : MonoBehaviour
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
+            if (physicState == CharaPhysicStateEnum.ForwardJumpAirDragRight)
+            {
+                rigidBody.AddForce(-Vector2.right * forwardJumpAirDrag_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
             if (physicState == CharaPhysicStateEnum.ForwardJumpLeft)
             {
                 rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                 rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
+
+            if (physicState == CharaPhysicStateEnum.ForwardJumpAirDragLeft)
+            {
+                rigidBody.AddForce(Vector2.right * forwardJumpAirDrag_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+
+            //  Forward Fall
 
 
             //  Misc
@@ -221,12 +236,14 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (isFacingRight && rigidBody.velocity.x > 0)
                     {
-                        rigidBody.AddForce(-Vector2.right * jumpRunDrag_addForce);
+                        //physicState = CharaPhysicStateEnum.ForwardJumpAirDragRight;
+                        rigidBody.AddForce(-Vector2.right * forwardJumpAirDrag_addForce);
                     }
 
                     if (!isFacingRight && rigidBody.velocity.x < 0)
                     {
-                        rigidBody.AddForce(Vector2.right * jumpRunDrag_addForce);
+                        //physicState = CharaPhysicStateEnum.ForwardJumpAirDragLeft;
+                        rigidBody.AddForce(Vector2.right * forwardJumpAirDrag_addForce);
                     }
                 }
             }
