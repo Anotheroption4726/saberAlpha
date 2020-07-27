@@ -23,7 +23,7 @@ public class TestArenaManagerScript : MonoBehaviour
         }
         */
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Gamepad_Start"))
         {
             if (!Game.GetGamePaused())
             {
