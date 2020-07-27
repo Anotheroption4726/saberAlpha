@@ -123,13 +123,13 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Idle))
             {
                 //  Run
-                if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") < 0 || Input.GetAxisRaw("Horizontal") > 0)
+                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
                 }
 
                 //  Jump
-                if (Input.GetKeyDown(KeyCode.Space) && groundChecker.GetIsGrounded())
+                if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsGrounded())
                 {
                     SetAnimation("Jump", CharaAnimStateEnum.Jump);
                     StartCoroutine("FallNormal");
