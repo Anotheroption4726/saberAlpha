@@ -8,8 +8,10 @@ public class CharacterScript : MonoBehaviour
     private int airSpeed = 10;
 
     //  Movement AddForce variables
-    private int forwardJumpSpeed_addForce = 250;
-    private int jumpRunDrag_addForce = 13;
+    private float forwardJumpSpeed_addForce = 250;
+    private float forwardJumpSlideTreshold = 20;
+    private float forwardJumpSlideSpeed = 1500;
+    private float jumpRunDrag_addForce = 13;
     private float jumpImpulse_addForce = 1200;
 
     //  Timers
@@ -163,6 +165,7 @@ public class CharacterScript : MonoBehaviour
                     }
                 }
 
+                // Slowing down
                 if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                 {
                     if (rigidBody.velocity.x > 0)
@@ -216,8 +219,8 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
 
-                //  Air Control
-                if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                //  Slow Fall
+                if ((rigidBody.velocity.x > 0 && rigidBody.velocity.x < forwardJumpSlideTreshold) || (rigidBody.velocity.x < 0 && rigidBody.velocity.x > -forwardJumpSlideTreshold))
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -227,7 +230,16 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                     {
-                        //   IL NE SLIDE PAS ENCULE
+                        if (rigidBody.velocity.x > 0)
+                        {
+                            rigidBody.AddForce(Vector2.right * forwardJumpSlideSpeed);
+                        }
+
+                        if (rigidBody.velocity.x < 0)
+                        {
+                            rigidBody.AddForce(-Vector2.right * forwardJumpSlideSpeed);
+                        }
+
                         SetAnimation("Slide", CharaAnimStateEnum.Slide);
                         StartCoroutine("StopSlide");
                     }
