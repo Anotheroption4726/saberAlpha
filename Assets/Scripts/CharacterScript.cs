@@ -93,6 +93,12 @@ public class CharacterScript : MonoBehaviour
 
 
             //  Misc
+            if (physicState == CharaPhysicStateEnum.SwitchDirection)
+            {
+                rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
             if (physicState == CharaPhysicStateEnum.Reset)
             {
                 rigidBody.velocity = new Vector2(0, 0);
@@ -208,11 +214,13 @@ public class CharacterScript : MonoBehaviour
                     if (!isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                        //physicState = CharaPhysicStateEnum.SwitchDirection;
                     }
 
                     if (isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                        //physicState = CharaPhysicStateEnum.Stateless;
                     }
 
                     FaceRight();
@@ -224,12 +232,14 @@ public class CharacterScript : MonoBehaviour
                     if (!isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
+                        //physicState = CharaPhysicStateEnum.Stateless;
                     }
 
                     if (isFacingRight)
                     {
 
                         rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                        //physicState = CharaPhysicStateEnum.SwitchDirection;
                     }
 
                     FaceLeft();
