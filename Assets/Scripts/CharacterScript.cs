@@ -289,7 +289,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Switch direction to Left
-                if ((Input.GetAxisRaw("Keyboard_Horizontal") > 0 && isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 && isFacingRight))
+                if ((Input.GetAxisRaw("Keyboard_Horizontal") < 0 && isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 && isFacingRight))
                 {
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceLeft();
