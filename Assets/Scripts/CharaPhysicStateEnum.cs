@@ -5,8 +5,6 @@
     IdleJump,
     IdleJumpRight,
     IdleJumpLeft,
-    IdleFallRight,
-    IdleFallLeft,
     ForwardJumpRight,
     ForwardJumpLeft,
     Reset,
