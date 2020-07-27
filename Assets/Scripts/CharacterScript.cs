@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    private bool isFacingRight = true;
+
     //  Movement variables
     private int groundSpeed = 40;
     private int airSpeed = 10;
@@ -68,7 +70,7 @@ public class CharacterScript : MonoBehaviour
                 //  Run Right
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    sprite.flipX = false;
+                    FaceRight();
                     rigidBody.velocity = new Vector2(groundSpeed, rigidBody.velocity.y);
 
                     //  Jump Forward
@@ -84,7 +86,7 @@ public class CharacterScript : MonoBehaviour
                 //  Run Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    sprite.flipX = true;
+                    FaceLeft();
                     rigidBody.velocity = new Vector2(-groundSpeed, rigidBody.velocity.y);
 
                     //  Jump Forward
@@ -114,14 +116,14 @@ public class CharacterScript : MonoBehaviour
                 //  Air move Right
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    sprite.flipX = false;
+                    FaceRight();
                     rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
                 }
 
                 //  Air move Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    sprite.flipX = true;
+                    FaceLeft();
                     rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
                 }
             }
@@ -135,45 +137,45 @@ public class CharacterScript : MonoBehaviour
                 //  Jump move Right
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    sprite.flipX = false;
-
-                    if (rigidBody.velocity.x < 0)
+                    if (!isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     }
 
-                    if (rigidBody.velocity.x > 0)
+                    if (isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
                     }
+
+                    FaceRight();
                 }
 
                 //  Jump move Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    sprite.flipX = true;
-
-                    if (rigidBody.velocity.x < 0)
+                    if (!isFacingRight)
                     {
                         rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
                     }
 
-                    if (rigidBody.velocity.x > 0)
+                    if (isFacingRight)
                     {
 
                         rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     }
+
+                    FaceLeft();
                 }
 
                 // Slowing down
                 if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                 {
-                    if (rigidBody.velocity.x > 0)
+                    if (isFacingRight && rigidBody.velocity.x > 0)
                     {
                         rigidBody.AddForce(-Vector2.right * jumpRunDrag_addForce);
                     }
 
-                    if (rigidBody.velocity.x < 0)
+                    if (!isFacingRight && rigidBody.velocity.x < 0)
                     {
                         rigidBody.AddForce(Vector2.right * jumpRunDrag_addForce);
                     }
@@ -189,14 +191,14 @@ public class CharacterScript : MonoBehaviour
                 //  Fall Right
                 if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
                 {
-                    sprite.flipX = false;
+                    FaceRight();
                     rigidBody.velocity = new Vector2(airSpeed, rigidBody.velocity.y);
                 }
 
                 //  Fall Left
                 if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
                 {
-                    sprite.flipX = true;
+                    FaceLeft();
                     rigidBody.velocity = new Vector2(-airSpeed, rigidBody.velocity.y);
                 }
 
@@ -214,13 +216,15 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
                 //  Switch Direction
-                if ((Input.GetKeyDown(KeyCode.LeftArrow) && rigidBody.velocity.x > 0) || (Input.GetKeyDown(KeyCode.RightArrow) && rigidBody.velocity.x < 0) || (Input.GetAxisRaw("Horizontal") < 0 && rigidBody.velocity.x > 0) || (Input.GetAxisRaw("Horizontal") > 0 && rigidBody.velocity.x < 0))
+                /*
+                if ((Input.GetKeyDown(KeyCode.LeftArrow) && isFacingRight) || (Input.GetKeyDown(KeyCode.RightArrow) && !isFacingRight) || (Input.GetAxisRaw("Horizontal") < 0 && isFacingRight) || (Input.GetAxisRaw("Horizontal") > 0 && !isFacingRight))
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
+                */
 
                 //  Slow Fall
-                if ((rigidBody.velocity.x > 0 && rigidBody.velocity.x < forwardJumpSlideTreshold) || (rigidBody.velocity.x < 0 && rigidBody.velocity.x > -forwardJumpSlideTreshold))
+                if ((isFacingRight && rigidBody.velocity.x < forwardJumpSlideTreshold) || (!isFacingRight && rigidBody.velocity.x > -forwardJumpSlideTreshold))
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -230,12 +234,12 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                     {
-                        if (rigidBody.velocity.x > 0)
+                        if (isFacingRight)
                         {
                             rigidBody.AddForce(Vector2.right * forwardJumpSlideSpeed);
                         }
 
-                        if (rigidBody.velocity.x < 0)
+                        if (!isFacingRight)
                         {
                             rigidBody.AddForce(-Vector2.right * forwardJumpSlideSpeed);
                         }
@@ -284,5 +288,17 @@ public class CharacterScript : MonoBehaviour
 
         animator.SetBool(arg_animationName, true);
         animState = arg_charaAnimStateEnum;
+    }
+
+    private void FaceRight()
+    {
+        sprite.flipX = false;
+        isFacingRight = true;
+    }
+
+    private void FaceLeft()
+    {
+        sprite.flipX = true;
+        isFacingRight = false;
     }
 }
