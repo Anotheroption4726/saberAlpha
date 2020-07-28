@@ -154,7 +154,7 @@ public class CharacterScript : MonoBehaviour
                 //  Crawl
                 if (Input.GetKey(KeyCode.DownArrow))
                 {
-                    Debug.Log("ça crawl!");
+                    SetAnimation("Crawl_idle", CharaAnimStateEnum.Crawl_idle);
                 }
             }
 
@@ -269,6 +269,24 @@ public class CharacterScript : MonoBehaviour
                         SetAnimation("Run", CharaAnimStateEnum.Run);
                     }
                 }
+            }
+
+
+            //
+            //  Crawl idle actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Crawl_idle))
+            {
+
+            }
+
+
+            //
+            //  Crawl moving actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Crawl_moving))
+            {
+
             }
         }
     }
