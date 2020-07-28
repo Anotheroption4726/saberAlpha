@@ -9,6 +9,8 @@
     ForwardJumpLeft,
     ForwardJumpLandingRight,
     ForwardJumpLandingLeft,
+    SwitchDirection,
+    AirDrag,
     Reset,
     Stateless,
 }
