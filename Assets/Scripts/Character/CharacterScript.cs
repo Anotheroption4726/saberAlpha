@@ -152,7 +152,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Crawl
-                if (Input.GetKey(KeyCode.DownArrow))
+                if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
                 {
                     SetAnimation("Crawl_idle", CharaAnimStateEnum.Crawl_idle);
                 }
@@ -277,7 +277,11 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Crawl_idle))
             {
-
+                //  Stand Up
+                if (Input.GetAxisRaw("Keyboard_Vertical") >= 0 || Input.GetAxisRaw("Gamepad_Vertical") <= 0)
+                {
+                    //SetAnimation("Idle", CharaAnimStateEnum.Idle);
+                }
             }
 
 
