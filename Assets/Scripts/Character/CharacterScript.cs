@@ -7,11 +7,11 @@ public class CharacterScript : MonoBehaviour
 
     //  Movement variables
     private int runGroundSpeed = 40;
-    private float jumpImpulse_addForce = 1200;
+    private float jumpImpulse = 1200;
     private int slowAirSpeed = 10;
-    private float forwardJumpSpeed_addForce = 250;
+    private float forwardJumpSpeed = 250;
     private float forwardJumpSlideSpeed = 1500;
-    private float forwardJumpAirDrag = 0.997f;
+    private float forwardJumpAirDrag = 0.97f;   //0.997f
 
     //  Timers
     private float slideTime = 0.13f;
@@ -56,7 +56,7 @@ public class CharacterScript : MonoBehaviour
             // Jump
             if (physicState == CharaPhysicStateEnum.IdleJump)
             {
-                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
+                rigidBody.AddForce(Vector2.up * jumpImpulse);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
@@ -76,15 +76,27 @@ public class CharacterScript : MonoBehaviour
             //  Forward Jump
             if (physicState == CharaPhysicStateEnum.ForwardJumpRight)
             {
-                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                rigidBody.AddForce(Vector2.right * forwardJumpSpeed_addForce);
+                rigidBody.AddForce(Vector2.up * jumpImpulse);
+                rigidBody.AddForce(Vector2.right * forwardJumpSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
             if (physicState == CharaPhysicStateEnum.ForwardJumpLeft)
             {
-                rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
-                rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
+                rigidBody.AddForce(Vector2.up * jumpImpulse);
+                rigidBody.AddForce(-Vector2.right * forwardJumpSpeed);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.SwitchDirection)
+            {
+                rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.AirDrag)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
@@ -327,14 +339,16 @@ public class CharacterScript : MonoBehaviour
         //  Switch direction to Right
         if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
         {
-            rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+            //  rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+            physicState = CharaPhysicStateEnum.SwitchDirection;
             FaceRight();
         }
 
         //  Switch direction to Left
         if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
         {
-            rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+            //  rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+            physicState = CharaPhysicStateEnum.SwitchDirection;
             FaceLeft();
         }
     }
@@ -343,7 +357,8 @@ public class CharacterScript : MonoBehaviour
     {
         if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
         {
-            rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
+            //  rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
+            physicState = CharaPhysicStateEnum.AirDrag;
         }
     }
 }
