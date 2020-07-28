@@ -7,8 +7,6 @@
     IdleJumpLeft,
     ForwardJumpRight,
     ForwardJumpLeft,
-    ForwardJumpAirDragRight,
-    ForwardJumpAirDragLeft,
     Reset,
     Stateless,
 }
