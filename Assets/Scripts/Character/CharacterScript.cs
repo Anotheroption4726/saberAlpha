@@ -11,7 +11,7 @@ public class CharacterScript : MonoBehaviour
     private int slowAirSpeed = 10;
     private float forwardJumpSpeed_addForce = 250;
     private float forwardJumpSlideSpeed = 1500;
-    private float forwardJumpAirDrag = 0.997f;
+    private float forwardJumpAirDrag = 0.996f;   //0.997f
 
     //  Timers
     private float slideTime = 0.13f;
