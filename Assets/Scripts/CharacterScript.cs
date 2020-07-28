@@ -191,22 +191,6 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Jump))
             {
                 IdleJumpMovement();
-
-                /*
-                //  Air move Right
-                if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
-                {
-                    FaceRight();
-                    physicState = CharaPhysicStateEnum.IdleJumpRight;
-                }
-
-                //  Air move Left
-                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
-                {
-                    FaceLeft();
-                    physicState = CharaPhysicStateEnum.IdleJumpLeft;
-                }
-                */
             }
 
 
@@ -216,22 +200,6 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Jump_forward))
             {
                 SwitchDirection();
-
-                /*
-                //  Switch direction to Right
-                if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
-                {
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                    FaceRight();
-                }
-
-                //  Switch direction to Left
-                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
-                {
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                    FaceLeft();
-                }
-                */
 
                 // Air drag
                 if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
@@ -248,22 +216,6 @@ public class CharacterScript : MonoBehaviour
             {
                 IdleJumpMovement();
 
-                /*
-                //  Fall Right
-                if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
-                {
-                    FaceRight();
-                    physicState = CharaPhysicStateEnum.IdleJumpRight;
-                }
-
-                //  Fall Left
-                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
-                {
-                    FaceLeft();
-                    physicState = CharaPhysicStateEnum.IdleJumpLeft;
-                }
-                */
-
                 //  Touch Ground
                 if (groundChecker.GetIsGrounded())
                 {
@@ -278,22 +230,6 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
                 SwitchDirection();
-
-                /*
-                //  Switch direction to Right
-                if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
-                {
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                    FaceRight();
-                }
-
-                //  Switch direction to Left
-                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
-                {
-                    rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                    FaceLeft();
-                }
-                */
 
                 //  Touch Ground
                 if (groundChecker.GetIsGrounded())
