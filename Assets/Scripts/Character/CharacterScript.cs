@@ -27,7 +27,7 @@ public class CharacterScript : MonoBehaviour
     private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_moving" };
 
     private void Awake()
     {
@@ -149,6 +149,12 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Jump", CharaAnimStateEnum.Jump);
                     StartCoroutine("FallNormal");
                     physicState = CharaPhysicStateEnum.IdleJump;
+                }
+
+                //  Crawl
+                if (Input.GetKey(KeyCode.DownArrow))
+                {
+                    Debug.Log("ça crawl!");
                 }
             }
 
