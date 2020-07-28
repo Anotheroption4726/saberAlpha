@@ -6,12 +6,13 @@ public class CharacterScript : MonoBehaviour
     private CharaPhysicStateEnum physicState = CharaPhysicStateEnum.Stateless;
 
     //  Movement variables
-    private int runGroundSpeed = 40;
+    private float runGroundSpeed = 40;
     private float jumpImpulse = 1200;
-    private int slowAirSpeed = 10;
+    private float slowAirSpeed = 10;
     private float forwardJumpSpeed = 250;
     private float forwardJumpSlideSpeed = 1500;
     private float forwardJumpAirDrag = 0.97f;   //0.997f
+    private float crawlSpeed = 10;
 
     //  Timers
     private float slideTime = 0.13f;
@@ -27,7 +28,7 @@ public class CharacterScript : MonoBehaviour
     private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward"};
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_move" };
 
     private void Awake()
     {
@@ -113,6 +114,20 @@ public class CharacterScript : MonoBehaviour
             }
 
 
+            //  Crawl move
+            if (physicState == CharaPhysicStateEnum.CrawlMoveRight)
+            {
+                rigidBody.velocity = new Vector2(crawlSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.CrawlMoveLeft)
+            {
+                rigidBody.velocity = new Vector2(-crawlSpeed, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+
             //  Misc
             if (physicState == CharaPhysicStateEnum.Reset)
             {
@@ -149,6 +164,12 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Jump", CharaAnimStateEnum.Jump);
                     StartCoroutine("FallNormal");
                     physicState = CharaPhysicStateEnum.IdleJump;
+                }
+
+                //  Crawl
+                if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+                {
+                    SetAnimation("Crawl_idle", CharaAnimStateEnum.Crawl_idle);
                 }
             }
 
@@ -264,6 +285,58 @@ public class CharacterScript : MonoBehaviour
                     }
                 }
             }
+
+
+            //
+            //  Crawl idle actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Crawl_idle))
+            {
+                //  Move
+                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+                {
+                    SetAnimation("Crawl_move", CharaAnimStateEnum.Crawl_move);
+                }
+
+                //  Stand Up
+                if (Input.GetAxisRaw("Keyboard_Vertical") >= 0 && Input.GetAxisRaw("Gamepad_Vertical") <= 0)
+                {
+                    SetAnimation("Idle", CharaAnimStateEnum.Idle);
+                }
+            }
+
+
+            //
+            //  Crawl moving actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Crawl_move))
+            {
+                //  Move Crawl Right
+                if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") > 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") > 0))
+                {
+                    FaceRight();
+                    physicState = CharaPhysicStateEnum.CrawlMoveRight;
+                }
+
+                //  Move Crawl Left
+                if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") < 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") < 0))
+                {
+                    FaceLeft();
+                    physicState = CharaPhysicStateEnum.CrawlMoveLeft;
+                }
+
+                //  Stop
+                if (Input.GetAxisRaw("Keyboard_Horizontal") == 0 && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
+                {
+                    SetAnimation("Crawl_idle", CharaAnimStateEnum.Crawl_idle);
+                }
+
+                //  Stand Up
+                if ((Input.GetAxisRaw("Keyboard_Vertical") >= 0 && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0)) || (Input.GetAxisRaw("Gamepad_Vertical") <= 0 && (Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)))
+                {
+                    SetAnimation("Run", CharaAnimStateEnum.Run);
+                }
+            }
         }
     }
 
@@ -339,7 +412,6 @@ public class CharacterScript : MonoBehaviour
         //  Switch direction to Right
         if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
         {
-            //  rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
             physicState = CharaPhysicStateEnum.SwitchDirection;
             FaceRight();
         }
@@ -347,7 +419,6 @@ public class CharacterScript : MonoBehaviour
         //  Switch direction to Left
         if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
         {
-            //  rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
             physicState = CharaPhysicStateEnum.SwitchDirection;
             FaceLeft();
         }
@@ -357,7 +428,6 @@ public class CharacterScript : MonoBehaviour
     {
         if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
         {
-            //  rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
             physicState = CharaPhysicStateEnum.AirDrag;
         }
     }

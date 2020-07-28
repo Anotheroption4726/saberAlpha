@@ -11,6 +11,8 @@
     ForwardJumpLandingLeft,
     SwitchDirection,
     AirDrag,
+    CrawlMoveRight,
+    CrawlMoveLeft,
     Reset,
     Stateless,
 }
