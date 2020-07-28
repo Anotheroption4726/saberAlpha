@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TestArenaManagerScript : MonoBehaviour
 {
-    private float timeScale = 1;
-    private float gravityScale = 4.75f;
-    private bool gamePaused = false;
+    private float timeScale = 1.0f;
+    private float gravityScale = 4.75f; //4.75f
 
     void Awake()
     {
@@ -22,19 +21,21 @@ public class TestArenaManagerScript : MonoBehaviour
         {
             SceneManager.LoadScene("TestArenaScene");
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape) && !gamePaused)
-        {
-            Time.timeScale = 0;
-            gamePaused = true;
-        }
-
-        
-        if (Input.GetKeyDown(KeyCode.Escape) && gamePaused)
-        {
-            Time.timeScale = 1;
-            gamePaused = false;
-        }
         */
+
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Gamepad_Start"))
+        {
+            if (!Game.GetGamePaused())
+            {
+                Time.timeScale = 0.0f;
+                Game.SetGamePaused(true);
+            }
+            else
+            {
+                Time.timeScale = timeScale;
+                Game.SetGamePaused(false);
+            }
+            
+        }
     }
 }
