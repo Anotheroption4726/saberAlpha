@@ -3,19 +3,16 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    private bool isFacingRight = true;
     private CharaPhysicStateEnum physicState = CharaPhysicStateEnum.Stateless;
 
     //  Movement variables
     private int runGroundSpeed = 40;
+    private float jumpImpulse_addForce = 1200;
     private int slowAirSpeed = 10;
-
-    //  Movement AddForce variables
     private float forwardJumpSpeed_addForce = 250;
     private float forwardJumpSlideTreshold = 20;    // 20
     private float forwardJumpSlideSpeed = 1500;
     private float forwardJumpAirDrag = 0.99f;
-    private float jumpImpulse_addForce = 1200;
 
     //  Timers
     private float slideTime = 0.13f;
@@ -28,6 +25,7 @@ public class CharacterScript : MonoBehaviour
 
     //  Animations
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
+    private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward"};
@@ -88,6 +86,18 @@ public class CharacterScript : MonoBehaviour
             {
                 rigidBody.AddForce(Vector2.up * jumpImpulse_addForce);
                 rigidBody.AddForce(-Vector2.right * forwardJumpSpeed_addForce);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.ForwardJumpLandingRight)
+            {
+                rigidBody.AddForce(Vector2.right * forwardJumpSlideSpeed);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.ForwardJumpLandingLeft)
+            {
+                rigidBody.AddForce(-Vector2.right * forwardJumpSlideSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
@@ -202,14 +212,14 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Jump_forward))
             {
-                //  Jump move Right
+                //  Switch direction to Right
                 if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceRight();
                 }
 
-                //  Jump move Left
+                //  Switch direction to Left
                 if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
@@ -257,24 +267,26 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
                 //  Switch direction to Right
-                if ((Input.GetAxisRaw("Keyboard_Horizontal") > 0 && !isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") > 0 && !isFacingRight))
+                if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceRight();
                 }
 
                 //  Switch direction to Left
-                if ((Input.GetAxisRaw("Keyboard_Horizontal") < 0 && isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 && isFacingRight))
+                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceLeft();
                 }
+
 
                 //  Slow Fall
                 if ((isFacingRight && rigidBody.velocity.x < forwardJumpSlideTreshold) || (!isFacingRight && rigidBody.velocity.x > -forwardJumpSlideTreshold))
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
+
 
                 //  Touch Ground
                 if (groundChecker.GetIsGrounded())
@@ -283,12 +295,12 @@ public class CharacterScript : MonoBehaviour
                     {
                         if (isFacingRight)
                         {
-                            rigidBody.AddForce(Vector2.right * forwardJumpSlideSpeed);
+                            physicState = CharaPhysicStateEnum.ForwardJumpLandingRight;
                         }
 
                         if (!isFacingRight)
                         {
-                            rigidBody.AddForce(-Vector2.right * forwardJumpSlideSpeed);
+                            physicState = CharaPhysicStateEnum.ForwardJumpLandingLeft;
                         }
 
                         SetAnimation("Slide", CharaAnimStateEnum.Slide);
