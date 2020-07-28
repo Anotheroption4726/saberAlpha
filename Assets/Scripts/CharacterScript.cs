@@ -195,21 +195,6 @@ public class CharacterScript : MonoBehaviour
 
 
             //
-            //  Forward Jump actions & Events
-            //
-            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
-            {
-                SwitchDirection();
-
-                // Air drag
-                if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
-                {
-                    rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
-                }
-            }
-
-
-            //
             // Idle Fall actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Fall_normal))
@@ -225,11 +210,22 @@ public class CharacterScript : MonoBehaviour
 
 
             //
+            //  Forward Jump actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Jump_forward))
+            {
+                SwitchDirection();
+                AirDrag();
+            }
+
+
+            //
             // Forward Fall actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
                 SwitchDirection();
+                AirDrag();
 
                 //  Touch Ground
                 if (groundChecker.GetIsGrounded())
@@ -260,6 +256,7 @@ public class CharacterScript : MonoBehaviour
     }
 
 
+    //  Timer functions
     private IEnumerator StopSlide()
     {
         yield return new WaitForSeconds(slideTime);
@@ -278,6 +275,8 @@ public class CharacterScript : MonoBehaviour
         SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
     }
 
+
+    //  Animation functions
     private void SetAnimation(string arg_animationName, CharaAnimStateEnum arg_charaAnimStateEnum)
     {
         foreach (string lp_animation in animationNamesTable)
@@ -304,6 +303,8 @@ public class CharacterScript : MonoBehaviour
         isFacingRight = false;
     }
 
+
+    //  Movement functions
     private void IdleJumpMovement()
     {
         //  Idle Jump move Right
@@ -335,6 +336,14 @@ public class CharacterScript : MonoBehaviour
         {
             rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
             FaceLeft();
+        }
+    }
+
+    private void AirDrag()
+    {
+        if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
         }
     }
 }
