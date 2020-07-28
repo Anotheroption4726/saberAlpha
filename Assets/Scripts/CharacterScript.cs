@@ -12,7 +12,7 @@ public class CharacterScript : MonoBehaviour
     private float forwardJumpSpeed_addForce = 250;
     private float forwardJumpSlideTreshold = 20;    // 20
     private float forwardJumpSlideSpeed = 1500;
-    private float forwardJumpAirDrag = 0.99f;
+    private float forwardJumpAirDrag = 0.997f;
 
     //  Timers
     private float slideTime = 0.13f;
@@ -279,14 +279,6 @@ public class CharacterScript : MonoBehaviour
                     rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
                     FaceLeft();
                 }
-
-
-                //  Slow Fall
-                if ((isFacingRight && rigidBody.velocity.x < forwardJumpSlideTreshold) || (!isFacingRight && rigidBody.velocity.x > -forwardJumpSlideTreshold))
-                {
-                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
-                }
-
 
                 //  Touch Ground
                 if (groundChecker.GetIsGrounded())
