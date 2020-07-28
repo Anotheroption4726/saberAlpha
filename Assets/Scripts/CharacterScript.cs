@@ -92,9 +92,6 @@ public class CharacterScript : MonoBehaviour
             }
 
 
-            //  Forward Fall
-
-
             //  Misc
             if (physicState == CharaPhysicStateEnum.Reset)
             {
@@ -180,7 +177,7 @@ public class CharacterScript : MonoBehaviour
 
 
             //
-            // Jump actions & Events
+            // Idle Jump actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Jump))
             {
@@ -201,7 +198,7 @@ public class CharacterScript : MonoBehaviour
 
 
             //
-            //  Jump forward actions & Events
+            //  Forward Jump actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Jump_forward))
             {
@@ -228,7 +225,7 @@ public class CharacterScript : MonoBehaviour
 
 
             //
-            // Fall normal actions & Events
+            // Idle Fall actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Fall_normal))
             {
@@ -236,14 +233,14 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
                     FaceRight();
-                    rigidBody.velocity = new Vector2(slowAirSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.IdleJumpRight;
                 }
 
                 //  Fall Left
                 if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
                 {
                     FaceLeft();
-                    rigidBody.velocity = new Vector2(-slowAirSpeed, rigidBody.velocity.y);
+                    physicState = CharaPhysicStateEnum.IdleJumpLeft;
                 }
 
                 //  Touch Ground
@@ -255,7 +252,7 @@ public class CharacterScript : MonoBehaviour
 
 
             //
-            // Fall forward actions & Events
+            // Forward Fall actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Fall_forward))
             {
