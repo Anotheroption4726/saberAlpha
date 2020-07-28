@@ -8,5 +8,5 @@
     Fall_normal,
     Fall_forward,
     Crawl_idle,
-    Crawl_moving,
+    Crawl_move,
 }
