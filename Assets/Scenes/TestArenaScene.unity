@@ -1516,7 +1516,7 @@ GameObject:
   - component: {fileID: 205447509}
   - component: {fileID: 205447510}
   m_Layer: 0
-  m_Name: GroundChecker
+  m_Name: GroundCollisionChecker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1543,7 +1543,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 205447506}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1

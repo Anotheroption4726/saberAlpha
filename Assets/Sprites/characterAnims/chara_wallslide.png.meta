@@ -8,6 +8,12 @@ TextureImporter:
   - first:
       213: -6700136882645410347
     second: chara_wallslide_1
+  - first:
+      213: 6952992364167740563
+    second: chara_wallslide_0
+  - first:
+      213: -5635522892410421236
+    second: chara_wallslide_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -112,15 +118,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.75, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5b2c722c5720cfe40800000000000000
-      internalID: 5691426733881279157
+      spriteID: 39cb83877bdfd7060800000000000000
+      internalID: 6952992364167740563
       vertices: []
       indices: 
       edges: []
@@ -133,15 +139,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.75, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dd5d6b01055403a0800000000000000
-      internalID: -6700136882645410347
+      spriteID: c008b42a9c99ac1b0800000000000000
+      internalID: -5635522892410421236
       vertices: []
       indices: 
       edges: []
