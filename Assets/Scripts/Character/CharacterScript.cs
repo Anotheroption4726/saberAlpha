@@ -22,13 +22,14 @@ public class CharacterScript : MonoBehaviour
     //  Components
     private Rigidbody2D rigidBody;
     [SerializeField] private GroundCheckerScript groundChecker;
+    [SerializeField] private WallCheckerScript rightWallChecker;
 
     //  Animations
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
     private bool isFacingRight = true;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_move" };
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_move", "Wallslide" };
 
     private void Awake()
     {
@@ -274,6 +275,12 @@ public class CharacterScript : MonoBehaviour
             {
                 SwitchDirection();
                 AirDrag();
+
+                //  Wallslide
+                if (rightWallChecker.GetIsTouchingWall())
+                {
+                    SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
+                }
             }
 
 
@@ -292,11 +299,13 @@ public class CharacterScript : MonoBehaviour
                     {
                         if (isFacingRight)
                         {
+                            Debug.Log("BUG 1: CETTE LIGNE SE DECLENCHE APRES UN CHANGEMENT DE DIRECTION SUR UN WALL SLIDE");
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingRight;
                         }
 
                         if (!isFacingRight)
                         {
+                            Debug.Log("BUG 2: CETTE LIGNE SE DECLENCHE APRES UN CHANGEMENT DE DIRECTION SUR UN WALL SLIDE");
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingLeft;
                         }
 
@@ -372,6 +381,26 @@ public class CharacterScript : MonoBehaviour
                 if (!groundChecker.GetIsGrounded())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
+            }
+
+
+            //
+            //  Wallslide actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Wallslide))
+            {
+                //  Switch Direction
+                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
+                {
+                    FaceLeft();
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
+
+                //  Touch Ground
+                if (groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
             }
         }

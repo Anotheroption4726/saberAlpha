@@ -9,4 +9,5 @@
     Fall_forward,
     Crawl_idle,
     Crawl_move,
+    Wallslide,
 }
