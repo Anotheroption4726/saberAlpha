@@ -231,6 +231,19 @@ public class CharacterScript : MonoBehaviour
 
 
             //
+            //  Slide actions & Events
+            //
+            if (animState.Equals(CharaAnimStateEnum.Slide))
+            {
+                //  Fall
+                if (!groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
+                }
+            }
+
+
+            //
             // Idle Jump actions & Events
             //
             if (animState.Equals(CharaAnimStateEnum.Jump))
