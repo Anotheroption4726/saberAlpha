@@ -315,6 +315,12 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
+
+                //  Fall
+                if (!groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
             }
 
 
@@ -347,6 +353,12 @@ public class CharacterScript : MonoBehaviour
                 if ((Input.GetAxisRaw("Keyboard_Vertical") >= 0 && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0)) || (Input.GetAxisRaw("Gamepad_Vertical") <= 0 && (Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)))
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
+                }
+
+                //  Fall
+                if (!groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
             }
         }
