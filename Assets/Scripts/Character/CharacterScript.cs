@@ -171,6 +171,12 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation("Crawl_idle", CharaAnimStateEnum.Crawl_idle);
                 }
+
+                //  Fall
+                if (!groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
             }
 
 
@@ -214,6 +220,12 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation("Slide", CharaAnimStateEnum.Slide);
                     StartCoroutine("StopSlide");
+                }
+
+                //  Fall
+                if (!groundChecker.GetIsGrounded())
+                {
+                    SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
                 }
             }
 
