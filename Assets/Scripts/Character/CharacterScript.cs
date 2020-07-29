@@ -21,8 +21,8 @@ public class CharacterScript : MonoBehaviour
 
     //  Components
     private Rigidbody2D rigidBody;
-    [SerializeField] private GroundCheckerScript groundChecker;
-    [SerializeField] private WallCheckerScript rightWallChecker;
+    [SerializeField] private PlatformCollideCheckScript groundChecker;
+    [SerializeField] private PlatformCollideCheckScript rightWallChecker;
 
     //  Animations
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
@@ -160,7 +160,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Jump
-                if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsGrounded())
+                if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                 {
                     SetAnimation("Jump", CharaAnimStateEnum.Jump);
                     StartCoroutine("FallNormal");
@@ -174,7 +174,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                if (!groundChecker.GetIsGrounded())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -193,7 +193,7 @@ public class CharacterScript : MonoBehaviour
                     physicState = CharaPhysicStateEnum.RunRight;
 
                     //  Jump Forward
-                    if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsGrounded())
+                    if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                         StartCoroutine("FallForward");
@@ -208,7 +208,7 @@ public class CharacterScript : MonoBehaviour
                     physicState = CharaPhysicStateEnum.RunLeft;
 
                     //  Jump Forward
-                    if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsGrounded())
+                    if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                         StartCoroutine("FallForward");
@@ -224,7 +224,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                if (!groundChecker.GetIsGrounded())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
                 }
@@ -237,7 +237,7 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Slide))
             {
                 //  Fall
-                if (!groundChecker.GetIsGrounded())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
                 }
@@ -261,7 +261,7 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsGrounded())
+                if (groundChecker.GetIsColliding())
                 {
                     SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
@@ -277,7 +277,7 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Wallslide
-                if (rightWallChecker.GetIsTouchingWall())
+                if (rightWallChecker.GetIsColliding())
                 {
                     SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
                 }
@@ -293,7 +293,7 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Touch Ground
-                if (groundChecker.GetIsGrounded())
+                if (groundChecker.GetIsColliding())
                 {
                     if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                     {
@@ -339,7 +339,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                if (!groundChecker.GetIsGrounded())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -378,7 +378,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                if (!groundChecker.GetIsGrounded())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -398,7 +398,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Touch Ground
-                if (groundChecker.GetIsGrounded())
+                if (groundChecker.GetIsColliding())
                 {
                     SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
