@@ -23,6 +23,7 @@ public class CharacterScript : MonoBehaviour
     private Rigidbody2D rigidBody;
     [SerializeField] private PlatformCollideCheckScript groundChecker;
     [SerializeField] private PlatformCollideCheckScript rightWallChecker;
+    [SerializeField] private PlatformCollideCheckScript leftWallChecker;
 
     //  Animations
     private CharaAnimStateEnum animState = CharaAnimStateEnum.Idle;
@@ -277,7 +278,7 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Wallslide
-                if (rightWallChecker.GetIsColliding())
+                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
                 {
                     SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
                 }
@@ -292,6 +293,12 @@ public class CharacterScript : MonoBehaviour
                 SwitchDirection();
                 AirDrag();
 
+                //  Wallslide
+                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
+                {
+                    SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
+                }
+
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
@@ -299,13 +306,11 @@ public class CharacterScript : MonoBehaviour
                     {
                         if (isFacingRight)
                         {
-                            Debug.Log("BUG 1: CETTE LIGNE SE DECLENCHE APRES UN CHANGEMENT DE DIRECTION SUR UN WALL SLIDE");
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingRight;
                         }
 
                         if (!isFacingRight)
                         {
-                            Debug.Log("BUG 2: CETTE LIGNE SE DECLENCHE APRES UN CHANGEMENT DE DIRECTION SUR UN WALL SLIDE");
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingLeft;
                         }
 
@@ -390,10 +395,19 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Wallslide))
             {
-                //  Switch Direction
+                StopCoroutine("FallForward");
+
+                //  Switch Direction Left
                 if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
                     FaceLeft();
+                    SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
+                }
+
+                //  Switch Direction Right
+                if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
+                {
+                    FaceRight();
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
 
