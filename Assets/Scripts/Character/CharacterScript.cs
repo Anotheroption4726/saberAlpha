@@ -148,6 +148,18 @@ public class CharacterScript : MonoBehaviour
 
 
             //  Misc
+            if (physicState == CharaPhysicStateEnum.ResetX)
+            {
+                rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
+            if (physicState == CharaPhysicStateEnum.ResetY)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                physicState = CharaPhysicStateEnum.Stateless;
+            }
+
             if (physicState == CharaPhysicStateEnum.Reset)
             {
                 rigidBody.velocity = new Vector2(0, 0);
@@ -438,18 +450,22 @@ public class CharacterScript : MonoBehaviour
                 //  Jump Left
                 if (!loc_hasJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                    //physicState = CharaPhysicStateEnum.ResetY;
                     FaceLeft();
-                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     physicState = CharaPhysicStateEnum.WallJumpLeft;
+                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     loc_hasJumped = true;
                 }
 
                 //  Jump Right
                 if (!loc_hasJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
                 {
+                    rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
+                    //physicState = CharaPhysicStateEnum.ResetY;
                     FaceRight();
-                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     physicState = CharaPhysicStateEnum.WallJumpRight;
+                    SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     loc_hasJumped = true;
                 }
 
