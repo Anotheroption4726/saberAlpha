@@ -307,10 +307,20 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Wallslide
-                if ((rightWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)) || (leftWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)))
+                if ((isFacingRight && rightWallChecker.GetIsColliding()) || (!isFacingRight && leftWallChecker.GetIsColliding()))
                 {
                     SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
                 }
+
+                //  Touch Ground
+                /*
+                if (groundChecker.GetIsColliding())
+                {
+                    StopCoroutine("FallForward");
+                    SetAnimation("Slide", CharaAnimStateEnum.Slide);
+                    StartCoroutine("StopSlide");
+                }
+                */
             }
 
 
@@ -323,7 +333,7 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Wallslide
-                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
+                if ((isFacingRight && rightWallChecker.GetIsColliding()) || (!isFacingRight && leftWallChecker.GetIsColliding()))
                 {
                     SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
                 }
@@ -424,6 +434,8 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Wallslide))
             {
+                bool loc_hasJumped = false;
+
                 StopCoroutine("FallNormal");
                 StopCoroutine("FallForward");
 
@@ -441,27 +453,26 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
 
-                /*
+
                 //  Jump Left
-                if (isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
+                if (!loc_hasJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
-                    //  MARCHE SI HORIZONTAL INPUT EST EGAL A 0
                     FaceLeft();
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     StartCoroutine("FallForward");
                     physicState = CharaPhysicStateEnum.WallJumpLeft;
+                    loc_hasJumped = true;
                 }
 
                 //  Jump Right
-                if (!isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
+                if (!loc_hasJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
                 {
-                    //  NE MARCHE PAS SI HORIZONTAL INPUT EST EGAL A 0
                     FaceRight();
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                     StartCoroutine("FallForward");
                     physicState = CharaPhysicStateEnum.WallJumpRight;
+                    loc_hasJumped = true;
                 }
-                */
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
