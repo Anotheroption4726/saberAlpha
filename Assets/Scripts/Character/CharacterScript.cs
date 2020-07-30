@@ -251,6 +251,12 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Jump))
             {
                 IdleJumpMovement();
+
+                //  Wallslide
+                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
+                {
+                    SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
+                }
             }
 
 
@@ -260,6 +266,12 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharaAnimStateEnum.Fall_normal))
             {
                 IdleJumpMovement();
+
+                //  Wallslide
+                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
+                {
+                    //SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
+                }
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
@@ -395,6 +407,7 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Wallslide))
             {
+                StopCoroutine("FallNormal");
                 StopCoroutine("FallForward");
 
                 //  Switch Direction Left
