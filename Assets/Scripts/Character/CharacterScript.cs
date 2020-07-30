@@ -13,6 +13,7 @@ public class CharacterScript : MonoBehaviour
     private float forwardJumpSlideSpeed = 1500;
     private float forwardJumpAirDrag = 0.97f;   //0.997f
     private float crawlSpeed = 10;
+    private float wallJumpSpeed = 1500;
 
     //  Timers
     private float slideTime = 0.13f;
@@ -134,14 +135,14 @@ public class CharacterScript : MonoBehaviour
             if (physicState == CharaPhysicStateEnum.WallJumpRight)
             {
                 rigidBody.AddForce(Vector2.up * jumpImpulse);
-                rigidBody.AddForce(Vector2.right * forwardJumpSpeed * 6);
+                rigidBody.AddForce(Vector2.right * wallJumpSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
             if (physicState == CharaPhysicStateEnum.WallJumpLeft)
             {
                 rigidBody.AddForce(Vector2.up * jumpImpulse);
-                rigidBody.AddForce(-Vector2.right * forwardJumpSpeed * 6);
+                rigidBody.AddForce(-Vector2.right * wallJumpSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
