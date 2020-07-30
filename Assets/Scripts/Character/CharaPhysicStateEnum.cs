@@ -13,6 +13,8 @@
     AirDrag,
     CrawlMoveRight,
     CrawlMoveLeft,
+    WallJumpRight,
+    WallJumpLeft,
     Reset,
     Stateless,
 }
