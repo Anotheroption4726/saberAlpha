@@ -268,9 +268,9 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Wallslide
-                if (rightWallChecker.GetIsColliding() || leftWallChecker.GetIsColliding())
+                if ((rightWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)) || (leftWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)))
                 {
-                    //SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
+                    SetAnimation("Wallslide", CharaAnimStateEnum.Wallslide);
                 }
 
                 //  Touch Ground
