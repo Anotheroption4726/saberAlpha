@@ -331,7 +331,7 @@ public class CharacterScript : MonoBehaviour
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
-                    if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                    if (!Input.anyKey || Input.GetAxisRaw("Horizontal") == 0)
                     {
                         if (isFacingRight)
                         {
@@ -441,6 +441,7 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
 
+                /*
                 //  Jump Left
                 if (isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
@@ -460,6 +461,7 @@ public class CharacterScript : MonoBehaviour
                     StartCoroutine("FallForward");
                     physicState = CharaPhysicStateEnum.WallJumpRight;
                 }
+                */
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
