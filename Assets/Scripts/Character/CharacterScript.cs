@@ -19,7 +19,7 @@ public class CharacterScript : MonoBehaviour
     //  Timers
     private float slideTime = 0.13f;
     private bool hasWallJumped = false;
-    private float wallJumpTimer = 0.1f;
+    private float wallJumpTimer = 0.25f;
 
     //  Components
     private Rigidbody2D rigidBody;
