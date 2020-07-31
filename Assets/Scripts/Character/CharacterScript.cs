@@ -13,12 +13,13 @@ public class CharacterScript : MonoBehaviour
     private float forwardJumpSlideSpeed = 1500;
     private float forwardJumpAirDrag = 0.97f;   //0.997f
     private float crawlSpeed = 10;
+    private float wallJumpImpulse = 800;
     private float wallJumpSpeed = 1500;
 
     //  Timers
     private float slideTime = 0.13f;
-    private float fallNormalTimer = 0.5f;
-    private float fallForwardTimer = 0.75f;
+    private bool hasWallJumped = false;
+    private float wallJumpTimer = 0.1f;
 
     //  Components
     private Rigidbody2D rigidBody;
@@ -134,14 +135,14 @@ public class CharacterScript : MonoBehaviour
             //  Wall Jump
             if (physicState == CharaPhysicStateEnum.WallJumpRight)
             {
-                rigidBody.AddForce(Vector2.up * jumpImpulse);
+                rigidBody.AddForce(Vector2.up * wallJumpImpulse);
                 rigidBody.AddForce(Vector2.right * wallJumpSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
 
             if (physicState == CharaPhysicStateEnum.WallJumpLeft)
             {
-                rigidBody.AddForce(Vector2.up * jumpImpulse);
+                rigidBody.AddForce(Vector2.up * wallJumpImpulse);
                 rigidBody.AddForce(-Vector2.right * wallJumpSpeed);
                 physicState = CharaPhysicStateEnum.Stateless;
             }
@@ -445,28 +446,30 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Wallslide))
             {
-                bool loc_hasJumped = false;
+                //bool loc_hasJumped = false;
 
                 //  Jump Left
-                if (!loc_hasJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
+                if (!hasWallJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                     //physicState = CharaPhysicStateEnum.ResetY;
                     FaceLeft();
                     physicState = CharaPhysicStateEnum.WallJumpLeft;
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                    loc_hasJumped = true;
+                    //loc_hasJumped = true;
+                    StartCoroutine("WallJumpTimer");
                 }
 
                 //  Jump Right
-                if (!loc_hasJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
+                if (!hasWallJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
                 {
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                     //physicState = CharaPhysicStateEnum.ResetY;
                     FaceRight();
                     physicState = CharaPhysicStateEnum.WallJumpRight;
                     SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
-                    loc_hasJumped = true;
+                    //loc_hasJumped = true;
+                    StartCoroutine("WallJumpTimer");
                 }
 
                 //  Switch Direction Left
@@ -498,6 +501,13 @@ public class CharacterScript : MonoBehaviour
     {
         yield return new WaitForSeconds(slideTime);
         SetAnimation("Idle", CharaAnimStateEnum.Idle);
+    }
+
+    private IEnumerator WallJumpTimer()
+    {
+        hasWallJumped = true;
+        yield return new WaitForSeconds(wallJumpTimer);
+        hasWallJumped = false;
     }
 
 
