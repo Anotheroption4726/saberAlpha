@@ -204,7 +204,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                else if (!groundChecker.GetIsColliding())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -252,7 +252,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                else if (!groundChecker.GetIsColliding())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_forward", CharaAnimStateEnum.Fall_forward);
                 }
@@ -395,7 +395,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                else if (!groundChecker.GetIsColliding())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -434,7 +434,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Fall
-                else if (!groundChecker.GetIsColliding())
+                if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
