@@ -17,8 +17,9 @@ public class TestArenaManagerScript : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Gamepad_Select"))
         {
+            Game.SetGamePaused(false);
             SceneManager.LoadScene("TestArenaScene");
         }
 
