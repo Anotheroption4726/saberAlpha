@@ -307,7 +307,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Touch Ground
-                else if (groundChecker.GetIsColliding())
+                if (groundChecker.GetIsColliding())
                 {
                     SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
@@ -446,9 +446,22 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharaAnimStateEnum.Wallslide))
             {
+                //
+                if (Input.GetAxisRaw("Gamepad_Horizontal") == 0 && Input.GetAxisRaw("Keyboard_Horizontal") == 0)
+                {
+                    rigidBody.gravityScale = 1;
+                }
+
+                //
+                else if ((Input.GetAxisRaw("Gamepad_Horizontal") > 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") < 0))
+                {
+                    rigidBody.gravityScale = 0.125f;
+                }
+
                 //  Jump Left
                 if (!hasWallJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
+                    rigidBody.gravityScale = 1;
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                     //physicState = CharaPhysicStateEnum.ResetY;
                     FaceLeft();
@@ -460,6 +473,7 @@ public class CharacterScript : MonoBehaviour
                 //  Jump Right
                 else if (!hasWallJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
                 {
+                    rigidBody.gravityScale = 1;
                     rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
                     //physicState = CharaPhysicStateEnum.ResetY;
                     FaceRight();
@@ -469,8 +483,9 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Switch Direction Left
-                else if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
+                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
+                    rigidBody.gravityScale = 1;
                     FaceLeft();
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
@@ -478,13 +493,15 @@ public class CharacterScript : MonoBehaviour
                 //  Switch Direction Right
                 else if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
+                    rigidBody.gravityScale = 1;
                     FaceRight();
                     SetAnimation("Fall_normal", CharaAnimStateEnum.Fall_normal);
                 }
 
                 //  Touch Ground
-                else if (groundChecker.GetIsColliding())
+                if (groundChecker.GetIsColliding())
                 {
+                    rigidBody.gravityScale = 1;
                     SetAnimation("Idle", CharaAnimStateEnum.Idle);
                 }
             }
