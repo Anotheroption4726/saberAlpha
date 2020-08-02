@@ -455,6 +455,7 @@ public class CharacterScript : MonoBehaviour
                 //
                 else if ((Input.GetAxisRaw("Gamepad_Horizontal") > 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") < 0))
                 {
+                    //  WATCH OUT THIS SHOULD BE PUT INTO FIXEDUPDATE
                     rigidBody.gravityScale = 0.125f;
                 }
 
