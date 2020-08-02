@@ -10,4 +10,5 @@
     Crawl_idle,
     Crawl_move,
     Wallslide,
+    Run_slide,
 }

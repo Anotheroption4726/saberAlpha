@@ -15,6 +15,8 @@
     CrawlMoveLeft,
     WallJumpRight,
     WallJumpLeft,
+    RunSlideRight,
+    RunSlideLeft,
     ResetX,
     ResetY,
     Reset,
