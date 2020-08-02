@@ -385,14 +385,14 @@ public class CharacterScript : MonoBehaviour
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
-                    if (!Input.anyKey || Input.GetAxisRaw("Horizontal") == 0)
+                    if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
                     {
                         if (isFacingRight)
                         {
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingRight;
                         }
 
-                        else if (!isFacingRight)
+                        else
                         {
                             physicState = CharaPhysicStateEnum.ForwardJumpLandingLeft;
                         }
