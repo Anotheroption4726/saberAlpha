@@ -19,6 +19,8 @@ public class CharacterScript : MonoBehaviour
 
     //  Timers
     private float slideTime = 0.13f;
+    private bool canRunSlide = false;
+    private float runSlideStartTime = 0.5f;
     private float runSlideTime = 0.25f;
     private bool hasWallJumped = false;
     private float wallJumpTimer = 0.25f;
@@ -202,6 +204,11 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
+
+                    if (!canRunSlide)
+                    {
+                        StartCoroutine("CanRunSlide");
+                    }
                 }
 
                 //  Jump
@@ -244,10 +251,10 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
-                        StartCoroutine("StopSlide");
+                        StartCoroutine("StopRunSlide");
                         physicState = CharaPhysicStateEnum.RunSlideRight;
                     }
                 }
@@ -266,10 +273,10 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     //  Run Slide
-                    else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
-                        StartCoroutine("StopSlide");
+                        StartCoroutine("StopRunSlide");
                         physicState = CharaPhysicStateEnum.RunSlideLeft;
                     }
                 }
@@ -548,10 +555,17 @@ public class CharacterScript : MonoBehaviour
         SetAnimation("Idle", CharaAnimStateEnum.Idle);
     }
 
+    private IEnumerator CanRunSlide()
+    {
+        yield return new WaitForSeconds(runSlideStartTime);
+        canRunSlide = true;
+    }
+
     private IEnumerator StopRunSlide()
     {
         yield return new WaitForSeconds(runSlideTime);
         SetAnimation("Idle", CharaAnimStateEnum.Idle);
+        canRunSlide = false;
     }
 
     private IEnumerator WallJumpTimer()
