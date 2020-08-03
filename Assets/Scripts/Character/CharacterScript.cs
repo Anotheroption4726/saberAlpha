@@ -20,7 +20,7 @@ public class CharacterScript : MonoBehaviour
     //  Timers
     private float slideTime = 0.13f;
     private bool canRunSlide = false;
-    private float runSlideStartTime = 0.5f;
+    private float runSlideStartTime = 0.75f;
     private float runSlideTime = 0.25f;
     private bool hasWallJumped = false;
     private float wallJumpTimer = 0.25f;
@@ -204,11 +204,6 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
                     SetAnimation("Run", CharaAnimStateEnum.Run);
-
-                    if (!canRunSlide)
-                    {
-                        StartCoroutine("CanRunSlide");
-                    }
                 }
 
                 //  Jump
@@ -237,6 +232,12 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharaAnimStateEnum.Run))
             {
+                //  CanRunSlide Timer
+                if (!canRunSlide)
+                {
+                    StartCoroutine("CanRunSlide");
+                }
+
                 //  Run Right
                 if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
@@ -251,7 +252,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
+                    else if (canRunSlide && (Input.GetButtonDown("Keyboard_Vertical") || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
@@ -273,7 +274,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     //  Run Slide
-                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
+                    else if (canRunSlide && (Input.GetButtonDown("Keyboard_Vertical") || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
@@ -281,7 +282,7 @@ public class CharacterScript : MonoBehaviour
                     }
                 }
 
-                //  Slide
+                //  Stop Slide
                 else if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
                 {
                     SetAnimation("Slide", CharaAnimStateEnum.Slide);
@@ -564,7 +565,7 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator StopRunSlide()
     {
         yield return new WaitForSeconds(runSlideTime);
-        SetAnimation("Idle", CharaAnimStateEnum.Idle);
+        SetAnimation("Crawl_move", CharaAnimStateEnum.Crawl_move);
         canRunSlide = false;
     }
 
