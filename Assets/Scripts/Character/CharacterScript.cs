@@ -242,6 +242,14 @@ public class CharacterScript : MonoBehaviour
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                         physicState = CharaPhysicStateEnum.ForwardJumpRight;
                     }
+
+                    // Run Slide
+                    else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+                    {
+                        SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
+                        StartCoroutine("StopSlide");
+                        physicState = CharaPhysicStateEnum.RunSlideRight;
+                    }
                 }
 
                 //  Run Left
@@ -256,21 +264,12 @@ public class CharacterScript : MonoBehaviour
                         SetAnimation("Jump_forward", CharaAnimStateEnum.Jump_forward);
                         physicState = CharaPhysicStateEnum.ForwardJumpLeft;
                     }
-                }
 
-                //  Run Slide
-                else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
-                {
-                    SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
-                    StartCoroutine("StopSlide");
-
-                    if (isFacingRight)
+                    //  Run Slide
+                    else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
                     {
-                        physicState = CharaPhysicStateEnum.RunSlideRight;
-                    }
-                    
-                    else
-                    {
+                        SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
+                        StartCoroutine("StopSlide");
                         physicState = CharaPhysicStateEnum.RunSlideLeft;
                     }
                 }
