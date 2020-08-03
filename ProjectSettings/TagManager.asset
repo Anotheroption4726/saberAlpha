@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - Ground
+  - Platform
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 1887218391
+    locked: 0
+  - name: Environnement
+    uniqueID: 2236934995
+    locked: 0
+  - name: Collisions
+    uniqueID: 2506360369
+    locked: 0
+  - name: Character
+    uniqueID: 1496664437
     locked: 0

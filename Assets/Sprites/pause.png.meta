@@ -1,19 +1,7 @@
 fileFormatVersion: 2
-guid: 3af02a1ef9fd78e4182ad34035d8a01a
+guid: 47977e0e40ac7ee4b89888a25fc1b558
 TextureImporter:
-  internalIDToNameTable:
-  - first:
-      213: 5691426733881279157
-    second: chara_wallslide_0
-  - first:
-      213: -6700136882645410347
-    second: chara_wallslide_1
-  - first:
-      213: 6952992364167740563
-    second: chara_wallslide_0
-  - first:
-      213: -5635522892410421236
-    second: chara_wallslide_1
+  internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -32,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
@@ -52,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 0
   spriteMeshType: 0
   alignment: 0
@@ -73,7 +61,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 64
+    maxTextureSize: 32
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -85,7 +73,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 64
+    maxTextureSize: 32
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -97,7 +85,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: WebGL
-    maxTextureSize: 64
+    maxTextureSize: 32
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
@@ -109,49 +97,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: chara_wallslide_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.75, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 39cb83877bdfd7060800000000000000
-      internalID: 6952992364167740563
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: chara_wallslide_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 64
-      alignment: 9
-      pivot: {x: 0.75, y: 0.25}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c008b42a9c99ac1b0800000000000000
-      internalID: -5635522892410421236
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []

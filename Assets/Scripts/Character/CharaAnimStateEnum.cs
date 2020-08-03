@@ -7,4 +7,8 @@
     Jump_forward,
     Fall_normal,
     Fall_forward,
+    Crawl_idle,
+    Crawl_move,
+    Wallslide,
+    Run_slide,
 }
