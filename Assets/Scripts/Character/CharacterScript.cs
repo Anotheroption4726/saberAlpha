@@ -252,7 +252,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (canRunSlide && (Input.GetButtonDown("Keyboard_Vertical") || Input.GetAxisRaw("Gamepad_Vertical") > 0))
+                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
@@ -274,7 +274,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     //  Run Slide
-                    else if (canRunSlide && (Input.GetButtonDown("Keyboard_Vertical") || Input.GetAxisRaw("Gamepad_Vertical") > 0))
+                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
                     {
                         SetAnimation("Run_slide", CharaAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
