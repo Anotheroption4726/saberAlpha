@@ -17,6 +17,8 @@
     WallJumpLeft,
     RunSlideRight,
     RunSlideLeft,
+    SetGravityLow,
+    SetGravityNormal,
     ResetX,
     ResetY,
     Reset,
