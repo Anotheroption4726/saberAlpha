@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    private CharacterPhysicStateEnum physicState = CharacterPhysicStateEnum.Stateless;
-
     //  Movement variables
     private float runGroundSpeed = 40;
     private float runSlideImpulse = 2500;
@@ -27,7 +25,6 @@ public class CharacterScript : MonoBehaviour
     private float wallSlideGravity = 0.125f;
 
     //  Components
-    private Rigidbody2D rigidBody;
     private CharacterPhysicsManagerScript physicsManager;
     [SerializeField] private CharacterCollideCheckScript groundChecker;
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
@@ -42,167 +39,7 @@ public class CharacterScript : MonoBehaviour
 
     private void Awake()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
         physicsManager = GetComponent<CharacterPhysicsManagerScript>();
-    }
-
-
-    private void FixedUpdate()
-    {
-        if (!Game.GetGamePaused())
-        {
-            //  Run
-            if (physicState == CharacterPhysicStateEnum.RunRight)
-            {
-                rigidBody.velocity = new Vector2(runGroundSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.RunLeft)
-            {
-                rigidBody.velocity = new Vector2(-runGroundSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.RunSlideRight)
-            {
-                rigidBody.AddForce(Vector2.right * runSlideImpulse);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.RunSlideLeft)
-            {
-                rigidBody.AddForce(-Vector2.right * runSlideImpulse);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-
-            // Jump
-            else if (physicState == CharacterPhysicStateEnum.IdleJump)
-            {
-                rigidBody.AddForce(Vector2.up * jumpImpulse);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.IdleJumpRight)
-            {
-                rigidBody.velocity = new Vector2(slowAirSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.IdleJumpLeft)
-            {
-                rigidBody.velocity = new Vector2(-slowAirSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-
-            //  Forward Jump
-            else if (physicState == CharacterPhysicStateEnum.ForwardJumpRight)
-            {
-                rigidBody.AddForce(Vector2.up * jumpImpulse);
-                rigidBody.AddForce(Vector2.right * forwardJumpSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.ForwardJumpLeft)
-            {
-                rigidBody.AddForce(Vector2.up * jumpImpulse);
-                rigidBody.AddForce(-Vector2.right * forwardJumpSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.SwitchDirection)
-            {
-                rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.AirDrag)
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x * forwardJumpAirDrag, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.ForwardJumpLandingRight)
-            {
-                rigidBody.AddForce(Vector2.right * forwardJumpSlideSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.ForwardJumpLandingLeft)
-            {
-                rigidBody.AddForce(-Vector2.right * forwardJumpSlideSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-
-            //  Crawl move
-            else if (physicState == CharacterPhysicStateEnum.CrawlMoveRight)
-            {
-                rigidBody.velocity = new Vector2(crawlSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.CrawlMoveLeft)
-            {
-                rigidBody.velocity = new Vector2(-crawlSpeed, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-
-            //  Wall Jump
-            else if (physicState == CharacterPhysicStateEnum.WallJumpRight)
-            {
-                rigidBody.AddForce(Vector2.up * wallJumpImpulse);
-                rigidBody.AddForce(Vector2.right * wallJumpSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.WallJumpLeft)
-            {
-                rigidBody.AddForce(Vector2.up * wallJumpImpulse);
-                rigidBody.AddForce(-Vector2.right * wallJumpSpeed);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.SetGravityLow)
-            {
-                rigidBody.gravityScale = 0.125f;
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.SetGravityNormal)
-            {
-                rigidBody.gravityScale = 1;
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-
-            //  Misc
-            else if (physicState == CharacterPhysicStateEnum.ResetX)
-            {
-                rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.ResetY)
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.Reset)
-            {
-                rigidBody.velocity = new Vector2(0, 0);
-                physicState = CharacterPhysicStateEnum.Stateless;
-            }
-
-            else if (physicState == CharacterPhysicStateEnum.Stateless)
-            {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y);
-            }
-        }
     }
 
 
@@ -225,7 +62,6 @@ public class CharacterScript : MonoBehaviour
                 else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                 {
                     SetAnimation("Jump", CharacterAnimStateEnum.Jump);
-                    //physicState = CharacterPhysicStateEnum.IdleJump;
                     physicsManager.AddForceMethod(Vector2.up * jumpImpulse);
 
                 }
@@ -259,14 +95,12 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
                 {
                     FaceRight();
-                    //physicState = CharacterPhysicStateEnum.RunRight;
                     physicsManager.ChangeVelocityHorizontal(runGroundSpeed);
 
                     //  Jump Forward
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        //physicState = CharacterPhysicStateEnum.ForwardJumpRight;
                         physicsManager.AddForceMethod(new Vector2(forwardJumpSpeed, jumpImpulse));
                     }
 
@@ -275,7 +109,6 @@ public class CharacterScript : MonoBehaviour
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
-                        //physicState = CharacterPhysicStateEnum.RunSlideRight;
                         physicsManager.AddForceMethod(new Vector2(runSlideImpulse, 0));
                     }
                 }
@@ -284,14 +117,12 @@ public class CharacterScript : MonoBehaviour
                 else if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
                 {
                     FaceLeft();
-                    //physicState = CharacterPhysicStateEnum.RunLeft;
                     physicsManager.ChangeVelocityHorizontal(-runGroundSpeed);
 
                     //  Jump Forward
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        //physicState = CharacterPhysicStateEnum.ForwardJumpLeft;
                         physicsManager.AddForceMethod(new Vector2(-forwardJumpSpeed, jumpImpulse));
                     }
 
@@ -300,7 +131,6 @@ public class CharacterScript : MonoBehaviour
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
-                        //physicState = CharacterPhysicStateEnum.RunSlideLeft;
                         physicsManager.AddForceMethod(new Vector2(-runSlideImpulse, 0));
                     }
                 }
@@ -419,13 +249,11 @@ public class CharacterScript : MonoBehaviour
                     {
                         if (isFacingRight)
                         {
-                            //physicState = CharacterPhysicStateEnum.ForwardJumpLandingRight;
                             physicsManager.AddForceMethod(new Vector2(forwardJumpSlideSpeed, 0));
                         }
 
                         else
                         {
-                            //physicState = CharacterPhysicStateEnum.ForwardJumpLandingLeft;
                             physicsManager.AddForceMethod(new Vector2(-forwardJumpSlideSpeed, 0));
                         }
 
@@ -475,7 +303,6 @@ public class CharacterScript : MonoBehaviour
                 if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") > 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
                     FaceRight();
-                    //physicState = CharacterPhysicStateEnum.CrawlMoveRight;
                     physicsManager.ChangeVelocityHorizontal(crawlSpeed);
                 }
 
@@ -483,7 +310,6 @@ public class CharacterScript : MonoBehaviour
                 else if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") < 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
                     FaceLeft();
-                    //physicState = CharacterPhysicStateEnum.CrawlMoveLeft;
                     physicsManager.ChangeVelocityHorizontal(-crawlSpeed);
                 }
 
@@ -516,7 +342,6 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetAxisRaw("Gamepad_Horizontal") == 0 && Input.GetAxisRaw("Keyboard_Horizontal") == 0)
                 {
                     //NOT IN FIXEDUPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
                 }
 
@@ -524,7 +349,6 @@ public class CharacterScript : MonoBehaviour
                 else if ((Input.GetAxisRaw("Gamepad_Horizontal") > 0 && isFacingRight) || (Input.GetAxisRaw("Keyboard_Horizontal") > 0 && isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 && !isFacingRight) || (Input.GetAxisRaw("Keyboard_Horizontal") < 0 && !isFacingRight))
                 {
                     //NOT IN FIXEDUPDATE
-                    //rigidBody.gravityScale = 0.125f;
                     physicsManager.SetRigidBodyGravity(wallSlideGravity);
                 }
 
@@ -532,11 +356,8 @@ public class CharacterScript : MonoBehaviour
                 if (!hasWallJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
-                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                    physicsManager.SetRigidBodyVelocity(new Vector2(rigidBody.velocity.x, 0));
-                    //physicState = CharacterPhysicStateEnum.WallJumpLeft;
+                    physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(-wallJumpSpeed, wallJumpImpulse));
 
                     FaceLeft();
@@ -548,11 +369,8 @@ public class CharacterScript : MonoBehaviour
                 else if (!hasWallJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
-                    //rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
-                    physicsManager.SetRigidBodyVelocity(new Vector2(rigidBody.velocity.x, 0));
-                    //physicState = CharacterPhysicStateEnum.WallJumpRight;
+                    physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(wallJumpSpeed, wallJumpImpulse));
 
                     FaceRight();
@@ -564,7 +382,6 @@ public class CharacterScript : MonoBehaviour
                 else if ((isFacingRight && !rightWallChecker.GetIsColliding()) || (!isFacingRight && !leftWallChecker.GetIsColliding()))
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
                 }
@@ -573,7 +390,6 @@ public class CharacterScript : MonoBehaviour
                 if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
                     FaceLeft();
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
@@ -583,7 +399,6 @@ public class CharacterScript : MonoBehaviour
                 else if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
                     FaceRight();
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
@@ -593,7 +408,6 @@ public class CharacterScript : MonoBehaviour
                 if (groundChecker.GetIsColliding())
                 {
                     //NOT IN FIXED UPDATE
-                    //rigidBody.gravityScale = 1;
                     physicsManager.SetRigidBodyGravity(1);
                     SetAnimation("Idle", CharacterAnimStateEnum.Idle);
                 }
@@ -665,7 +479,6 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
         {
             FaceRight();
-            //physicState = CharacterPhysicStateEnum.IdleJumpRight;
             physicsManager.ChangeVelocityHorizontal(slowAirSpeed);
         }
 
@@ -673,7 +486,6 @@ public class CharacterScript : MonoBehaviour
         else if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
         {
             FaceLeft();
-            //physicState = CharacterPhysicStateEnum.IdleJumpLeft;
             physicsManager.ChangeVelocityHorizontal(-slowAirSpeed);
         }
     }
@@ -683,7 +495,6 @@ public class CharacterScript : MonoBehaviour
         //  Switch direction to Right
         if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
         {
-            //physicState = CharacterPhysicStateEnum.SwitchDirection;
             physicsManager.SwitchHorizontalDirection();
             FaceRight();
         }
@@ -691,7 +502,6 @@ public class CharacterScript : MonoBehaviour
         //  Switch direction to Left
         else if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
         {
-            //physicState = CharacterPhysicStateEnum.SwitchDirection;
             physicsManager.SwitchHorizontalDirection();
             FaceLeft();
         }
@@ -701,7 +511,6 @@ public class CharacterScript : MonoBehaviour
     {
         if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
         {
-            //physicState = CharacterPhysicStateEnum.AirDrag;
             physicsManager.HorizontalDrag(forwardJumpAirDrag);
         }
     }
