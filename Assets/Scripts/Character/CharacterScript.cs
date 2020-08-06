@@ -378,7 +378,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Wall slide over
-                else if ((isFacingRight && !rightWallChecker.GetIsColliding()) || (!isFacingRight && !leftWallChecker.GetIsColliding()))
+                else if ((directionInt > 0 && !rightWallChecker.GetIsColliding()) || (directionInt < 0 && !leftWallChecker.GetIsColliding()))
                 {
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
@@ -386,20 +386,25 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Switch Direction Left
-                if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
+                if ((directionInt > 0 && ReturnHorizontalInput() < 0) || (directionInt < 0 && ReturnHorizontalInput() > 0))
                 {
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
-                    FaceLeft();
-                    SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
-                }
 
-                //  Switch Direction Right
-                else if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
-                {
-                    //NOT IN FIXED UPDATE
-                    physicsManager.SetRigidBodyGravity(1);
-                    FaceRight();
+                    int loc_directionInt = ReturnHorizontalInput();
+                    directionInt = loc_directionInt;
+
+                    ////////////////////////////////////////////////////////////////////////////
+                    if (directionInt == 1)
+                    {
+                        FaceRight();
+                    }
+                    else
+                    {
+                        FaceLeft();
+                    }
+                    ////////////////////////////////////////////////////////////////////////////
+
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
                 }
 
