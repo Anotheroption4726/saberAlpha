@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    private int directionInt = 1;
-
     //  Movement variables
     private float runGroundSpeed = 40;
     private float runSlideImpulse = 2500;
@@ -34,7 +32,7 @@ public class CharacterScript : MonoBehaviour
 
     //  Animations
     private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Idle;
-    private bool isFacingRight = true;
+    private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
     private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide" };
@@ -108,18 +106,6 @@ public class CharacterScript : MonoBehaviour
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     directionInt = loc_directionInt;
-
-                    ////////////////////////////////////////////////////////////////////////////
-                    if (directionInt == 1)
-                    {
-                        //FaceRight();
-                    }
-                    else
-                    {
-                        //FaceLeft();
-                    }
-                    ////////////////////////////////////////////////////////////////////////////
-
                     physicsManager.ChangeVelocityHorizontal(loc_directionInt * runGroundSpeed);
 
                     //  Jump Forward
@@ -297,19 +283,7 @@ public class CharacterScript : MonoBehaviour
                 if (ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
                 {
                     int loc_directionInt = ReturnHorizontalInput();
-                    directionInt = loc_directionInt;
-
-                    ////////////////////////////////////////////////////////////////////////////
-                    if (directionInt == 1)
-                    {
-                        //FaceRight();
-                    }
-                    else
-                    {
-                        //FaceLeft();
-                    }
-                    ////////////////////////////////////////////////////////////////////////////
-                    
+                    directionInt = loc_directionInt;                 
                     physicsManager.ChangeVelocityHorizontal(loc_directionInt * crawlSpeed);
                 }
 
@@ -361,18 +335,6 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyGravity(1);
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(directionInt * wallJumpSpeed, wallJumpImpulse));
-
-                    ////////////////////////////////////////////////////////////////////////////
-                    if (directionInt == 1)
-                    {
-                        //FaceRight();
-                    }
-                    else
-                    {
-                        //FaceLeft();
-                    }
-                    ////////////////////////////////////////////////////////////////////////////
-
                     SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
                     StartCoroutine("WallJumpTimer");
                 }
@@ -385,7 +347,7 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
                 }
 
-                //  Switch Direction Left
+                //  Switch Direction
                 if ((directionInt > 0 && ReturnHorizontalInput() < 0) || (directionInt < 0 && ReturnHorizontalInput() > 0))
                 {
                     //NOT IN FIXED UPDATE
@@ -393,18 +355,6 @@ public class CharacterScript : MonoBehaviour
 
                     int loc_directionInt = ReturnHorizontalInput();
                     directionInt = loc_directionInt;
-
-                    ////////////////////////////////////////////////////////////////////////////
-                    if (directionInt == 1)
-                    {
-                        //FaceRight();
-                    }
-                    else
-                    {
-                        //FaceLeft();
-                    }
-                    ////////////////////////////////////////////////////////////////////////////
-
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
                 }
 
@@ -463,18 +413,6 @@ public class CharacterScript : MonoBehaviour
         animState = arg_charaAnimStateEnum;
     }
 
-    private void FaceRight()
-    {
-        sprite.flipX = false;
-        isFacingRight = true;
-    }
-
-    private void FaceLeft()
-    {
-        sprite.flipX = true;
-        isFacingRight = false;
-    }
-
 
     //  Player Input
     private int ReturnHorizontalInput()
@@ -526,18 +464,6 @@ public class CharacterScript : MonoBehaviour
         {
             int loc_directionInt = ReturnHorizontalInput();
             directionInt = loc_directionInt;
-
-            ////////////////////////////////////////////////////////////////////////////
-            if (directionInt == 1)
-            {
-                //FaceRight();
-            }
-            else
-            {
-                //FaceLeft();
-            }
-            ////////////////////////////////////////////////////////////////////////////
-
             physicsManager.ChangeVelocityHorizontal(loc_directionInt * slowAirSpeed);
         }
     }
@@ -548,18 +474,6 @@ public class CharacterScript : MonoBehaviour
         if (ReturnHorizontalInput() != 0 && ReturnHorizontalInput() != directionInt)
         {
             directionInt = -directionInt;
-
-            ////////////////////////////////////////////////////////////////////////////
-            if (directionInt == 1)
-            {
-                //FaceRight();
-            }
-            else
-            {
-                //FaceLeft();
-            }
-            ////////////////////////////////////////////////////////////////////////////
-
             physicsManager.SwitchHorizontalDirection();
         }
     }
