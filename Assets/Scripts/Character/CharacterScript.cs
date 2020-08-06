@@ -208,6 +208,9 @@ public class CharacterScript : MonoBehaviour
                 //  Wallslide
                 else if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
                 {
+                    //NOT IN FIXEDUPDATE
+                    physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
+
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
