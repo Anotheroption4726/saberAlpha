@@ -103,17 +103,30 @@ public class CharacterScript : MonoBehaviour
                     StartCoroutine("CanRunSlide");
                 }
 
-                //  Run Right
-                if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+                //  Run
+                if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                 {
-                    FaceRight();
-                    physicsManager.ChangeVelocityHorizontal(runGroundSpeed);
+                    int loc_directionInt = ReturnHorizontalInput();
+                    directionInt = loc_directionInt;
+
+                    ////////////////////////////////////////////////////////////////////////////
+                    if (directionInt == 1)
+                    {
+                        FaceRight();
+                    }
+                    else
+                    {
+                        FaceLeft();
+                    }
+                    ////////////////////////////////////////////////////////////////////////////
+
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * runGroundSpeed);
 
                     //  Jump Forward
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        physicsManager.AddForceMethod(new Vector2(forwardJumpSpeed, jumpImpulse));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * forwardJumpSpeed, jumpImpulse));
                     }
 
                     // Run Slide
@@ -121,29 +134,7 @@ public class CharacterScript : MonoBehaviour
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(runSlideImpulse, 0));
-                    }
-                }
-
-                //  Run Left
-                else if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
-                {
-                    FaceLeft();
-                    physicsManager.ChangeVelocityHorizontal(-runGroundSpeed);
-
-                    //  Jump Forward
-                    if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
-                    {
-                        SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        physicsManager.AddForceMethod(new Vector2(-forwardJumpSpeed, jumpImpulse));
-                    }
-
-                    //  Run Slide
-                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
-                    {
-                        SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
-                        StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(-runSlideImpulse, 0));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * runSlideImpulse, 0));
                     }
                 }
 
