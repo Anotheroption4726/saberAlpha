@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    private int directionInt = 1;
+
     //  Movement variables
     private float runGroundSpeed = 40;
     private float runSlideImpulse = 2500;
@@ -48,12 +50,22 @@ public class CharacterScript : MonoBehaviour
         if (!Game.GetGamePaused())
         {
             //
+            if (directionInt > 0)
+            {
+                //sprite.flipX = false;
+            }
+            else
+            {
+                //sprite.flipX = true;
+            }
+
+            //
             // Idle Actions & Events
             //
             if (animState.Equals(CharacterAnimStateEnum.Idle))
             {
                 //  Run
-                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+                if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                 {
                     SetAnimation("Run", CharacterAnimStateEnum.Run);
                 }
@@ -473,6 +485,26 @@ public class CharacterScript : MonoBehaviour
 
 
     //  Movement functions
+    private int ReturnHorizontalInput()
+    {
+        int loc_horizonatlInputValue;
+
+        if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
+        {
+            loc_horizonatlInputValue = -1;
+        }
+        else if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+        {
+            loc_horizonatlInputValue = 1;
+        }
+        else
+        {
+            loc_horizonatlInputValue = 0;
+        }
+
+        return loc_horizonatlInputValue;
+    }
+
     private void IdleJumpMovement()
     {
         //  Idle Jump move Right
