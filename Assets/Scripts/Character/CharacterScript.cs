@@ -48,16 +48,6 @@ public class CharacterScript : MonoBehaviour
         if (!Game.GetGamePaused())
         {
             //
-            if (directionInt > 0)
-            {
-                sprite.flipX = false;
-            }
-            else
-            {
-                sprite.flipX = true;
-            }
-
-            //
             // Idle Actions & Events
             //
             if (animState.Equals(CharacterAnimStateEnum.Idle))
@@ -105,7 +95,7 @@ public class CharacterScript : MonoBehaviour
                 if (ReturnHorizontalInput() != 0)
                 {
                     int loc_directionInt = ReturnHorizontalInput();
-                    directionInt = loc_directionInt;
+                    SetDirection(loc_directionInt);
                     physicsManager.ChangeVelocityHorizontal(loc_directionInt * runGroundSpeed);
 
                     //  Jump Forward
@@ -200,7 +190,7 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Jump_forward))
             {
-                SwitchDirection();
+                SwitchDirectionForwardJump();
                 AirDrag();
 
                 //  Fall Animation
@@ -222,7 +212,7 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Fall_forward))
             {
-                SwitchDirection();
+                SwitchDirectionForwardJump();
                 AirDrag();
 
                 //  Wallslide
@@ -279,11 +269,11 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharacterAnimStateEnum.Crawl_move))
             {
-                //  Move Crawl Right
+                //  Move Crawl
                 if (ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
                 {
                     int loc_directionInt = ReturnHorizontalInput();
-                    directionInt = loc_directionInt;                 
+                    SetDirection(loc_directionInt);
                     physicsManager.ChangeVelocityHorizontal(loc_directionInt * crawlSpeed);
                 }
 
@@ -312,14 +302,12 @@ public class CharacterScript : MonoBehaviour
             //
             if (animState.Equals(CharacterAnimStateEnum.Wallslide))
             {
-                //
+                //  Fall resistance
                 if (ReturnHorizontalInput() == 0)
                 {
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyGravity(1);
                 }
-
-                //
                 else if ((ReturnHorizontalInput() > 0 && directionInt > 0) || (ReturnHorizontalInput() < 0 && directionInt < 0))
                 {
                     //NOT IN FIXEDUPDATE
@@ -329,7 +317,7 @@ public class CharacterScript : MonoBehaviour
                 //  Jump Left
                 if (!hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
-                    directionInt = -directionInt;
+                    SetDirection(-directionInt);
 
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
@@ -339,7 +327,7 @@ public class CharacterScript : MonoBehaviour
                     StartCoroutine("WallJumpTimer");
                 }
 
-                //  Wall slide over
+                //  No more wall
                 else if ((directionInt > 0 && !rightWallChecker.GetIsColliding()) || (directionInt < 0 && !leftWallChecker.GetIsColliding()))
                 {
                     //NOT IN FIXED UPDATE
@@ -354,7 +342,7 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyGravity(1);
 
                     int loc_directionInt = ReturnHorizontalInput();
-                    directionInt = loc_directionInt;
+                    SetDirection(loc_directionInt);
                     SetAnimation("Fall_normal", CharacterAnimStateEnum.Fall_normal);
                 }
 
@@ -413,6 +401,20 @@ public class CharacterScript : MonoBehaviour
         animState = arg_charaAnimStateEnum;
     }
 
+    private void SetDirection(int arg_direction)
+    {
+        if (arg_direction > 0)
+        {
+            sprite.flipX = false;
+        }
+        else
+        {
+            sprite.flipX = true;
+        }
+
+        directionInt = arg_direction;
+    }
+
 
     //  Player Input
     private int ReturnHorizontalInput()
@@ -459,21 +461,19 @@ public class CharacterScript : MonoBehaviour
     //  Physics & Movement
     private void IdleJumpMovement()
     {
-        //  Idle Jump move Right
         if (ReturnHorizontalInput() != 0)
         {
             int loc_directionInt = ReturnHorizontalInput();
-            directionInt = loc_directionInt;
+            SetDirection(loc_directionInt);
             physicsManager.ChangeVelocityHorizontal(loc_directionInt * slowAirSpeed);
         }
     }
 
-    private void SwitchDirection()
+    private void SwitchDirectionForwardJump()
     {
-        //  Switch direction to Right
         if (ReturnHorizontalInput() != 0 && ReturnHorizontalInput() != directionInt)
         {
-            directionInt = -directionInt;
+            SetDirection(-directionInt);
             physicsManager.SwitchHorizontalDirection();
         }
     }
