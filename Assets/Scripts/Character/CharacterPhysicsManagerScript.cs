@@ -8,10 +8,13 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
 
     private bool isTriggerHorizontalVelocity = false;
     private bool isTriggerVerticalVelocity = false;
+    private bool isSwitchHorizontalDirection = false;
+    private bool isTriggerHorizontalDrag = false;
     private bool isTriggerAddForce = false;
 
     private float xVelocityValue;
     private float yVelocityValue;
+    private float horizontalDragMultiplier;
     private Vector2 addForceVector;
 
     private void Awake()
@@ -21,18 +24,35 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //  Change Horizontal Velocity
         if (isTriggerHorizontalVelocity)
         {
             rigidBody.velocity = new Vector2(xVelocityValue, rigidBody.velocity.y);
             isTriggerHorizontalVelocity = false;
         }
 
+        //  Change Vertical Velocity
         if (isTriggerVerticalVelocity)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, yVelocityValue);
             isTriggerVerticalVelocity = false;
         }
 
+        //  Switch RigidBody Direction
+        if (isSwitchHorizontalDirection)
+        {
+            rigidBody.velocity = new Vector2(-rigidBody.velocity.x, rigidBody.velocity.y);
+            isSwitchHorizontalDirection = false;
+        }
+
+        //  Horizontal Drag
+        if (isTriggerHorizontalDrag)
+        {
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x * horizontalDragMultiplier, rigidBody.velocity.y);
+            isTriggerHorizontalDrag = false;
+        }
+
+        //  AddForce
         if (isTriggerAddForce)
         {
             rigidBody.AddForce(addForceVector);
@@ -40,6 +60,13 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
         }
     }
 
+    //  Getters
+    public Rigidbody2D GetRigidbody()
+    {
+        return rigidBody;
+    }
+
+    //  Velocity Methods
     public void ChangeVelocityHorizontal(float arg_XValue)
     {
         xVelocityValue = arg_XValue;
@@ -52,7 +79,19 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
         isTriggerVerticalVelocity = true;
     }
 
-    public void AddForceTrigger(Vector2 arg_addForceVector)
+    public void SwitchHorizontalDirection()
+    {
+        isSwitchHorizontalDirection = true;
+    }
+
+    public void HorizontalDrag(float arg_horizontalDragMultiplier)
+    {
+        horizontalDragMultiplier = arg_horizontalDragMultiplier;
+        isTriggerHorizontalDrag = true;
+    }
+
+    //  AddForce Methods
+    public void AddForceMethod(Vector2 arg_addForceVector)
     {
         addForceVector = arg_addForceVector;
         isTriggerAddForce = true;
