@@ -52,11 +52,11 @@ public class CharacterScript : MonoBehaviour
             //
             if (directionInt > 0)
             {
-                //sprite.flipX = false;
+                sprite.flipX = false;
             }
             else
             {
-                //sprite.flipX = true;
+                sprite.flipX = true;
             }
 
             //
@@ -112,11 +112,11 @@ public class CharacterScript : MonoBehaviour
                     ////////////////////////////////////////////////////////////////////////////
                     if (directionInt == 1)
                     {
-                        FaceRight();
+                        //FaceRight();
                     }
                     else
                     {
-                        FaceLeft();
+                        //FaceLeft();
                     }
                     ////////////////////////////////////////////////////////////////////////////
 
@@ -302,11 +302,11 @@ public class CharacterScript : MonoBehaviour
                     ////////////////////////////////////////////////////////////////////////////
                     if (directionInt == 1)
                     {
-                        FaceRight();
+                        //FaceRight();
                     }
                     else
                     {
-                        FaceLeft();
+                        //FaceLeft();
                     }
                     ////////////////////////////////////////////////////////////////////////////
                     
@@ -365,11 +365,11 @@ public class CharacterScript : MonoBehaviour
                     ////////////////////////////////////////////////////////////////////////////
                     if (directionInt == 1)
                     {
-                        FaceRight();
+                        //FaceRight();
                     }
                     else
                     {
-                        FaceLeft();
+                        //FaceLeft();
                     }
                     ////////////////////////////////////////////////////////////////////////////
 
@@ -397,11 +397,11 @@ public class CharacterScript : MonoBehaviour
                     ////////////////////////////////////////////////////////////////////////////
                     if (directionInt == 1)
                     {
-                        FaceRight();
+                        //FaceRight();
                     }
                     else
                     {
-                        FaceLeft();
+                        //FaceLeft();
                     }
                     ////////////////////////////////////////////////////////////////////////////
 
@@ -530,11 +530,11 @@ public class CharacterScript : MonoBehaviour
             ////////////////////////////////////////////////////////////////////////////
             if (directionInt == 1)
             {
-                FaceRight();
+                //FaceRight();
             }
             else
             {
-                FaceLeft();
+                //FaceLeft();
             }
             ////////////////////////////////////////////////////////////////////////////
 
@@ -552,11 +552,11 @@ public class CharacterScript : MonoBehaviour
             ////////////////////////////////////////////////////////////////////////////
             if (directionInt == 1)
             {
-                FaceRight();
+                //FaceRight();
             }
             else
             {
-                FaceLeft();
+                //FaceLeft();
             }
             ////////////////////////////////////////////////////////////////////////////
 
