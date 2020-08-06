@@ -319,8 +319,8 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation("Crawl_idle", CharacterAnimStateEnum.Crawl_idle);
                 }
 
-                //  Stand Up
-                else if ((Input.GetAxisRaw("Keyboard_Vertical") >= 0 && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0)) || (Input.GetAxisRaw("Gamepad_Vertical") <= 0 && (Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)))
+                //  Stand Up and Run
+                else if (ReturnVerticalInput() >= 0 && ReturnHorizontalInput() != 0)
                 {
                     SetAnimation("Run", CharacterAnimStateEnum.Run);
                 }
@@ -339,14 +339,14 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharacterAnimStateEnum.Wallslide))
             {
                 //
-                if (Input.GetAxisRaw("Gamepad_Horizontal") == 0 && Input.GetAxisRaw("Keyboard_Horizontal") == 0)
+                if (ReturnHorizontalInput() == 0)
                 {
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyGravity(1);
                 }
 
                 //
-                else if ((Input.GetAxisRaw("Gamepad_Horizontal") > 0 && isFacingRight) || (Input.GetAxisRaw("Keyboard_Horizontal") > 0 && isFacingRight) || (Input.GetAxisRaw("Gamepad_Horizontal") < 0 && !isFacingRight) || (Input.GetAxisRaw("Keyboard_Horizontal") < 0 && !isFacingRight))
+                else if ((ReturnHorizontalInput() > 0 && directionInt > 0) || (ReturnHorizontalInput() < 0 && directionInt < 0))
                 {
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyGravity(wallSlideGravity);
