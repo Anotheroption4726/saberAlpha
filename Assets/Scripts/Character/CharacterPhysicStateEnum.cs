@@ -1,4 +1,4 @@
-﻿public enum CharaPhysicStateEnum
+﻿public enum CharacterPhysicStateEnum
 {
     RunRight,
     RunLeft,
