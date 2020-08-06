@@ -522,40 +522,51 @@ public class CharacterScript : MonoBehaviour
     private void IdleJumpMovement()
     {
         //  Idle Jump move Right
-        if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+        if (ReturnHorizontalInput() != 0)
         {
-            FaceRight();
-            physicsManager.ChangeVelocityHorizontal(slowAirSpeed);
-        }
+            int loc_directionInt = ReturnHorizontalInput();
+            directionInt = loc_directionInt;
 
-        //  Idle Jump move Left
-        else if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
-        {
-            FaceLeft();
-            physicsManager.ChangeVelocityHorizontal(-slowAirSpeed);
+            ////////////////////////////////////////////////////////////////////////////
+            if (directionInt == 1)
+            {
+                FaceRight();
+            }
+            else
+            {
+                FaceLeft();
+            }
+            ////////////////////////////////////////////////////////////////////////////
+
+            physicsManager.ChangeVelocityHorizontal(loc_directionInt * slowAirSpeed);
         }
     }
 
     private void SwitchDirection()
     {
         //  Switch direction to Right
-        if (!isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0))
+        if (ReturnHorizontalInput() != 0 && ReturnHorizontalInput() != directionInt)
         {
-            physicsManager.SwitchHorizontalDirection();
-            FaceRight();
-        }
+            directionInt = -directionInt;
 
-        //  Switch direction to Left
-        else if (isFacingRight && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0))
-        {
+            ////////////////////////////////////////////////////////////////////////////
+            if (directionInt == 1)
+            {
+                FaceRight();
+            }
+            else
+            {
+                FaceLeft();
+            }
+            ////////////////////////////////////////////////////////////////////////////
+
             physicsManager.SwitchHorizontalDirection();
-            FaceLeft();
         }
     }
 
     private void AirDrag()
     {
-        if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
+        if (!Input.anyKey && ReturnHorizontalInput() == 0)
         {
             physicsManager.HorizontalDrag(forwardJumpAirDrag);
         }
