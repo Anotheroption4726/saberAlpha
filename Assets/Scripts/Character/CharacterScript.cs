@@ -11,6 +11,7 @@ public class CharacterScript : MonoBehaviour
     private float forwardJumpSpeed = 250;
     private float forwardJumpSlideSpeed = 1500;
     private float forwardJumpAirDrag = 0.97f;   //0.997f
+    private float fallMaxSpeedTreshold = 60;
     private float crawlSpeed = 10;
     private float wallJumpImpulse = 800;
     private float wallJumpSpeed = 1500;
@@ -35,7 +36,7 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide" };
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide" };
 
     private void Awake()
     {
@@ -186,6 +187,12 @@ public class CharacterScript : MonoBehaviour
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Idle", CharacterAnimStateEnum.Idle);
+                }
+
+                //  Maximum Speed
+                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                {
+                    SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
             }
 

@@ -7,6 +7,7 @@
     Jump_forward,
     Fall_normal,
     Fall_forward,
+    Fall_maxspeed,
     Crawl_idle,
     Crawl_move,
     Wallslide,
