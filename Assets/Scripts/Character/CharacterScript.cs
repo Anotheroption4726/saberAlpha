@@ -353,27 +353,26 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Jump Left
-                if (!hasWallJumped && isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") <= 0 || Input.GetAxisRaw("Gamepad_Horizontal") <= 0))
+                if (!hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
+                    directionInt = -directionInt;
+
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-                    physicsManager.AddForceMethod(new Vector2(-wallJumpSpeed, wallJumpImpulse));
+                    physicsManager.AddForceMethod(new Vector2(directionInt * wallJumpSpeed, wallJumpImpulse));
 
-                    FaceLeft();
-                    SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                    StartCoroutine("WallJumpTimer");
-                }
+                    ////////////////////////////////////////////////////////////////////////////
+                    if (directionInt == 1)
+                    {
+                        FaceRight();
+                    }
+                    else
+                    {
+                        FaceLeft();
+                    }
+                    ////////////////////////////////////////////////////////////////////////////
 
-                //  Jump Right
-                else if (!hasWallJumped && !isFacingRight && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && (Input.GetAxisRaw("Keyboard_Horizontal") >= 0 || Input.GetAxisRaw("Gamepad_Horizontal") >= 0))
-                {
-                    //NOT IN FIXED UPDATE
-                    physicsManager.SetRigidBodyGravity(1);
-                    physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-                    physicsManager.AddForceMethod(new Vector2(wallJumpSpeed, wallJumpImpulse));
-
-                    FaceRight();
                     SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
                     StartCoroutine("WallJumpTimer");
                 }
