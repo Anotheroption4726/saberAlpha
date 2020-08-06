@@ -65,7 +65,7 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharacterAnimStateEnum.Idle))
             {
                 //  Run
-                if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
+                if (ReturnHorizontalInput() != 0)
                 {
                     SetAnimation("Run", CharacterAnimStateEnum.Run);
                 }
@@ -79,7 +79,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Crawl
-                else if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+                else if (ReturnVerticalInput() < 0)
                 {
                     SetAnimation("Crawl_idle", CharacterAnimStateEnum.Crawl_idle);
                 }
@@ -104,7 +104,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Run
-                if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
+                if (ReturnHorizontalInput() != 0)
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     directionInt = loc_directionInt;
@@ -130,7 +130,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (canRunSlide && (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0))
+                    else if (canRunSlide && ReturnVerticalInput() < 0)
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
@@ -139,7 +139,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Stop Slide
-                else if (!Input.anyKey && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
+                else if (!Input.anyKey && ReturnHorizontalInput() == 0)
                 {
                     SetAnimation("Slide", CharacterAnimStateEnum.Slide);
                     StartCoroutine("StopSlide");
@@ -275,7 +275,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Stand Up
-                else if (Input.GetAxisRaw("Keyboard_Vertical") >= 0 && Input.GetAxisRaw("Gamepad_Vertical") <= 0)
+                else if (ReturnVerticalInput() >= 0)
                 {
                     SetAnimation("Idle", CharacterAnimStateEnum.Idle);
                 }
@@ -294,21 +294,27 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharacterAnimStateEnum.Crawl_move))
             {
                 //  Move Crawl Right
-                if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") > 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") > 0))
+                if (ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
                 {
-                    FaceRight();
-                    physicsManager.ChangeVelocityHorizontal(crawlSpeed);
-                }
+                    int loc_directionInt = ReturnHorizontalInput();
+                    directionInt = loc_directionInt;
 
-                //  Move Crawl Left
-                else if ((Input.GetAxisRaw("Keyboard_Vertical") < 0 && Input.GetAxisRaw("Keyboard_Horizontal") < 0) || (Input.GetAxisRaw("Gamepad_Vertical") > 0 && Input.GetAxisRaw("Gamepad_Horizontal") < 0))
-                {
-                    FaceLeft();
-                    physicsManager.ChangeVelocityHorizontal(-crawlSpeed);
+                    ////////////////////////////////////////////////////////////////////////////
+                    if (directionInt == 1)
+                    {
+                        FaceRight();
+                    }
+                    else
+                    {
+                        FaceLeft();
+                    }
+                    ////////////////////////////////////////////////////////////////////////////
+                    
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * crawlSpeed);
                 }
 
                 //  Stop
-                else if (Input.GetAxisRaw("Keyboard_Horizontal") == 0 && Input.GetAxisRaw("Gamepad_Horizontal") == 0)
+                else if (ReturnHorizontalInput() == 0)
                 {
                     SetAnimation("Crawl_idle", CharacterAnimStateEnum.Crawl_idle);
                 }
@@ -466,27 +472,49 @@ public class CharacterScript : MonoBehaviour
     }
 
 
-    //  Movement functions
+    //  Player Input
     private int ReturnHorizontalInput()
     {
-        int loc_horizonatlInputValue;
+        int loc_horizonalInputValue;
 
         if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
         {
-            loc_horizonatlInputValue = -1;
+            loc_horizonalInputValue = -1;
         }
         else if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
         {
-            loc_horizonatlInputValue = 1;
+            loc_horizonalInputValue = 1;
         }
         else
         {
-            loc_horizonatlInputValue = 0;
+            loc_horizonalInputValue = 0;
         }
 
-        return loc_horizonatlInputValue;
+        return loc_horizonalInputValue;
     }
 
+    private int ReturnVerticalInput()
+    {
+        int loc_verticalInputValue;
+
+        if (Input.GetAxisRaw("Keyboard_Vertical") < 0 || Input.GetAxisRaw("Gamepad_Vertical") > 0)
+        {
+            loc_verticalInputValue = -1;
+        }
+        else if (Input.GetAxisRaw("Keyboard_Vertical") > 0 || Input.GetAxisRaw("Gamepad_Vertical") < 0)
+        {
+            loc_verticalInputValue = 1;
+        }
+        else
+        {
+            loc_verticalInputValue = 0;
+        }
+
+        return loc_verticalInputValue;
+    }
+
+
+    //  Physics & Movement
     private void IdleJumpMovement()
     {
         //  Idle Jump move Right
