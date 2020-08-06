@@ -60,11 +60,23 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
         }
     }
 
-    //  Getters
+
+    //  Getters and Setters
     public Rigidbody2D GetRigidbody()
     {
         return rigidBody;
     }
+
+    public void SetRigidBodyGravity(float arg_gravityScale)
+    {
+        rigidBody.gravityScale = arg_gravityScale;
+    }
+
+    public void SetRigidBodyVelocity(Vector2 arg_velocityValue)
+    {
+        rigidBody.velocity = arg_velocityValue;
+    }
+
 
     //  Velocity Methods
     public void ChangeVelocityHorizontal(float arg_XValue)
@@ -89,6 +101,7 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
         horizontalDragMultiplier = arg_horizontalDragMultiplier;
         isTriggerHorizontalDrag = true;
     }
+
 
     //  AddForce Methods
     public void AddForceMethod(Vector2 arg_addForceVector)
