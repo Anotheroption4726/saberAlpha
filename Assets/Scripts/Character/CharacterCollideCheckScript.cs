@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformCollideCheckScript : MonoBehaviour
+public class CharacterCollideCheckScript : MonoBehaviour
 {
     private bool isColliding;
     [SerializeField] private LayerMask groundLayerMask;

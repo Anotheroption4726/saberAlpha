@@ -1,4 +1,4 @@
-﻿public enum CharaAnimStateEnum
+﻿public enum CharacterAnimStateEnum
 {
     Idle,
     Run,
