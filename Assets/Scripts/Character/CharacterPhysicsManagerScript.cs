@@ -17,6 +17,8 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
     private float horizontalDragMultiplier;
     private Vector2 addForceVector;
 
+    [SerializeField] private PhysicsMaterial2D[] colliderMaterialTable = new PhysicsMaterial2D[2];
+
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -67,6 +69,11 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
         return rigidBody;
     }
 
+    public PhysicsMaterial2D[] GetColliderMaterialTable()
+    {
+        return colliderMaterialTable;
+    }
+
     public void SetRigidBodyGravity(float arg_gravityScale)
     {
         rigidBody.gravityScale = arg_gravityScale;
@@ -75,6 +82,11 @@ public class CharacterPhysicsManagerScript : MonoBehaviour
     public void SetRigidBodyVelocity(Vector2 arg_velocityValue)
     {
         rigidBody.velocity = arg_velocityValue;
+    }
+
+    public void SetRigidBodyMaterial(PhysicsMaterial2D arg_physicsMaterial)
+    {
+        rigidBody.sharedMaterial = arg_physicsMaterial;
     }
 
 

@@ -148,6 +148,7 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Jump))
             {
+                physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 IdleJumpMovement();
 
                 //  Fall Animation
@@ -159,6 +160,7 @@ public class CharacterScript : MonoBehaviour
                 //  Wallslide
                 else if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
             }
@@ -169,17 +171,20 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Fall_normal))
             {
+                physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 IdleJumpMovement();
 
                 //  Wallslide
                 if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Idle", CharacterAnimStateEnum.Idle);
                 }
             }
@@ -190,6 +195,7 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Jump_forward))
             {
+                physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 SwitchDirectionForwardJump();
                 AirDrag();
 
@@ -202,6 +208,7 @@ public class CharacterScript : MonoBehaviour
                 //  Wallslide
                 else if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
                 {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
             }
@@ -218,6 +225,7 @@ public class CharacterScript : MonoBehaviour
                 //  Wallslide
                 if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
                 {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
 
@@ -235,6 +243,8 @@ public class CharacterScript : MonoBehaviour
                     {
                         SetAnimation("Run", CharacterAnimStateEnum.Run);
                     }
+
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                 }
             }
 
