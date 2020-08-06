@@ -36,7 +36,7 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide" };
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide", "Ontheground" };
 
     private void Awake()
     {
@@ -193,6 +193,20 @@ public class CharacterScript : MonoBehaviour
                 if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
                 {
                     SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
+                }
+            }
+
+
+            //
+            //
+            //
+            else if (animState.Equals(CharacterAnimStateEnum.Fall_maxspeed))
+            {
+                //  Touch Ground
+                if (groundChecker.GetIsColliding())
+                {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                    SetAnimation("Ontheground", CharacterAnimStateEnum.Ontheground);
                 }
             }
 
