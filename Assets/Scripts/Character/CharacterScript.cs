@@ -181,7 +181,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Wallslide
-                else if ((rightWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)) || (leftWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)))
+                else if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
@@ -196,7 +196,7 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Wallslide
-                if ((rightWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)) || (leftWallChecker.GetIsColliding() && (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)))
+                if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
@@ -224,7 +224,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Wallslide
-                else if ((isFacingRight && rightWallChecker.GetIsColliding()) || (!isFacingRight && leftWallChecker.GetIsColliding()))
+                else if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
                 {
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
@@ -240,7 +240,7 @@ public class CharacterScript : MonoBehaviour
                 AirDrag();
 
                 //  Wallslide
-                if ((isFacingRight && rightWallChecker.GetIsColliding()) || (!isFacingRight && leftWallChecker.GetIsColliding()))
+                if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
                 {
                     SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
                 }
@@ -248,23 +248,14 @@ public class CharacterScript : MonoBehaviour
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
-                    if (!Input.anyKey && Input.GetAxisRaw("Horizontal") == 0)
+                    if (!Input.anyKey && ReturnHorizontalInput() == 0)
                     {
-                        if (isFacingRight)
-                        {
-                            physicsManager.AddForceMethod(new Vector2(forwardJumpSlideSpeed, 0));
-                        }
-
-                        else
-                        {
-                            physicsManager.AddForceMethod(new Vector2(-forwardJumpSlideSpeed, 0));
-                        }
-
+                        physicsManager.AddForceMethod(new Vector2(directionInt * forwardJumpSlideSpeed, 0));
                         SetAnimation("Slide", CharacterAnimStateEnum.Slide);
                         StartCoroutine("StopSlide");
                     }
 
-                    else if (Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0)
+                    else if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                     {
                         SetAnimation("Run", CharacterAnimStateEnum.Run);
                     }
@@ -278,7 +269,7 @@ public class CharacterScript : MonoBehaviour
             if (animState.Equals(CharacterAnimStateEnum.Crawl_idle))
             {
                 //  Move
-                if (Input.GetAxisRaw("Keyboard_Horizontal") < 0 || Input.GetAxisRaw("Keyboard_Horizontal") > 0 || Input.GetAxisRaw("Gamepad_Horizontal") < 0 || Input.GetAxisRaw("Gamepad_Horizontal") > 0)
+                if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                 {
                     SetAnimation("Crawl_move", CharacterAnimStateEnum.Crawl_move);
                 }
