@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TestArenaManagerScript : MonoBehaviour
 {
-    private float timeScale = 1.0f;
+    private float timeScale = 1;
     [SerializeField] private Image pauseIcon;
 
     void Awake()
