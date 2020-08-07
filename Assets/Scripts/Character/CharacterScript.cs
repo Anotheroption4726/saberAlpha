@@ -3,31 +3,45 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    //  Movement variables
-    private float runGroundSpeed = 40;
-    private float runSlideImpulse = 2500;
-    private float jumpImpulse = 1200;
-    private float slowAirSpeed = 10;
-    private float forwardJumpSpeed = 250;
-    private float forwardJumpSlideSpeed = 1500;
-    private float forwardJumpAirDrag = 0.97f;   //0.997f
-    private float fallMaxSpeedTreshold = 60;
-    private float crawlSpeed = 10;
-    private float wallJumpImpulse = 800;
-    private float wallJumpSpeed = 1500;
-    private float wallSlideGravity = 0.125f;
+    //  Run Variables
+    private float fixed_run_movementSpeed = 40;
+    private float timer_run_stopSlideTime = 0.13f;
 
-    //  Timers
-    private float slideTime = 0.13f;
-    private bool canRunSlide = false;
-    private float runSlideStartTime = 0.75f;
-    private float runSlideTime = 0.25f;
-    private bool hasWallJumped = false;
-    private float wallJumpTimer = 0.25f;
-    private float ontheGroundTime = 2;
-    private float ontheGroundStandUpTime = 0.5f;
-    private bool ontheGroundBool = false;
+    //  Idle Jump Variables
+    private float impulse_idleJump_verticalForce = 1200;
+    private float fixed_idleJump_movementSpeed = 10;
 
+    // Forward Jump Variables
+    private float impulse_forwardJump_horizontalForce = 250;
+    private float impulse_forwardJump_stopSlideForce = 1500;
+    private float ratio_forwardJump_horizontalAirDrag = 0.97f;   //0.997f
+
+    //  Fall MaxSpeed
+    private float threshold_fallMaxSpeed_velocityValue = 60;
+
+    //  On the Ground Variables
+    private float timer_onTheGround_duration = 2;
+    private float timer_onTheGround_StandUpTime = 0.5f;
+    private bool trigger_onTheGround_isOntheGround = false;
+
+    //  Crawl Variables
+    private float fixed_crawl_movementSpeed = 10;
+
+    //  Run Slide Variables
+    private float impulse_runSlide_horizontalForce = 2500;
+    private float timer_runSlide_startTime = 0.75f;
+    private float timer_runSlide_duration = 0.25f;
+    private bool trigger_runSlide_canRunSlide = false;
+
+    //  WallSlide Variables
+    private float ratio_wallSlide_holdGravity = 0.125f;
+
+    //  WallJump Variables
+    private float impulse_wallJump_verticalForce = 800;
+    private float impulse_wallJump_horizontalForce = 1500;
+    private float timer_wallJump_restrainDuration = 0.25f;
+    private bool trigger_wallJump_hasWallJumped = false;
+    
     //  Components
     private CharacterPhysicsManagerScript physicsManager;
     [SerializeField] private CharacterCollideCheckScript groundChecker;
@@ -81,7 +95,7 @@ public class CharacterScript : MonoBehaviour
                 else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                 {
                     SetAnimation("Jump", CharacterAnimStateEnum.Jump);
-                    physicsManager.AddForceMethod(Vector2.up * jumpImpulse);
+                    physicsManager.AddForceMethod(Vector2.up * impulse_idleJump_verticalForce);
 
                 }
 
@@ -105,7 +119,7 @@ public class CharacterScript : MonoBehaviour
             else if (animState.Equals(CharacterAnimStateEnum.Run))
             {
                 //  CanRunSlide Timer
-                if (!canRunSlide)
+                if (!trigger_runSlide_canRunSlide)
                 {
                     StartCoroutine("CanRunSlide");
                 }
@@ -115,21 +129,21 @@ public class CharacterScript : MonoBehaviour
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     SetDirection(loc_directionInt);
-                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * runGroundSpeed);
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * fixed_run_movementSpeed);
 
                     //  Jump Forward
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * forwardJumpSpeed, jumpImpulse));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * impulse_forwardJump_horizontalForce, impulse_idleJump_verticalForce));
                     }
 
                     // Run Slide
-                    else if (canRunSlide && ReturnVerticalInput() < 0)
+                    else if (trigger_runSlide_canRunSlide && ReturnVerticalInput() < 0)
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * runSlideImpulse, 0));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * impulse_runSlide_horizontalForce, 0));
                     }
                 }
 
@@ -208,7 +222,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Maximum Speed
-                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                if (physicsManager.GetRigidbody().velocity.y < -threshold_fallMaxSpeed_velocityValue)
                 {
                     SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
@@ -223,12 +237,12 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsColliding() && !ontheGroundBool)
+                if (groundChecker.GetIsColliding() && !trigger_onTheGround_isOntheGround)
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Ontheground", CharacterAnimStateEnum.Ontheground);
                     StartCoroutine("Ontheground");
-                    ontheGroundBool = true;
+                    trigger_onTheGround_isOntheGround = true;
                 }
             }
 
@@ -280,7 +294,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (!Input.anyKey && ReturnHorizontalInput() == 0)
                     {
-                        physicsManager.AddForceMethod(new Vector2(directionInt * forwardJumpSlideSpeed, 0));
+                        physicsManager.AddForceMethod(new Vector2(directionInt * impulse_forwardJump_stopSlideForce, 0));
                         SetAnimation("Slide", CharacterAnimStateEnum.Slide);
                         StartCoroutine("StopSlide");
                     }
@@ -294,7 +308,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Maximum Speed
-                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                if (physicsManager.GetRigidbody().velocity.y < -threshold_fallMaxSpeed_velocityValue)
                 {
                     SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
@@ -336,7 +350,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     SetDirection(loc_directionInt);
-                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * crawlSpeed);
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * fixed_crawl_movementSpeed);
                 }
 
                 //  Stop
@@ -373,18 +387,18 @@ public class CharacterScript : MonoBehaviour
                 else if ((ReturnHorizontalInput() > 0 && directionInt > 0) || (ReturnHorizontalInput() < 0 && directionInt < 0))
                 {
                     //NOT IN FIXEDUPDATE
-                    physicsManager.SetRigidBodyGravity(wallSlideGravity);
+                    physicsManager.SetRigidBodyGravity(ratio_wallSlide_holdGravity);
                 }
 
                 //  Jump Left
-                if (!hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
+                if (!trigger_wallJump_hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
                     SetDirection(-directionInt);
 
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-                    physicsManager.AddForceMethod(new Vector2(directionInt * wallJumpSpeed, wallJumpImpulse));
+                    physicsManager.AddForceMethod(new Vector2(directionInt * impulse_wallJump_horizontalForce, impulse_wallJump_verticalForce));
                     SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
                     StartCoroutine("WallJumpTimer");
                 }
@@ -423,43 +437,43 @@ public class CharacterScript : MonoBehaviour
     //  Timer functions
     private IEnumerator StopSlide()
     {
-        yield return new WaitForSeconds(slideTime);
+        yield return new WaitForSeconds(timer_run_stopSlideTime);
         SetAnimation("Idle", CharacterAnimStateEnum.Idle);
     }
 
     private IEnumerator CanRunSlide()
     {
-        yield return new WaitForSeconds(runSlideStartTime);
-        canRunSlide = true;
+        yield return new WaitForSeconds(timer_runSlide_startTime);
+        trigger_runSlide_canRunSlide = true;
     }
 
     private IEnumerator StopRunSlide()
     {
-        yield return new WaitForSeconds(runSlideTime);
+        yield return new WaitForSeconds(timer_runSlide_duration);
         SetAnimation("Crawl_move", CharacterAnimStateEnum.Crawl_move);
-        canRunSlide = false;
+        trigger_runSlide_canRunSlide = false;
     }
 
     private IEnumerator WallJumpTimer()
     {
-        hasWallJumped = true;
-        yield return new WaitForSeconds(wallJumpTimer);
-        hasWallJumped = false;
+        trigger_wallJump_hasWallJumped = true;
+        yield return new WaitForSeconds(timer_wallJump_restrainDuration);
+        trigger_wallJump_hasWallJumped = false;
     }
 
     private IEnumerator Ontheground()
     {
-        yield return new WaitForSeconds(ontheGroundTime);
+        yield return new WaitForSeconds(timer_onTheGround_duration);
         SetAnimation("Ontheground_standup", CharacterAnimStateEnum.Ontheground_standup);
         StartCoroutine("OnthegroundStandup");
     }
 
     private IEnumerator OnthegroundStandup()
     {
-        yield return new WaitForSeconds(ontheGroundStandUpTime);
+        yield return new WaitForSeconds(timer_onTheGround_StandUpTime);
         Debug.Log("Debout");
         SetAnimation("Idle", CharacterAnimStateEnum.Idle);
-        ontheGroundBool = false;
+        trigger_onTheGround_isOntheGround = false;
     }
 
 
@@ -542,7 +556,7 @@ public class CharacterScript : MonoBehaviour
         {
             int loc_directionInt = ReturnHorizontalInput();
             SetDirection(loc_directionInt);
-            physicsManager.ChangeVelocityHorizontal(loc_directionInt * slowAirSpeed);
+            physicsManager.ChangeVelocityHorizontal(loc_directionInt * fixed_idleJump_movementSpeed);
         }
     }
 
@@ -559,7 +573,7 @@ public class CharacterScript : MonoBehaviour
     {
         if (!Input.anyKey && ReturnHorizontalInput() == 0)
         {
-            physicsManager.HorizontalDrag(forwardJumpAirDrag);
+            physicsManager.HorizontalDrag(ratio_forwardJump_horizontalAirDrag);
         }
     }
 }
