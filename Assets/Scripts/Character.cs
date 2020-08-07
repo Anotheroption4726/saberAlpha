@@ -197,4 +197,21 @@
     {
         return trigger_wallJump_hasWallJumped;
     }
+
+
+    //  Setters
+    public void SetOnTheGroundIsOntheGround(bool arg_isOntheGround)
+    {
+        trigger_onTheGround_isOntheGround = arg_isOntheGround;
+    }
+
+    public void SetRunSlideCanRunSlide(bool arg_canRunSlide)
+    {
+        trigger_runSlide_canRunSlide = arg_canRunSlide;
+    }
+
+    public void SetWallJumpHasWallJumped(bool arg_hasWallJumped)
+    {
+        trigger_wallJump_hasWallJumped = arg_hasWallJumped;
+    }
 }
