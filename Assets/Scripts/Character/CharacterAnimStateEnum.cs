@@ -12,4 +12,6 @@
     Crawl_move,
     Wallslide,
     Run_slide,
+    Ontheground,
+    Ontheground_standup,
 }

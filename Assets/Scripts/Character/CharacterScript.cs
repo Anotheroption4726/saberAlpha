@@ -15,6 +15,7 @@ public class CharacterScript : MonoBehaviour
     private float crawlSpeed = 10;
     private float wallJumpImpulse = 800;
     private float wallJumpSpeed = 1500;
+    private float wallSlideGravity = 0.125f;
 
     //  Timers
     private float slideTime = 0.13f;
@@ -23,7 +24,9 @@ public class CharacterScript : MonoBehaviour
     private float runSlideTime = 0.25f;
     private bool hasWallJumped = false;
     private float wallJumpTimer = 0.25f;
-    private float wallSlideGravity = 0.125f;
+    private float ontheGroundTime = 2;
+    private float ontheGroundStandUpTime = 0.5f;
+    private bool ontheGroundBool = false;
 
     //  Components
     private CharacterPhysicsManagerScript physicsManager;
@@ -36,7 +39,22 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide" };
+    private string[] animationNamesTable = new string[]{
+                                                            "Idle", 
+                                                            "Run", 
+                                                            "Slide", 
+                                                            "Jump", 
+                                                            "Jump_forward", 
+                                                            "Fall_normal", 
+                                                            "Fall_forward", 
+                                                            "Fall_maxspeed", 
+                                                            "Crawl_idle", 
+                                                            "Crawl_move", 
+                                                            "Wallslide", 
+                                                            "Run_slide", 
+                                                            "Ontheground", 
+                                                            "Ontheground_standup" 
+                                                        };
 
     private void Awake()
     {
@@ -198,6 +216,24 @@ public class CharacterScript : MonoBehaviour
 
 
             //
+            //  Fall maxspeed Action & Events
+            //
+            else if (animState.Equals(CharacterAnimStateEnum.Fall_maxspeed))
+            {
+                IdleJumpMovement();
+
+                //  Touch Ground
+                if (groundChecker.GetIsColliding() && !ontheGroundBool)
+                {
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                    SetAnimation("Ontheground", CharacterAnimStateEnum.Ontheground);
+                    StartCoroutine("Ontheground");
+                    ontheGroundBool = true;
+                }
+            }
+
+
+            //
             //  Forward Jump actions & Events
             //
             else if (animState.Equals(CharacterAnimStateEnum.Jump_forward))
@@ -255,6 +291,12 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                }
+
+                //  Maximum Speed
+                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                {
+                    SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
             }
 
@@ -403,6 +445,21 @@ public class CharacterScript : MonoBehaviour
         hasWallJumped = true;
         yield return new WaitForSeconds(wallJumpTimer);
         hasWallJumped = false;
+    }
+
+    private IEnumerator Ontheground()
+    {
+        yield return new WaitForSeconds(ontheGroundTime);
+        SetAnimation("Ontheground_standup", CharacterAnimStateEnum.Ontheground_standup);
+        StartCoroutine("OnthegroundStandup");
+    }
+
+    private IEnumerator OnthegroundStandup()
+    {
+        yield return new WaitForSeconds(ontheGroundStandUpTime);
+        Debug.Log("Debout");
+        SetAnimation("Idle", CharacterAnimStateEnum.Idle);
+        ontheGroundBool = false;
     }
 
 
