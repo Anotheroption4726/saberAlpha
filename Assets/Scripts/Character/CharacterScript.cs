@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
+    /*
     //  Run Variables
     private float fixed_run_movementSpeed = 40;
     private float timer_run_stopSlideTime = 0.13f;
@@ -41,7 +42,10 @@ public class CharacterScript : MonoBehaviour
     private float impulse_wallJump_horizontalForce = 1500;
     private float timer_wallJump_restrainDuration = 0.25f;
     private bool trigger_wallJump_hasWallJumped = false;
-    
+    */
+
+    private Character character;
+
     //  Components
     private CharacterPhysicsManagerScript physicsManager;
     [SerializeField] private CharacterCollideCheckScript groundChecker;
@@ -70,12 +74,26 @@ public class CharacterScript : MonoBehaviour
                                                             "Ontheground_standup" 
                                                         };
 
+    //  Getters and Setters
+    public Character GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(Character arg_character)
+    {
+        character = arg_character;
+    }
+
+
+    //  Awake Function
     private void Awake()
     {
         physicsManager = GetComponent<CharacterPhysicsManagerScript>();
     }
 
 
+    //  Update Function
     private void Update()
     {
         if (!Game.GetGamePaused())

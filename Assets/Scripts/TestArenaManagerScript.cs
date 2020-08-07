@@ -8,9 +8,17 @@ public class TestArenaManagerScript : MonoBehaviour
 {
     private float timeScale = 1;
     [SerializeField] private Image pauseIcon;
+    [SerializeField] GameObject inGameCharacter;
 
     void Awake()
     {
+        inGameCharacter.GetComponent<CharacterScript>().SetCharacter(new Character
+                                                                         (
+                                                                            
+                                                                         )
+                                                                    );
+
+
         Time.timeScale = timeScale;
         pauseIcon.enabled = false;
     }
