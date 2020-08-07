@@ -292,6 +292,12 @@ public class CharacterScript : MonoBehaviour
 
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                 }
+
+                //  Maximum Speed
+                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                {
+                    SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
+                }
             }
 
 
