@@ -8904,7 +8904,7 @@ GameObject:
   - component: {fileID: 1072282155}
   - component: {fileID: 1072282156}
   m_Layer: 0
-  m_Name: TestArenaManager
+  m_Name: SceneManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8938,6 +8938,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseIcon: {fileID: 74589634}
   inGameCharacter: {fileID: 370792727}
+  gameType: 0
+  timeScale: 1
+  fixed_run_movementSpeed: 40
+  timer_run_stopSlideTime: 0.13
+  impulse_idleJump_verticalForce: 1200
+  fixed_idleJump_movementSpeed: 10
+  impulse_forwardJump_horizontalForce: 250
+  impulse_forwardJump_stopSlideForce: 1500
+  ratio_forwardJump_horizontalAirDrag: 0.97
+  threshold_fallMaxSpeed_velocityValue: 60
+  timer_onTheGround_duration: 2
+  timer_onTheGround_StandUpTime: 0.5
+  fixed_crawl_movementSpeed: 10
+  impulse_runSlide_horizontalForce: 2500
+  timer_runSlide_startTime: 0.75
+  timer_runSlide_duration: 0.25
+  ratio_wallSlide_holdGravity: 0.125
+  impulse_wallJump_verticalForce: 800
+  impulse_wallJump_horizontalForce: 1500
+  timer_wallJump_restrainDuration: 0.25
 --- !u!1 &1078890730
 GameObject:
   m_ObjectHideFlags: 0
