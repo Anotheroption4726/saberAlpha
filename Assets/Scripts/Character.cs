@@ -38,4 +38,55 @@
     private float impulse_wallJump_horizontalForce = 1500;
     private float timer_wallJump_restrainDuration = 0.25f;
     private bool trigger_wallJump_hasWallJumped = false;
+
+    //  Getters
+    public float getRunMovementSpeed()
+    {
+        return fixed_run_movementSpeed;
+    }
+
+    public float GetRunStopSlideTime()
+    {
+        return timer_run_stopSlideTime;
+    }
+
+    public float GetIdleJumpVerticalForce()
+    {
+        return impulse_idleJump_verticalForce;
+    }
+
+    public float GetIdleJumpMovementSpeed()
+    {
+        return fixed_idleJump_movementSpeed;
+    }
+
+    public float GetForwardJumpHorizontalForce()
+    {
+        return impulse_forwardJump_horizontalForce;
+    }
+
+    public float GetForwardJumpStopSlideForce()
+    {
+        return impulse_forwardJump_stopSlideForce;
+    }
+
+    public float GetForwardJumpHorizontalAirDrag()
+    {
+        return ratio_forwardJump_horizontalAirDrag;
+    }
+
+    public float GetFallMaxSpeedVelocityValue()
+    {
+        return threshold_fallMaxSpeed_velocityValue;
+    }
+
+    public float GetOnTheGroundDuration()
+    {
+        return timer_onTheGround_duration;
+    }
+
+    public float GetOnTheGroundStandUpTime()
+    {
+        return timer_onTheGround_StandUpTime;
+    }
 }
