@@ -1,4 +1,6 @@
-CONTROLS
+# SABER ALPHA
+
+## CONTROLS
 
 	Restart Game:
 
@@ -41,7 +43,7 @@ CONTROLS
 
 
 
-DEVELOPPER/TEST MODE
+## DEVELOPPER/TEST MODE
 
 	Open the Project (requires Unity 2019.4.4f1 or more). If 
 	'TestScene' isn't opened, go to '/Assets/Scenes' and open 
