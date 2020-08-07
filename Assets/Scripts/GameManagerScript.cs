@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,55 +7,13 @@ public class GameManagerScript : MonoBehaviour
     //  Components
     [SerializeField] private Image pauseIcon;
     [SerializeField] GameObject inGameCharacter;
-
-    //  Gamae Parameters
-    [SerializeField] private GameTypeEnum gameType;
-    [SerializeField] private float timeScale = 1;
-
-    //
-    //  Character test Parameters 
-    //
-
-    //  Run Parameters
-    [SerializeField] private float fixed_run_movementSpeed;
-    [SerializeField] private float timer_run_stopSlideTime;
-
-    //  Idle Jump Parameters
-    [SerializeField] private float impulse_idleJump_verticalForce;
-    [SerializeField] private float fixed_idleJump_movementSpeed;
-
-    // Forward Jump Parameters
-    [SerializeField] private float impulse_forwardJump_horizontalForce;
-    [SerializeField] private float impulse_forwardJump_stopSlideForce;
-    [SerializeField] private float ratio_forwardJump_horizontalAirDrag;
-
-    //  Fall MaxSpeed Parameters
-    [SerializeField] private float threshold_fallMaxSpeed_velocityValue;
-
-    //  On the Ground Parameters
-    [SerializeField] private float timer_onTheGround_duration;
-    [SerializeField] private float timer_onTheGround_StandUpTime;
-
-    //  Crawl Parameters
-    [SerializeField] private float fixed_crawl_movementSpeed;
-
-    //  Run Slide Parameters
-    [SerializeField] private float impulse_runSlide_horizontalForce;
-    [SerializeField] private float timer_runSlide_startTime;
-    [SerializeField] private float timer_runSlide_duration;
-
-    //  WallSlide Parameters
-    [SerializeField] private float ratio_wallSlide_holdGravity;
-
-    //  WallJump Parameters
-    [SerializeField] private float impulse_wallJump_verticalForce;
-    [SerializeField] private float impulse_wallJump_horizontalForce;
-    [SerializeField] private float timer_wallJump_restrainDuration;
-
+    private GameParametersScript gameParameters;
 
     void Awake()
     {
-        Game.SetGameType(gameType);
+        gameParameters = GetComponent<GameParametersScript>();
+        Game.SetGameType(gameParameters.GetGameType());
+        pauseIcon.enabled = false;
 
         if (Game.GetGameType() == GameTypeEnum.NormalGame)
         {
@@ -66,32 +22,32 @@ public class GameManagerScript : MonoBehaviour
 
         if (Game.GetGameType() == GameTypeEnum.TestGame)
         {
+            Time.timeScale = gameParameters.GetTimeScale();
+            Physics2D.gravity = new Vector2(0, -gameParameters.GetGravityScale());
+
             inGameCharacter.GetComponent<CharacterScript>().SetCharacter(
                                                                             new Character(
-                                                                                            fixed_run_movementSpeed,
-                                                                                            timer_run_stopSlideTime,
-                                                                                            impulse_idleJump_verticalForce,
-                                                                                            fixed_idleJump_movementSpeed,
-                                                                                            impulse_forwardJump_horizontalForce,
-                                                                                            impulse_forwardJump_stopSlideForce,
-                                                                                            ratio_forwardJump_horizontalAirDrag,
-                                                                                            threshold_fallMaxSpeed_velocityValue,
-                                                                                            timer_onTheGround_duration,
-                                                                                            timer_onTheGround_StandUpTime,
-                                                                                            fixed_crawl_movementSpeed,
-                                                                                            impulse_runSlide_horizontalForce,
-                                                                                            timer_runSlide_startTime,
-                                                                                            timer_runSlide_duration,
-                                                                                            ratio_wallSlide_holdGravity,
-                                                                                            impulse_wallJump_verticalForce,
-                                                                                            impulse_wallJump_horizontalForce,
-                                                                                            timer_wallJump_restrainDuration
+                                                                                            gameParameters.GetRunMovementSpeed(),
+                                                                                            gameParameters.GetRunStopSlideTime(),
+                                                                                            gameParameters.GetIdleJumpVerticalForce(),
+                                                                                            gameParameters.GetIdleJumpMovementSpeed(),
+                                                                                            gameParameters.GetForwardJumpHorizontalForce(),
+                                                                                            gameParameters.GetForwardJumpStopSlideForce(),
+                                                                                            gameParameters.GetForwardJumpHorizontalAirDrag(),
+                                                                                            gameParameters.GetFallMaxSpeedVelocityValue(),
+                                                                                            gameParameters.GetOnTheGroundDuration(),
+                                                                                            gameParameters.GetOnTheGroundStandUpTime(),
+                                                                                            gameParameters.GetCrawlMovementSpeed(),
+                                                                                            gameParameters.GetRunSlideHorizontalForce(),
+                                                                                            gameParameters.GetRunSlideStartTime(),
+                                                                                            gameParameters.GetRunSlideDuration(),
+                                                                                            gameParameters.GetWallSlideHoldGravity(),
+                                                                                            gameParameters.GetWallJumpVerticalForce(),
+                                                                                            gameParameters.GetWallJumpHorizontalForce(),
+                                                                                            gameParameters.GetWallJumpRestrainDuration()
                                                                                          )
                                                                         );
         }
-
-        Time.timeScale = timeScale;
-        pauseIcon.enabled = false;
     }
 
     private void Update()
@@ -113,7 +69,7 @@ public class GameManagerScript : MonoBehaviour
             else
             {
                 pauseIcon.enabled = false;
-                Time.timeScale = timeScale;
+                Time.timeScale = gameParameters.GetTimeScale();
                 Game.SetGamePaused(false);
             }
             
