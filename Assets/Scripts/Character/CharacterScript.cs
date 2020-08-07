@@ -36,7 +36,7 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide", "Ontheground" };
+    private string[] animationNamesTable = new string[]{"Idle", "Run", "Slide", "Jump", "Jump_forward", "Fall_normal", "Fall_forward", "Fall_maxspeed", "Crawl_idle", "Crawl_move", "Wallslide", "Run_slide", "Ontheground", "Ontheground_standup" };
 
     private void Awake()
     {
