@@ -61,7 +61,7 @@ public class GameManagerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) || Input.GetButtonDown("Gamepad_Select"))
         {
             Game.SetGamePaused(false);
-            SceneManager.LoadScene("TestArenaScene");
+            SceneManager.LoadScene("TestScene");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Gamepad_Start"))
