@@ -4,9 +4,11 @@ using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
 {
-    //  Components
     [SerializeField] private Image pauseIcon;
     [SerializeField] GameObject inGameCharacter;
+    [SerializeField] PhysicsMaterial2D characterPhysicMaterial;
+    [SerializeField] PhysicsMaterial2D platformPhysicMaterial;
+
     private GameParametersScript gameParameters;
 
     void Awake()
@@ -17,6 +19,8 @@ public class GameManagerScript : MonoBehaviour
 
         if (Game.GetGameType() == GameTypeEnum.NormalGame)
         {
+            platformPhysicMaterial.friction = Game.GetDefaultPlatformFriction();
+            characterPhysicMaterial.friction = Game.GetDefaultCharacterFriction();
             inGameCharacter.GetComponent<CharacterScript>().SetCharacter(new Character());
         }
 
@@ -24,6 +28,8 @@ public class GameManagerScript : MonoBehaviour
         {
             Time.timeScale = gameParameters.GetTimeScale();
             Physics2D.gravity = new Vector2(0, -gameParameters.GetGravityScale());
+            platformPhysicMaterial.friction = gameParameters.GetPlatformFriction();
+            characterPhysicMaterial.friction = gameParameters.GetCharacterFriction();
 
             inGameCharacter.GetComponent<CharacterScript>().SetCharacter(
                                                                             new Character(

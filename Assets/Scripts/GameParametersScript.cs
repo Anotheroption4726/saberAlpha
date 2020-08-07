@@ -8,6 +8,8 @@ public class GameParametersScript : MonoBehaviour
     [SerializeField] private GameTypeEnum gameType;
     [SerializeField] private float timeScale;
     [SerializeField] private float gravityScale;
+    [SerializeField] private float platformFriction;
+    [SerializeField] private float characterFriction;
 
     //  Character Run Parameters
     [SerializeField] private float fixed_run_movementSpeed;
@@ -60,6 +62,16 @@ public class GameParametersScript : MonoBehaviour
     public float GetGravityScale()
     {
         return gravityScale;
+    }
+
+    public float GetPlatformFriction()
+    {
+        return platformFriction;
+    }
+
+    public float GetCharacterFriction()
+    {
+        return characterFriction;
     }
 
     public float GetRunMovementSpeed()

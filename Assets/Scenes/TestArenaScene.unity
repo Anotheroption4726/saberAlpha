@@ -8939,6 +8939,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseIcon: {fileID: 74589634}
   inGameCharacter: {fileID: 370792727}
+  characterPhysicMaterial: {fileID: 6200000, guid: 42eaf11769c341741a776cce9931c437,
+    type: 2}
+  platformPhysicMaterial: {fileID: 6200000, guid: 2b92971b54b691b41bd30836cfdf1457,
+    type: 2}
 --- !u!114 &1072282157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8954,6 +8958,8 @@ MonoBehaviour:
   gameType: 1
   timeScale: 1
   gravityScale: 46.5
+  platformFriction: 4
+  characterFriction: 4
   fixed_run_movementSpeed: 40
   timer_run_stopSlideTime: 0.13
   impulse_idleJump_verticalForce: 1200
