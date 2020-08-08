@@ -1,4 +1,5 @@
 # SABER ALPHA
+Open the *'saberAlpha'* project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't opened on start up, go to **/Assets/Scenes** and open *'TestScene'*.
 
 ### CONTROLS
 
@@ -30,7 +31,7 @@
 		- Gamepad: Button 0 (Xbox: A / Playstation: X)
 
 ### DEVELOPPER MODE
-Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't opened on start up, go to **/Assets/Scenes** and open *'TestScene'*. Once you are in *'TestScene'*, go to the **Hierarchy** window (usually the left side panel), select the *'SceneManager'* **GameObject** and navigate to its *'Game Parameters Script'* **Component** in the **Inspector** window (usually the right side panel). Here you will find a series of variables that you'll be able tweak in order to test the game.
+Once you are in *'TestScene'*, go to the **Hierarchy** window (usually the left side panel), select the *'SceneManager'* **GameObject** and navigate to its *'Game Parameters Script'* **Component** in the **Inspector** window (usually the right side panel). Here you will find a series of variables that you'll be able tweak in order to test the game.
 
 ##### Warnings:
 	!!! You should only work within the scope of the 'Game Parameters Script'. Do not change anything else in the project outside of that Component.
@@ -55,15 +56,15 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Platform Friction:
 	- Default Value: 4
-	- Increase: All characters won't be able to move when colliding with platforms
-	- Decrease: All characters will ice skate when colliding with platforms
-
-### CHARACTER VARIABLES
+	- Increase: Characters won't be able to move when colliding with platforms
+	- Decrease: Characters will ice skate when colliding with platforms
 
 ##### Character Friction:
 	- Default Value: 4
-	- Increase: The character won't be able to move when colliding with platforms
-	- Decrease: The character will ice skate when colliding with platforms
+	- Increase: Characters won't be able to move when colliding with platforms (alternative parameter)
+	- Decrease: Characters will ice skate when colliding with platforms (alternative parameter)
+
+### CHARACTER VARIABLES
 
 ##### Run Movement Speed_fixed :
 	- Default Value: 40
