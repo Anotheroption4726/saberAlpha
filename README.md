@@ -129,7 +129,7 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Slide Start Time_timer :
 	- Default Value: 0.75 (seconds)
-	- Increase: Increase the amount of time the player needs to wait (after starting to run) before doing a run slide. Resets after a run slide has happened
+	- Increase: Increases the amount of time the player needs to wait (after starting to run) before doing a run slide. Resets after a run slide has happened
 	- Decrease: Decreases the amount of time the player needs to wait (after starting to run) before doing a run slide. Resets after a run slide has happened
 
 ##### Run Slide Duration_timer :
@@ -154,5 +154,5 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Wall Jump Restrain Duration_timer :
 	- Default Value: 0.25 (seconds)
-	- Increase: Increase the amount of time the player needs to wait after doing a wall jump before doing a new one
+	- Increase: Increases the amount of time the player needs to wait after doing a wall jump before doing a new one
 	- Decrease: Decreases the amount of time the player needs to wait after doing a wall jump before doing a new one
