@@ -1,4 +1,4 @@
-# _ SABER ALPHA _
+# SABER ALPHA
 
 ### CONTROLS
 
@@ -74,7 +74,7 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Stop Slide Time_timer :
 	- Default Value: 0.13 (seconds)
-	- Increase: The character will slide during a longer period of time after runing 
+	- Increase: The character will slide during a longer period of time after runing
 	- Decrease: The character will slide during a shorter period of time after runing
 
 ##### Idle Jump Vertical Force_impulse :
@@ -104,18 +104,18 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Fall Max Speed Velocity Value_threshold :
 	- Default Value: 60
-	- Increase: 'Fall Maxspeed' animation happens less often. The character will need a higher vertical speed when falling from higher places
-	- Decrease: 'Fall Maxspeed' animation happens more often. The character will need a lower vertical speed when falling from higher places
+	- Increase: 'Fall Maxspeed' animation happens less often. The character will need a higher vertical speed when falling from higher places to trigger the animation state
+	- Decrease: 'Fall Maxspeed' animation happens more often. The character will need a lower vertical speed when falling from higher places to trigger the animation state
 
 ##### On The Ground Duration_timer :
-	- Default Value: 2
-	- Increase: 
-	- Decrease: 
+	- Default Value: 2 (seconds)
+	- Increase: After hitting the ground (while in 'Fall Maxspeed'), the character remains lying down for a longer period of time
+	- Decrease: After hitting the ground (while in 'Fall Maxspeed'), the character remains lying down for a shorter period of time
 
 ##### On The Ground Stand Up Time_timer :
-	- Default Value: 0.5
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.5 (seconds)
+	- Increase: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is longer
+	- Decrease: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is shorter
 
 ##### Crawl Movement Speed_fixed :
 	- Default Value: 10
@@ -124,35 +124,35 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Slide Horizontal Force_impulse :
 	- Default Value: 2500
-	- Increase: 
-	- Decrease: 
+	- Increase: The character will slide further (horizontally) while doing a run slide
+	- Decrease: The character will slide closer (horizontally) while doing a run slide
 
 ##### Run Slide Start Time_timer :
-	- Default Value: 0.75
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.75 (seconds)
+	- Increase: Increase the amount of time the player needs to wait (after starting to run) before doing a run slide
+	- Decrease: Decreases the amount of time the player needs to wait (after starting to run) before doing a run slide
 
 ##### Run Slide Duration_timer :
-	- Default Value: 0.25
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.25 (seconds)
+	- Increase: If triggered, the character will run slide during a longer period of time 
+	- Decrease: If triggered, the character will run slide during a shorter period of time 
 
 ##### Wall Slide Hold Gravity_ratio :
 	- Default Value: 0.125
-	- Increase: 
-	- Decrease: 
+	- Increase: While wall sliding and holding the movement input towards the wall, the character will fall faster towards the ground
+	- Decrease: While wall sliding and holding the movement input towards the wall, the character will fall slower towards the ground
 
 ##### Wall Jump Vertical Force_impulse :
 	- Default Value: 800
-	- Increase: Character jumps higher if Wall Sliding
-	- Decrease: Character jumps lower if Wall Sliding
+	- Increase: Character jumps higher (vertically) if wall sliding
+	- Decrease: Character jumps lower (vertically) if Wall Sliding
 
 ##### Wall Jump Horizontal Force_impulse :
 	- Default Value: 1500
-	- Increase: Character jumps further if Wall Sliding
-	- Decrease: Character jumps closer if Wall Sliding 
+	- Increase: Character jumps further (horizontally) if wall sliding
+	- Decrease: Character jumps closer (horizontally) if wall sliding 
 
 ##### Wall Jump Restrain Duration_timer :
-	- Default Value: 0.25
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.25 (seconds)
+	- Increase: Increase the amount of time the player needs to wait (after doing a wall jump) before doing a new one
+	- Decrease: Decreases the amount of time the player needs to wait (after doing a wall jump) before doing a new one
