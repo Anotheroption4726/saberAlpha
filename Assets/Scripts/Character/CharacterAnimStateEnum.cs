@@ -1,4 +1,4 @@
-﻿public enum CharaAnimStateEnum
+﻿public enum CharacterAnimStateEnum
 {
     Idle,
     Run,
@@ -7,8 +7,11 @@
     Jump_forward,
     Fall_normal,
     Fall_forward,
+    Fall_maxspeed,
     Crawl_idle,
     Crawl_move,
     Wallslide,
     Run_slide,
+    Ontheground,
+    Ontheground_standup,
 }
