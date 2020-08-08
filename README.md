@@ -29,7 +29,7 @@
 		- Keyboard: Space Bar
 		- Gamepad: Button 0 (Xbox: A / Playstation: X)
 
-### DEVELOPPER/TEST MODE
+### DEVELOPPER MODE
 Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't opened on start up, go to **/Assets/Scenes** and open *'TestScene'*. Once you are in *'TestScene'*, go to the **Hierarchy** window (usually the left side panel), select the *'SceneManager'* **GameObject** and navigate to its *'Game Parameters Script'* **Component** (usually on the right side panel). Here you will find a series of variables that you'll be able tweak in order to test the game.
 
 ##### Warnings:
@@ -40,6 +40,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 	!!! Changes made to the scene will only be applied once 
 	it is saved AND if you are using the 'Test Game' mode. 
 	Remember to work on your own git branch.
+
+### GAME VARIABLES
 
 ##### Game Type:
 	- Normal Game: Regular game using the original default 
@@ -54,8 +56,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Gravity Scale:
 	- Default Value: 46.5
-	- Increase: Earth-like physics
-	- Decrease: Moon-like physics
+	- Increase: Game has earth-like physics
+	- Decrease: Game has moon-like physics
 
 ##### Platform Friction:
 	- Default Value: 4
@@ -66,6 +68,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 	- Default Value: 4
 	- Increase: 
 	- Decrease: 
+
+### CHARACTER VARIABLES
 
 ##### Run Movement Speed_fixed :
 	- Default Value: 40
