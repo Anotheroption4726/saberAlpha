@@ -61,25 +61,25 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Platform Friction:
 	- Default Value: 4
-	- Increase: 
-	- Decrease: 
+	- Increase: All characters won't be able to move when colliding with platforms
+	- Decrease: All characters will ice skate when colliding with platforms
 
 ### CHARACTER VARIABLES
 
 ##### Character Friction:
 	- Default Value: 4
-	- Increase: 
-	- Decrease: 
+	- Increase: The character won't be able to move when colliding with platforms
+	- Decrease: The character will ice skate when colliding with platforms
 
 ##### Run Movement Speed_fixed :
 	- Default Value: 40
-	- Increase: Character runs faster
-	- Decrease: Character runs slower
+	- Increase: The character runs faster
+	- Decrease: The character runs slower
 
 ##### Run Stop Slide Time_timer :
-	- Default Value: 0.13
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.13 (seconds)
+	- Increase: The character will slide during a longer period of time after runing 
+	- Decrease: The character will slide during a shorter period of time after runing
 
 ##### Idle Jump Vertical Force_impulse :
 	- Default Value: 1200
@@ -88,28 +88,28 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Idle Jump Movement Speed_fixed :
 	- Default Value: 10
-	- Increase: 
-	- Decrease: 
+	- Increase: The character moves faster (horizontally) while in mid-air (doesn't affect Forward Jump or Wall Jump speeds)
+	- Decrease: The character moves slower (horizontally) while in mid-air (doesn't affect Forward Jump or Wall Jump speeds)
 
 ##### Forward Jump Horizontal Force_impulse :
 	- Default Value: 250
-	- Increase: Character jumps further (doesn't apply to Wall Jump)
-	- Decrease: Character jumps closer (doesn't apply to Wall Jump)
+	- Increase: Character Forward Jumps further (horizontally, doesn't apply to Wall Jump)
+	- Decrease: Character Forward Jumps closer (horizontally, doesn't apply to Wall Jump)
 
 ##### Forward Jump Stop Slide Force_impulse :
 	- Default Value: 1500
-	- Increase: 
-	- Decrease: 
+	- Increase: The character will slide further (horizontally) while landing on the ground after a Forward Jump or a Wall Jump
+	- Decrease: The character will slide closer (horizontally) while landing on the ground after a Forward Jump or a Wall Jump
 
 ##### Forward Jump Horizontal Air Drag_ratio :
-	- Default Value: 0.97
-	- Increase: 
-	- Decrease: 
+	- Default Value: 0.97 (min: 0 - max: 1)
+	- Increase: While Forward Jumping and not holding any movement input, the character will loose more horizontal speed every frame
+	- Decrease: While Forward Jumping and not holding any movement input, the character will loose less horizontal speed every frame
 
 ##### Fall Max Speed Velocity Value_threshold :
 	- Default Value: 60
-	- Increase: 
-	- Decrease: 
+	- Increase: 'Fall Maxspeed' animation happens less often. The character will need a higher vertical speed when falling from higher places
+	- Decrease: 'Fall Maxspeed' animation happens more often. The character will need a lower vertical speed when falling from higher places
 
 ##### On The Ground Duration_timer :
 	- Default Value: 2
