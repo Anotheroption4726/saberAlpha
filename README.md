@@ -40,10 +40,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 ### GAME VARIABLES
 
 ##### Game Type:
-	- Normal Game: Regular game using the original default 
-	  parameter values.
-	- Test Game: Test game using the modified parameter 
-	  values.
+	- Normal Game: Regular game using the original default parameter values
+	- Test Game: Test game using the modified parameter values
 
 ##### Time Scale:
 	- Default Value: 1
