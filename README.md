@@ -42,15 +42,15 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 	Remember to work on your own git branch.
 
 ##### Game Type:
-	- Normal Game: regular game using the original default 
+	- Normal Game: Regular game using the original default 
 	  parameter values.
-	- Test Game: test game using the modified parameter 
+	- Test Game: Test game using the modified parameter 
 	  values.
 
 ##### Time Scale:
 	- Default Value: 1
-	- Increase: game runs faster
-	- Decrease: game runs slower
+	- Increase: Game runs faster
+	- Decrease: Game runs slower
 
 ##### Gravity Scale:
 	- Default Value: 46.5
@@ -69,8 +69,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Movement Speed_fixed :
 	- Default Value: 40
-	- Increase: 
-	- Decrease: 
+	- Increase: Character runs faster
+	- Decrease: Character runs slower
 
 ##### Run Stop Slide Time_timer :
 	- Default Value: 0.13
@@ -79,8 +79,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Idle Jump Vertical Force_impulse :
 	- Default Value: 1200
-	- Increase: 
-	- Decrease: 
+	- Increase: Character jumps higher (applies to Forward Jump as well)
+	- Decrease: Character jumps lower (applies to Forward Jump as well)
 
 ##### Idle Jump Movement Speed_fixed :
 	- Default Value: 10
@@ -89,8 +89,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Forward Jump Horizontal Force_impulse :
 	- Default Value: 250
-	- Increase: 
-	- Decrease: 
+	- Increase: Character jumps further (doesn't apply to Wall Jump)
+	- Decrease: Character jumps closer (doesn't apply to Wall Jump)
 
 ##### Forward Jump Stop Slide Force_impulse :
 	- Default Value: 1500
@@ -119,8 +119,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Crawl Movement Speed_fixed :
 	- Default Value: 10
-	- Increase: 
-	- Decrease: 
+	- Increase: Character moves faster while crawling
+	- Decrease: Character moves slower while crawling
 
 ##### Run Slide Horizontal Force_impulse :
 	- Default Value: 2500
@@ -144,13 +144,13 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Wall Jump Vertical Force_impulse :
 	- Default Value: 800
-	- Increase: 
-	- Decrease: 
+	- Increase: Character jumps higher if Wall Sliding
+	- Decrease: Character jumps lower if Wall Sliding
 
 ##### Wall Jump Horizontal Force_impulse :
 	- Default Value: 1500
-	- Increase: 
-	- Decrease: 
+	- Increase: Character jumps further if Wall Sliding
+	- Decrease: Character jumps closer if Wall Sliding 
 
 ##### Wall Jump Restrain Duration_timer :
 	- Default Value: 0.25
