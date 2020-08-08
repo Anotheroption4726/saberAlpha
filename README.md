@@ -64,12 +64,12 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 	- Increase: 
 	- Decrease: 
 
+### CHARACTER VARIABLES
+
 ##### Character Friction:
 	- Default Value: 4
 	- Increase: 
 	- Decrease: 
-
-### CHARACTER VARIABLES
 
 ##### Run Movement Speed_fixed :
 	- Default Value: 40
