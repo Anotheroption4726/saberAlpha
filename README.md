@@ -33,13 +33,9 @@
 Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't opened on start up, go to **/Assets/Scenes** and open *'TestScene'*. Once you are in *'TestScene'*, go to the **Hierarchy** window (usually the left side panel), select the *'SceneManager'* **GameObject** and navigate to its *'Game Parameters Script'* **Component** in the **Inspector** window (usually the right side panel). Here you will find a series of variables that you'll be able tweak in order to test the game.
 
 ##### Warnings:
-	!!! You should only work within the scope of the 'Game 
-	Parameters Script'. Do not change anything else in the
-	project outside of that Component.
+	!!! You should only work within the scope of the 'Game Parameters Script'. Do not change anything else in the project outside of that Component.
 
-	!!! Changes made to the scene will only be applied once 
-	it is saved AND if you are using the 'Test Game' mode. 
-	Remember to work on your own git branch.
+	!!! Changes made to the scene will only be applied once it is saved AND if you are using the 'Test Game' mode. Remember to work on your own git branch.
 
 ### GAME VARIABLES
 
