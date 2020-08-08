@@ -74,13 +74,13 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Stop Slide Time_timer :
 	- Default Value: 0.13 (seconds)
-	- Increase: The character will slide during a longer period of time after runing
-	- Decrease: The character will slide during a shorter period of time after runing
+	- Increase: The character will slide during a longer period of time after runing or forward jumping (doesn't change the speed of the animation)
+	- Decrease: The character will slide during a shorter period of time after runing or forward jumping (doesn't change the speed of the animation)
 
 ##### Idle Jump Vertical Force_impulse :
 	- Default Value: 1200
-	- Increase: Character jumps higher (applies to Forward Jump as well)
-	- Decrease: Character jumps lower (applies to Forward Jump as well)
+	- Increase: Character jumps higher (vertically, applies to Forward Jump as well)
+	- Decrease: Character jumps lower (vertically, applies to Forward Jump as well)
 
 ##### Idle Jump Movement Speed_fixed :
 	- Default Value: 10
@@ -89,18 +89,18 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Forward Jump Horizontal Force_impulse :
 	- Default Value: 250
-	- Increase: Character Forward Jumps further (horizontally, doesn't apply to Wall Jump)
-	- Decrease: Character Forward Jumps closer (horizontally, doesn't apply to Wall Jump)
+	- Increase: Character forward jumps further (horizontally, doesn't apply to wall jumps)
+	- Decrease: Character forward jumps closer (horizontally, doesn't apply to wall jumps)
 
 ##### Forward Jump Stop Slide Force_impulse :
 	- Default Value: 1500
-	- Increase: The character will slide further (horizontally) while landing on the ground after a Forward Jump or a Wall Jump
-	- Decrease: The character will slide closer (horizontally) while landing on the ground after a Forward Jump or a Wall Jump
+	- Increase: The character will slide further (horizontally) while landing on the ground after forward jumping or wall jumping
+	- Decrease: The character will slide closer (horizontally) while landing on the ground after forward jumping or wall jumping
 
 ##### Forward Jump Horizontal Air Drag_ratio :
 	- Default Value: 0.97 (min: 0 - max: 1)
-	- Increase: While Forward Jumping and not holding any movement input, the character will loose more horizontal speed every frame
-	- Decrease: While Forward Jumping and not holding any movement input, the character will loose less horizontal speed every frame
+	- Increase: While forward jumping and not holding any movement input, the character will loose less proportional horizontal speed every frame
+	- Decrease: While forward jumping and not holding any movement input, the character will loose more proportional horizontal speed every frame
 
 ##### Fall Max Speed Velocity Value_threshold :
 	- Default Value: 60
@@ -109,13 +109,13 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### On The Ground Duration_timer :
 	- Default Value: 2 (seconds)
-	- Increase: After hitting the ground (while in 'Fall Maxspeed'), the character remains lying down for a longer period of time
-	- Decrease: After hitting the ground (while in 'Fall Maxspeed'), the character remains lying down for a shorter period of time
+	- Increase: After hitting the ground (while in 'Fall Maxspeed' animation state), the character remains lying down for a longer period of time (doesn't change the speed of the animation)
+	- Decrease: After hitting the ground (while in 'Fall Maxspeed' animation state), the character remains lying down for a shorter period of time (doesn't change the speed of the animation)
 
 ##### On The Ground Stand Up Time_timer :
 	- Default Value: 0.5 (seconds)
-	- Increase: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is longer
-	- Decrease: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is shorter
+	- Increase: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is longer (doesn't change the speed of the animation)
+	- Decrease: the duration of the 'Stand Up' animation state (triggered after the 'On The Ground' animation state is over) is shorter (doesn't change the speed of the animation)
 
 ##### Crawl Movement Speed_fixed :
 	- Default Value: 10
@@ -129,13 +129,13 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Slide Start Time_timer :
 	- Default Value: 0.75 (seconds)
-	- Increase: Increase the amount of time the player needs to wait (after starting to run) before doing a run slide
-	- Decrease: Decreases the amount of time the player needs to wait (after starting to run) before doing a run slide
+	- Increase: Increase the amount of time the player needs to wait (after starting to run) before doing a run slide. Resets after a run slide has happened
+	- Decrease: Decreases the amount of time the player needs to wait (after starting to run) before doing a run slide. Resets after a run slide has happened
 
 ##### Run Slide Duration_timer :
 	- Default Value: 0.25 (seconds)
-	- Increase: If triggered, the character will run slide during a longer period of time 
-	- Decrease: If triggered, the character will run slide during a shorter period of time 
+	- Increase: If triggered, the character will run slide during a longer period of time (doesn't change the speed of the animation)
+	- Decrease: If triggered, the character will run slide during a shorter period of time (doesn't change the speed of the animation)
 
 ##### Wall Slide Hold Gravity_ratio :
 	- Default Value: 0.125
@@ -154,5 +154,5 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Wall Jump Restrain Duration_timer :
 	- Default Value: 0.25 (seconds)
-	- Increase: Increase the amount of time the player needs to wait (after doing a wall jump) before doing a new one
-	- Decrease: Decreases the amount of time the player needs to wait (after doing a wall jump) before doing a new one
+	- Increase: Increase the amount of time the player needs to wait after doing a wall jump before doing a new one
+	- Decrease: Decreases the amount of time the player needs to wait after doing a wall jump before doing a new one
