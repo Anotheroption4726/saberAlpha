@@ -12,40 +12,40 @@ public class GameParametersScript : MonoBehaviour
     [SerializeField] private float characterFriction;
 
     //  Character Run Parameters
-    [SerializeField] private float fixed_run_movementSpeed;
-    [SerializeField] private float timer_run_stopSlideTime;
+    [SerializeField] private float runMovementSpeed_fixed;
+    [SerializeField] private float runStopSlideTime_timer;
 
     //  Character Idle Jump Parameters
-    [SerializeField] private float impulse_idleJump_verticalForce;
-    [SerializeField] private float fixed_idleJump_movementSpeed;
+    [SerializeField] private float idleJumpVerticalForce_impulse;
+    [SerializeField] private float idleJumpMovementSpeed_fixed;
 
     //  Character Forward Jump Parameters
-    [SerializeField] private float impulse_forwardJump_horizontalForce;
-    [SerializeField] private float impulse_forwardJump_stopSlideForce;
-    [SerializeField] private float ratio_forwardJump_horizontalAirDrag;
+    [SerializeField] private float forwardJumpHorizontalForce_impulse;
+    [SerializeField] private float forwardJumpStopSlideForce_impulse;
+    [SerializeField] private float forwardJumpHorizontalAirDrag_ratio;
 
     //  Character Fall MaxSpeed Parameters
-    [SerializeField] private float threshold_fallMaxSpeed_velocityValue;
+    [SerializeField] private float fallMaxSpeedVelocityValue_threshold;
 
     //  Character On the Ground Parameters
-    [SerializeField] private float timer_onTheGround_duration;
-    [SerializeField] private float timer_onTheGround_StandUpTime;
+    [SerializeField] private float onTheGroundDuration_timer;
+    [SerializeField] private float onTheGroundStandUpTime_timer;
 
     //  Character Crawl Parameters
-    [SerializeField] private float fixed_crawl_movementSpeed;
+    [SerializeField] private float crawlMovementSpeed_fixed;
 
     //  Character Run Slide Parameters
-    [SerializeField] private float impulse_runSlide_horizontalForce;
-    [SerializeField] private float timer_runSlide_startTime;
-    [SerializeField] private float timer_runSlide_duration;
+    [SerializeField] private float runSlideHorizontalForce_impulse;
+    [SerializeField] private float runSlideStartTime_timer;
+    [SerializeField] private float runSlideDuration_timer;
 
     //  Character WallSlide Parameters
-    [SerializeField] private float ratio_wallSlide_holdGravity;
+    [SerializeField] private float wallSlideHoldGravity_ratio;
 
     //  Character WallJump Parameters
-    [SerializeField] private float impulse_wallJump_verticalForce;
-    [SerializeField] private float impulse_wallJump_horizontalForce;
-    [SerializeField] private float timer_wallJump_restrainDuration;
+    [SerializeField] private float wallJumpVerticalForce_impulse;
+    [SerializeField] private float wallJumpHorizontalForce_impulse;
+    [SerializeField] private float wallJumpRestrainDuration_timer;
 
 
     //  Getters
@@ -76,91 +76,91 @@ public class GameParametersScript : MonoBehaviour
 
     public float GetRunMovementSpeed()
     {
-        return fixed_run_movementSpeed;
+        return runMovementSpeed_fixed;
     }
 
     public float GetRunStopSlideTime()
     {
-        return timer_run_stopSlideTime;
+        return runStopSlideTime_timer;
     }
 
     public float GetIdleJumpVerticalForce()
     {
-        return impulse_idleJump_verticalForce;
+        return idleJumpVerticalForce_impulse;
     }
 
     public float GetIdleJumpMovementSpeed()
     {
-        return fixed_idleJump_movementSpeed;
+        return idleJumpMovementSpeed_fixed;
     }
 
     public float GetForwardJumpHorizontalForce()
     {
-        return impulse_forwardJump_horizontalForce;
+        return forwardJumpHorizontalForce_impulse;
     }
 
     public float GetForwardJumpStopSlideForce()
     {
-        return impulse_forwardJump_stopSlideForce;
+        return forwardJumpStopSlideForce_impulse;
     }
 
     public float GetForwardJumpHorizontalAirDrag()
     {
-        return ratio_forwardJump_horizontalAirDrag;
+        return forwardJumpHorizontalAirDrag_ratio;
     }
 
     public float GetFallMaxSpeedVelocityValue()
     {
-        return threshold_fallMaxSpeed_velocityValue;
+        return fallMaxSpeedVelocityValue_threshold;
     }
 
     public float GetOnTheGroundDuration()
     {
-        return timer_onTheGround_duration;
+        return onTheGroundDuration_timer;
     }
 
     public float GetOnTheGroundStandUpTime()
     {
-        return timer_onTheGround_StandUpTime;
+        return onTheGroundStandUpTime_timer;
     }
 
     public float GetCrawlMovementSpeed()
     {
-        return fixed_crawl_movementSpeed;
+        return crawlMovementSpeed_fixed;
     }
 
     public float GetRunSlideHorizontalForce()
     {
-        return impulse_runSlide_horizontalForce;
+        return runSlideHorizontalForce_impulse;
     }
 
     public float GetRunSlideStartTime()
     {
-        return timer_runSlide_startTime;
+        return runSlideStartTime_timer;
     }
 
     public float GetRunSlideDuration()
     {
-        return timer_runSlide_duration;
+        return runSlideDuration_timer;
     }
 
     public float GetWallSlideHoldGravity()
     {
-        return ratio_wallSlide_holdGravity;
+        return wallSlideHoldGravity_ratio;
     }
 
     public float GetWallJumpVerticalForce()
     {
-        return impulse_wallJump_verticalForce;
+        return wallJumpVerticalForce_impulse;
     }
 
     public float GetWallJumpHorizontalForce()
     {
-        return impulse_wallJump_horizontalForce;
+        return wallJumpHorizontalForce_impulse;
     }
 
     public float GetWallJumpRestrainDuration()
     {
-        return timer_wallJump_restrainDuration;
+        return wallJumpRestrainDuration_timer;
     }
 }

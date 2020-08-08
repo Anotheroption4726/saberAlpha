@@ -3077,24 +3077,24 @@ MonoBehaviour:
   gravityScale: 46.5
   platformFriction: 4
   characterFriction: 4
-  fixed_run_movementSpeed: 40
-  timer_run_stopSlideTime: 0.13
-  impulse_idleJump_verticalForce: 1200
-  fixed_idleJump_movementSpeed: 10
-  impulse_forwardJump_horizontalForce: 250
-  impulse_forwardJump_stopSlideForce: 1500
-  ratio_forwardJump_horizontalAirDrag: 0.97
-  threshold_fallMaxSpeed_velocityValue: 60
-  timer_onTheGround_duration: 2
-  timer_onTheGround_StandUpTime: 0.5
-  fixed_crawl_movementSpeed: 10
-  impulse_runSlide_horizontalForce: 2500
-  timer_runSlide_startTime: 0.75
-  timer_runSlide_duration: 0.25
-  ratio_wallSlide_holdGravity: 0.125
-  impulse_wallJump_verticalForce: 800
-  impulse_wallJump_horizontalForce: 1500
-  timer_wallJump_restrainDuration: 0.25
+  runMovementSpeed_fixed: 40
+  runStopSlideTime_timer: 0.13
+  idleJumpVerticalForce_impulse: 1200
+  idleJumpMovementSpeed_fixed: 10
+  forwardJumpHorizontalForce_impulse: 250
+  forwardJumpStopSlideForce_impulse: 1500
+  forwardJumpHorizontalAirDrag_ratio: 0.97
+  fallMaxSpeedVelocityValue_threshold: 60
+  onTheGroundDuration_timer: 2
+  onTheGroundStandUpTime_timer: 0.5
+  crawlMovementSpeed_fixed: 10
+  runSlideHorizontalForce_impulse: 2500
+  runSlideStartTime_timer: 0.75
+  runSlideDuration_timer: 0.25
+  wallSlideHoldGravity_ratio: 0.125
+  wallJumpVerticalForce_impulse: 800
+  wallJumpHorizontalForce_impulse: 1500
+  wallJumpRestrainDuration_timer: 0.25
 --- !u!1 &1084149478
 GameObject:
   m_ObjectHideFlags: 0
