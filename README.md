@@ -72,8 +72,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Stop Slide Time_timer :
 	- Default Value: 0.13 (seconds)
-	- Increase: The character will slide during a longer period of time after runing or forward jumping (doesn't change the speed of the animation)
-	- Decrease: The character will slide during a shorter period of time after runing or forward jumping (doesn't change the speed of the animation)
+	- Increase: The character will be in 'Slide' animation state for a longer period of time after runing or forward jumping (doesn't change the speed of the animation)
+	- Decrease: The character will be in 'Slide' animation state for a shorter period of time after runing or forward jumping (doesn't change the speed of the animation)
 
 ##### Idle Jump Vertical Force_impulse :
 	- Default Value: 1200
@@ -132,8 +132,8 @@ Open the Project (requires **Unity 2019.4.4f1** or more). If *'TestScene'* isn't
 
 ##### Run Slide Duration_timer :
 	- Default Value: 0.25 (seconds)
-	- Increase: If triggered, the character will run slide during a longer period of time (doesn't change the speed of the animation)
-	- Decrease: If triggered, the character will run slide during a shorter period of time (doesn't change the speed of the animation)
+	- Increase: If triggered, the character will be in 'Run Slide' animation state for a longer period of time (doesn't change the speed of the animation)
+	- Decrease: If triggered, the character will be in 'Run Slide' animation state for a shorter period of time (doesn't change the speed of the animation)
 
 ##### Wall Slide Hold Gravity_ratio :
 	- Default Value: 0.125
