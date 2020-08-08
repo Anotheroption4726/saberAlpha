@@ -3,30 +3,7 @@ using UnityEngine;
 
 public class CharacterScript : MonoBehaviour
 {
-    //  Movement variables
-    private float runGroundSpeed = 40;
-    private float runSlideImpulse = 2500;
-    private float jumpImpulse = 1200;
-    private float slowAirSpeed = 10;
-    private float forwardJumpSpeed = 250;
-    private float forwardJumpSlideSpeed = 1500;
-    private float forwardJumpAirDrag = 0.97f;   //0.997f
-    private float fallMaxSpeedTreshold = 60;
-    private float crawlSpeed = 10;
-    private float wallJumpImpulse = 800;
-    private float wallJumpSpeed = 1500;
-    private float wallSlideGravity = 0.125f;
-
-    //  Timers
-    private float slideTime = 0.13f;
-    private bool canRunSlide = false;
-    private float runSlideStartTime = 0.75f;
-    private float runSlideTime = 0.25f;
-    private bool hasWallJumped = false;
-    private float wallJumpTimer = 0.25f;
-    private float ontheGroundTime = 2;
-    private float ontheGroundStandUpTime = 0.5f;
-    private bool ontheGroundBool = false;
+    private Character character;
 
     //  Components
     private CharacterPhysicsManagerScript physicsManager;
@@ -56,12 +33,26 @@ public class CharacterScript : MonoBehaviour
                                                             "Ontheground_standup" 
                                                         };
 
+    //  Getters and Setters
+    public Character GetCharacter()
+    {
+        return character;
+    }
+
+    public void SetCharacter(Character arg_character)
+    {
+        character = arg_character;
+    }
+
+
+    //  Awake Function
     private void Awake()
     {
         physicsManager = GetComponent<CharacterPhysicsManagerScript>();
     }
 
 
+    //  Update Function
     private void Update()
     {
         if (!Game.GetGamePaused())
@@ -81,7 +72,7 @@ public class CharacterScript : MonoBehaviour
                 else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                 {
                     SetAnimation("Jump", CharacterAnimStateEnum.Jump);
-                    physicsManager.AddForceMethod(Vector2.up * jumpImpulse);
+                    physicsManager.AddForceMethod(Vector2.up * character.GetIdleJumpVerticalForce());
 
                 }
 
@@ -105,7 +96,7 @@ public class CharacterScript : MonoBehaviour
             else if (animState.Equals(CharacterAnimStateEnum.Run))
             {
                 //  CanRunSlide Timer
-                if (!canRunSlide)
+                if (!character.GetRunSlideCanRunSlide())
                 {
                     StartCoroutine("CanRunSlide");
                 }
@@ -115,21 +106,21 @@ public class CharacterScript : MonoBehaviour
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     SetDirection(loc_directionInt);
-                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * runGroundSpeed);
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * character.GetRunMovementSpeed());
 
                     //  Jump Forward
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * forwardJumpSpeed, jumpImpulse));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetForwardJumpHorizontalForce(), character.GetIdleJumpVerticalForce()));
                     }
 
                     // Run Slide
-                    else if (canRunSlide && ReturnVerticalInput() < 0)
+                    else if (character.GetRunSlideCanRunSlide() && ReturnVerticalInput() < 0)
                     {
                         SetAnimation("Run_slide", CharacterAnimStateEnum.Run_slide);
                         StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * runSlideImpulse, 0));
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetRunSlideHorizontalForce(), 0));
                     }
                 }
 
@@ -208,7 +199,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Maximum Speed
-                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                if (physicsManager.GetRigidbody().velocity.y < -character.GetFallMaxSpeedVelocityValue())
                 {
                     SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
@@ -223,12 +214,12 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsColliding() && !ontheGroundBool)
+                if (groundChecker.GetIsColliding() && !character.GetOnTheGroundIsOntheGround())
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation("Ontheground", CharacterAnimStateEnum.Ontheground);
                     StartCoroutine("Ontheground");
-                    ontheGroundBool = true;
+                    character.SetOnTheGroundIsOntheGround(false);
                 }
             }
 
@@ -280,7 +271,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (!Input.anyKey && ReturnHorizontalInput() == 0)
                     {
-                        physicsManager.AddForceMethod(new Vector2(directionInt * forwardJumpSlideSpeed, 0));
+                        physicsManager.AddForceMethod(new Vector2(directionInt * character.GetForwardJumpStopSlideForce(), 0));
                         SetAnimation("Slide", CharacterAnimStateEnum.Slide);
                         StartCoroutine("StopSlide");
                     }
@@ -294,7 +285,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Maximum Speed
-                if (physicsManager.GetRigidbody().velocity.y < -fallMaxSpeedTreshold)
+                if (physicsManager.GetRigidbody().velocity.y < -character.GetFallMaxSpeedVelocityValue())
                 {
                     SetAnimation("Fall_maxspeed", CharacterAnimStateEnum.Fall_maxspeed);
                 }
@@ -336,7 +327,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     int loc_directionInt = ReturnHorizontalInput();
                     SetDirection(loc_directionInt);
-                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * crawlSpeed);
+                    physicsManager.ChangeVelocityHorizontal(loc_directionInt * character.GetCrawlMovementSpeed());
                 }
 
                 //  Stop
@@ -373,18 +364,18 @@ public class CharacterScript : MonoBehaviour
                 else if ((ReturnHorizontalInput() > 0 && directionInt > 0) || (ReturnHorizontalInput() < 0 && directionInt < 0))
                 {
                     //NOT IN FIXEDUPDATE
-                    physicsManager.SetRigidBodyGravity(wallSlideGravity);
+                    physicsManager.SetRigidBodyGravity(character.GetWallSlideHoldGravity());
                 }
 
                 //  Jump Left
-                if (!hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
+                if (!character.GetWallJumpHasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
                     SetDirection(-directionInt);
 
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-                    physicsManager.AddForceMethod(new Vector2(directionInt * wallJumpSpeed, wallJumpImpulse));
+                    physicsManager.AddForceMethod(new Vector2(directionInt * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
                     SetAnimation("Jump_forward", CharacterAnimStateEnum.Jump_forward);
                     StartCoroutine("WallJumpTimer");
                 }
@@ -423,43 +414,43 @@ public class CharacterScript : MonoBehaviour
     //  Timer functions
     private IEnumerator StopSlide()
     {
-        yield return new WaitForSeconds(slideTime);
+        yield return new WaitForSeconds(character.GetRunStopSlideTime());
         SetAnimation("Idle", CharacterAnimStateEnum.Idle);
     }
 
     private IEnumerator CanRunSlide()
     {
-        yield return new WaitForSeconds(runSlideStartTime);
-        canRunSlide = true;
+        yield return new WaitForSeconds(character.GetRunSlideStartTime());
+        character.SetRunSlideCanRunSlide(true);
     }
 
     private IEnumerator StopRunSlide()
     {
-        yield return new WaitForSeconds(runSlideTime);
+        yield return new WaitForSeconds(character.GetRunSlideDuration());
         SetAnimation("Crawl_move", CharacterAnimStateEnum.Crawl_move);
-        canRunSlide = false;
+        character.SetRunSlideCanRunSlide(false);
     }
 
     private IEnumerator WallJumpTimer()
     {
-        hasWallJumped = true;
-        yield return new WaitForSeconds(wallJumpTimer);
-        hasWallJumped = false;
+        character.SetWallJumpHasWallJumped(true);
+        yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
+        character.SetWallJumpHasWallJumped(false);
     }
 
     private IEnumerator Ontheground()
     {
-        yield return new WaitForSeconds(ontheGroundTime);
+        yield return new WaitForSeconds(character.GetOnTheGroundDuration());
         SetAnimation("Ontheground_standup", CharacterAnimStateEnum.Ontheground_standup);
         StartCoroutine("OnthegroundStandup");
     }
 
     private IEnumerator OnthegroundStandup()
     {
-        yield return new WaitForSeconds(ontheGroundStandUpTime);
+        yield return new WaitForSeconds(character.GetOnTheGroundStandUpTime());
         Debug.Log("Debout");
         SetAnimation("Idle", CharacterAnimStateEnum.Idle);
-        ontheGroundBool = false;
+        character.SetOnTheGroundIsOntheGround(false);
     }
 
 
@@ -542,7 +533,7 @@ public class CharacterScript : MonoBehaviour
         {
             int loc_directionInt = ReturnHorizontalInput();
             SetDirection(loc_directionInt);
-            physicsManager.ChangeVelocityHorizontal(loc_directionInt * slowAirSpeed);
+            physicsManager.ChangeVelocityHorizontal(loc_directionInt * character.GetIdleJumpMovementSpeed());
         }
     }
 
@@ -559,7 +550,7 @@ public class CharacterScript : MonoBehaviour
     {
         if (!Input.anyKey && ReturnHorizontalInput() == 0)
         {
-            physicsManager.HorizontalDrag(forwardJumpAirDrag);
+            physicsManager.HorizontalDrag(character.GetForwardJumpHorizontalAirDrag());
         }
     }
 }
