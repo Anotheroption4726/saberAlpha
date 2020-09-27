@@ -271,7 +271,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     if (!Input.anyKey && ReturnHorizontalInput() == 0)
                     {
-                        physicsManager.AddForceMethod(new Vector2(directionInt * character.GetForwardJumpStopSlideForce(), 0));
+                        //physicsManager.AddForceMethod(new Vector2(directionInt * character.GetForwardJumpStopSlideForce(), 0));
                         SetAnimation("Slide", CharacterAnimStateEnum.Slide);
                         StartCoroutine("StopSlide");
                     }
