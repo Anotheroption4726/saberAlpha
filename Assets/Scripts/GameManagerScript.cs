@@ -19,8 +19,8 @@ public class GameManagerScript : MonoBehaviour
 
         if (Game.GetGameType() == GameTypeEnum.NormalGame)
         {
-            platformPhysicMaterial.friction = Game.GetDefaultPlatformFriction();
-            characterPhysicMaterial.friction = Game.GetDefaultCharacterFriction();
+            //platformPhysicMaterial.friction = Game.GetDefaultPlatformFriction();
+            //characterPhysicMaterial.friction = Game.GetDefaultCharacterFriction();
             inGameCharacter.GetComponent<CharacterScript>().SetCharacter(new Character());
         }
 
