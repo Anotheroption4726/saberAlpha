@@ -2,8 +2,6 @@
 {
     private static GameTypeEnum gameType;
     private static bool gamePaused = false;
-    private static float defaultPlatformFriction = 4;
-    private static float defaultCharacterFriction = 4;
 
     public static GameTypeEnum GetGameType()
     {
@@ -13,16 +11,6 @@
     public static bool GetGamePaused()
     {
         return gamePaused;
-    }
-
-    public static float GetDefaultPlatformFriction()
-    {
-        return defaultPlatformFriction;
-    }
-
-    public static float GetDefaultCharacterFriction()
-    {
-        return defaultCharacterFriction;
     }
 
     public static void SetGameType(GameTypeEnum arg_gameType)
