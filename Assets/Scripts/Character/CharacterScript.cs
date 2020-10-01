@@ -71,25 +71,6 @@ public class CharacterScript : MonoBehaviour
                 //  Jump
                 else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                 {
-                    /*
-                    //  Wallslide
-                    if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
-                    {
-                        //NOT IN FIXEDUPDATE
-                        physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-
-                        physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                        SetAnimation("Wallslide", CharacterAnimStateEnum.Wallslide);
-                    }
-
-                    // Jump
-                    else
-                    {
-                        SetAnimation("Jump", CharacterAnimStateEnum.Jump);
-                        physicsManager.AddForceMethod(Vector2.up * character.GetIdleJumpVerticalForce());
-                    }
-                    */
-
                     SetAnimation("Jump", CharacterAnimStateEnum.Jump);
                     physicsManager.AddForceMethod(Vector2.up * character.GetIdleJumpVerticalForce());
                 }
