@@ -16,22 +16,20 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private string[] animationNamesTable = new string[]{
-                                                            "Idle", 
-                                                            "Run", 
-                                                            "Slide", 
-                                                            "Jump", 
-                                                            "Jump_forward", 
-                                                            "Fall_normal", 
-                                                            "Fall_forward", 
-                                                            "Fall_maxspeed", 
-                                                            "Crawl_idle", 
-                                                            "Crawl_move", 
-                                                            "Wallslide", 
-                                                            "Run_slide", 
-                                                            "Ontheground", 
-                                                            "Ontheground_standup" 
-                                                        };
+    const string ANIM_IDLE = "Idle";
+    const string ANIM_RUN = "Run";
+    const string ANIM_SLIDE = "Slide";
+    const string ANIM_JUMP = "Jump";
+    const string ANIM_JUMP_FORWARD = "Jump_forward";
+    const string ANIM_FALL_NORMAL = "Fall_normal";
+    const string ANIM_FALL_FORWARD = "Fall_forward";
+    const string ANIM_MAXSPEED = "Fall_maxspeed";
+    const string ANIM_CRAWL_IDLE = "Crawl_idle";
+    const string ANIM_CRAWL_MOVE = "Crawl_move";
+    const string ANIM_WALLSLIDE = "Wallslide";
+    const string ANIM_RUN_SLIDE = "Run_slide";
+    const string ANIM_ONTHEGROUND = "Ontheground";
+    const string ANIM_ONTHEGROUND_STANDUP = "Ontheground_standup";
 
     //  Getters and Setters
     public Character GetCharacter()
