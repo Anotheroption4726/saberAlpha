@@ -14,4 +14,5 @@
     Run_slide,
     Ontheground,
     Ontheground_standup,
+    Melee_idle,
 }

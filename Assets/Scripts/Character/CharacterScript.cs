@@ -30,6 +30,7 @@ public class CharacterScript : MonoBehaviour
     const string ANIM_RUN_SLIDE = "Chara_Run_slide";
     const string ANIM_ONTHEGROUND = "Chara_Ontheground";
     const string ANIM_ONTHEGROUND_STANDUP = "Chara_Ontheground_standup";
+    const string ANIM_MELEE_IDLE = "Chara_Melee_idle";
 
     //  Getters and Setters
     public Character GetCharacter()
@@ -83,6 +84,13 @@ public class CharacterScript : MonoBehaviour
                 if (!groundChecker.GetIsColliding())
                 {
                     SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                }
+
+                // Melee
+                if (Input.GetButtonDown("Gamepad_Melee"))
+                {
+                    SetAnimation(ANIM_MELEE_IDLE, CharacterAnimStateEnum.Melee_idle);
+                    StartCoroutine("StopMelee");
                 }
             }
 
@@ -461,6 +469,12 @@ public class CharacterScript : MonoBehaviour
         yield return new WaitForSeconds(character.GetOnTheGroundStandUpTime());
         SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
         character.SetOnTheGroundIsOntheGround(false);
+    }
+
+    private IEnumerator StopMelee()
+    {
+        yield return new WaitForSeconds(character.GetMeleeStopTime());
+        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
     }
 
 
