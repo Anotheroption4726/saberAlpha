@@ -3072,11 +3072,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d3a829bef3c334db57303e8585fe95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 1
+  gameType: 0
   timeScale: 1
   gravityScale: 46.5
-  platformFriction: 4
-  characterFriction: 4
   runMovementSpeed_fixed: 40
   runStopSlideTime_timer: 0.13
   idleJumpVerticalForce_impulse: 1200
