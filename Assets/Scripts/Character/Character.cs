@@ -40,7 +40,8 @@
     private bool trigger_wallJump_hasWallJumped = false;
 
     // Melee Parameters
-    private float meleeStopTime;
+    private float meleeIdleStopTime;
+    private float meleeRunStopTime;
 
 
     //  Constructor
@@ -64,7 +65,8 @@
         float arg_wallJump_verticalForce = 800,
         float arg_wallJump_horizontalForce = 1500,
         float arg_wallJump_restrainDuration = 0.25f,
-        float arg_meleeStopTime = 0.35f
+        float arg_meleeIdleStopTime = 0.35f,
+        float arg_meleeRunStopTime = 0.25f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;
@@ -85,7 +87,8 @@
         impulse_wallJump_verticalForce = arg_wallJump_verticalForce;
         impulse_wallJump_horizontalForce = arg_wallJump_horizontalForce;
         timer_wallJump_restrainDuration = arg_wallJump_restrainDuration;
-        meleeStopTime = arg_meleeStopTime;
+        meleeIdleStopTime = arg_meleeIdleStopTime;
+        meleeRunStopTime = arg_meleeRunStopTime;
     }
 
 
@@ -195,9 +198,14 @@
         return trigger_wallJump_hasWallJumped;
     }
 
-    public float GetMeleeStopTime()
+    public float GetMeleeIdleStopTime()
     {
-        return meleeStopTime;
+        return meleeIdleStopTime;
+    }
+
+    public float GetMeleeRunStopTime()
+    {
+        return meleeRunStopTime;
     }
 
 
