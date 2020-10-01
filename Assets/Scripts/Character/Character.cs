@@ -43,17 +43,18 @@
     private float meleeIdleStopTime;
     private float meleeRunStopTime;
     private float meleeJumpStopTime;
+    private float meleeJumpForwardStopTime;
 
 
     //  Constructor
     public Character
     (
-        float arg_run_movementSpeed = 40, 
-        float arg_run_stopSlideTime = 0.13f, 
-        float arg_idleJump_verticalForce = 1200, 
-        float arg_idleJump_movementSpeed = 10, 
-        float arg_forwardJump_horizontalForce = 250, 
-        float arg_forwardJump_stopSlideForce = 1500, 
+        float arg_run_movementSpeed = 40,
+        float arg_run_stopSlideTime = 0.13f,
+        float arg_idleJump_verticalForce = 1200,
+        float arg_idleJump_movementSpeed = 10,
+        float arg_forwardJump_horizontalForce = 250,
+        float arg_forwardJump_stopSlideForce = 1500,
         float arg_forwardJump_horizontalAirDrag = 0.97f,    //0.997f
         float arg_fallMaxSpeed_velocityValue = 60,
         float arg_onTheGround_duration = 2,
@@ -68,7 +69,8 @@
         float arg_wallJump_restrainDuration = 0.25f,
         float arg_meleeIdleStopTime = 0.35f,
         float arg_meleeRunStopTime = 0.25f,
-        float arg_meleeJumpStopTime = 0.45f
+        float arg_meleeJumpStopTime = 0.45f,
+        float arg_meleeJumpForwardStopTime = 0.5f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;
@@ -92,6 +94,7 @@
         meleeIdleStopTime = arg_meleeIdleStopTime;
         meleeRunStopTime = arg_meleeRunStopTime;
         meleeJumpStopTime = arg_meleeJumpStopTime;
+        meleeJumpForwardStopTime = arg_meleeJumpForwardStopTime;
     }
 
 
@@ -214,6 +217,11 @@
     public float GetMeleeJumpStopTime()
     {
         return meleeJumpStopTime;
+    }
+
+    public float GetMeleeJumpForwardStopTime()
+    {
+        return meleeJumpForwardStopTime;
     }
 
 
