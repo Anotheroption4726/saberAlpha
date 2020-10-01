@@ -32,6 +32,7 @@ public class CharacterScript : MonoBehaviour
     const string ANIM_ONTHEGROUND_STANDUP = "Chara_Ontheground_standup";
     const string ANIM_MELEE_IDLE = "Chara_Melee_idle";
     const string ANIM_MELEE_RUN = "Chara_Melee_run";
+    const string ANIM_MELEE_JUMP = "Chara_Melee_jump";
 
     //  Getters and Setters
     public Character GetCharacter()
@@ -200,6 +201,13 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
                 }
+
+                // Melee Jump
+                if (Input.GetButtonDown("Gamepad_Melee"))
+                {
+                    SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
+                    StartCoroutine("StopMeleeJump");
+                }
             }
 
 
@@ -229,6 +237,13 @@ public class CharacterScript : MonoBehaviour
                 if (physicsManager.GetRigidbody().velocity.y < -character.GetFallMaxSpeedVelocityValue())
                 {
                     SetAnimation(ANIM_FALL_MAXSPEED, CharacterAnimStateEnum.Fall_maxspeed);
+                }
+
+                // Melee Jump
+                if (Input.GetButtonDown("Gamepad_Melee"))
+                {
+                    SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
+                    StartCoroutine("StopMeleeJump");
                 }
             }
 
@@ -491,6 +506,12 @@ public class CharacterScript : MonoBehaviour
         SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
         //SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
         //StartCoroutine("StopSlide");
+    }
+
+    private IEnumerator StopMeleeJump()
+    {
+        yield return new WaitForSeconds(character.GetMeleeJumpStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
     }
 
 

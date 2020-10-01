@@ -42,6 +42,7 @@
     // Melee Parameters
     private float meleeIdleStopTime;
     private float meleeRunStopTime;
+    private float meleeJumpStopTime;
 
 
     //  Constructor
@@ -66,7 +67,8 @@
         float arg_wallJump_horizontalForce = 1500,
         float arg_wallJump_restrainDuration = 0.25f,
         float arg_meleeIdleStopTime = 0.35f,
-        float arg_meleeRunStopTime = 0.25f
+        float arg_meleeRunStopTime = 0.25f,
+        float arg_meleeJumpStopTime = 0.45f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;
@@ -89,6 +91,7 @@
         timer_wallJump_restrainDuration = arg_wallJump_restrainDuration;
         meleeIdleStopTime = arg_meleeIdleStopTime;
         meleeRunStopTime = arg_meleeRunStopTime;
+        meleeJumpStopTime = arg_meleeJumpStopTime;
     }
 
 
@@ -206,6 +209,11 @@
     public float GetMeleeRunStopTime()
     {
         return meleeRunStopTime;
+    }
+
+    public float GetMeleeJumpStopTime()
+    {
+        return meleeJumpStopTime;
     }
 
 
