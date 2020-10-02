@@ -16,12 +16,17 @@
     Ontheground_standup,
     Melee_idle,
     Melee_idle_up,
+    Melee_idle_up_diagonal,
     Melee_run,
     Melee_jump,
     Melee_jump_up,
     Melee_jump_forward,
     Shoot_idle,
     Shoot_idle_up,
+    Shoot_idle_up_diagonal,
     Shoot_jump,
-    Shoot_jump_up
+    Shoot_jump_up,
+    Shoot_jump_up_diagonal,
+    Shoot_jump_down,
+    Shoot_jump_down_diagonal
 }

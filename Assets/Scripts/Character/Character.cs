@@ -42,6 +42,7 @@
     // Melee Parameters
     private float meleeIdleStopTime;
     private float meleeIdleUpStopTime;
+    private float meleeIdleUpDiagonalStopTime;
     private float meleeRunStopTime;
     private float meleeJumpStopTime;
     private float meleeJumpUpStopTime;
@@ -50,8 +51,12 @@
     // Shoot Parameters
     private float shootIdleStopTime;
     private float shootIdleUpStopTime;
+    private float shootIdleUpDiagonalStopTime;
     private float shootJumpStopTime;
     private float shootJumpUpStopTime;
+    private float shootJumpUpDiagonalStopTime;
+    private float shootJumpDownStopTime;
+    private float shootJumpDownDiagonalStopTime;
 
 
     //  Constructor
@@ -77,14 +82,19 @@
         float arg_wallJump_restrainDuration = 0.25f,
         float arg_meleeIdleStopTime = 0.35f,
         float arg_meleeIdleUpStopTime = 0.35f,
+        float arg_meleeIdleUpDiagonalStopTime = 0.4f,
         float arg_meleeRunStopTime = 0.25f,
         float arg_meleeJumpStopTime = 0.45f,
         float arg_meleeJumpUpStopTime = 0.5f,
         float arg_meleeJumpForwardStopTime = 0.5f,
         float arg_shootIdleStopTime = 0.4f,
         float arg_shootIdleUpStopTime = 0.4f,
+        float arg_shootIdleUpDiagonalStopTime = 0.4f,
         float arg_shootJumpStopTime = 0.4f,
-        float arg_shootJumpUpStopTime = 0.4f
+        float arg_shootJumpUpStopTime = 0.4f,
+        float arg_shootJumpUpDiagonalStopTime = 0.3f,
+        float arg_shootJumpDownStopTime = 0.3f,
+        float arg_shootJumpDownDiagonalStopTime = 0.3f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;
@@ -107,15 +117,20 @@
         timer_wallJump_restrainDuration = arg_wallJump_restrainDuration;
         meleeIdleStopTime = arg_meleeIdleStopTime;
         meleeIdleUpStopTime = arg_meleeIdleUpStopTime;
+        meleeIdleUpDiagonalStopTime = arg_meleeIdleUpDiagonalStopTime;
         meleeRunStopTime = arg_meleeRunStopTime;
         meleeJumpStopTime = arg_meleeJumpStopTime;
         meleeJumpUpStopTime = arg_meleeJumpUpStopTime;
         meleeJumpForwardStopTime = arg_meleeJumpForwardStopTime;
         shootIdleStopTime = arg_shootIdleStopTime;
         shootIdleUpStopTime = arg_shootIdleUpStopTime;
+        shootIdleUpDiagonalStopTime = arg_shootIdleUpDiagonalStopTime;
         shootJumpStopTime = arg_shootJumpStopTime;
         shootJumpUpStopTime = arg_shootJumpUpStopTime;
-    }
+        shootJumpUpDiagonalStopTime = arg_shootJumpUpDiagonalStopTime;
+        shootJumpDownStopTime = arg_shootJumpDownStopTime;
+        shootJumpDownDiagonalStopTime = arg_shootJumpDownDiagonalStopTime;
+}
 
 
     //  Getters
@@ -234,6 +249,11 @@
         return meleeIdleUpStopTime;
     }
 
+    public float GetMeleeIdleUpDiagonalStopTime()
+    {
+        return meleeIdleUpDiagonalStopTime;
+    }
+
     public float GetMeleeRunStopTime()
     {
         return meleeRunStopTime;
@@ -264,6 +284,11 @@
         return shootIdleUpStopTime;
     }
 
+    public float GetShootIdleUpDiagonalStopTime()
+    {
+        return shootIdleUpDiagonalStopTime;
+    }
+
     public float GetShootJumpStopTime()
     {
         return shootJumpStopTime;
@@ -272,6 +297,21 @@
     public float GetShootJumpUpStopTime()
     {
         return shootJumpUpStopTime;
+    }
+
+    public float GetShootJumpUpDiagonalStopTime()
+    {
+        return shootJumpUpDiagonalStopTime;
+    }
+
+    public float GetShootJumpDownStopTime()
+    {
+        return shootJumpDownStopTime;
+    }
+
+    public float GetShootJumpDownDiagonalStopTime()
+    {
+        return shootJumpDownDiagonalStopTime;
     }
 
 
