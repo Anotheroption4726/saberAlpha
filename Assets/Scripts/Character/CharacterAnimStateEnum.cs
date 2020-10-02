@@ -15,6 +15,7 @@
     Ontheground,
     Ontheground_standup,
     Melee_idle,
+    Melee_idle_up,
     Melee_run,
     Melee_jump,
     Melee_jump_forward,
