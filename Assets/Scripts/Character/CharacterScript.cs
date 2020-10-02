@@ -36,6 +36,10 @@ public class CharacterScript : MonoBehaviour
     const string ANIM_MELEE_JUMP = "Chara_Melee_jump";
     const string ANIM_MELEE_JUMP_UP = "Chara_Melee_jump_up";
     const string ANIM_MELEE_JUMP_FORWARD = "Chara_Melee_jump_forward";
+    const string ANIM_SHOOT_IDLE = "Chara_Shoot_idle";
+    const string ANIM_SHOOT_IDLE_UP = "Chara_Shoot_idle_up";
+    const string ANIM_SHOOT_JUMP = "Chara_Shoot_jump";
+    const string ANIM_SHOOT_JUMP_UP = "Chara_Shoot_jump_up";
 
     //  Getters and Setters
     public Character GetCharacter()
@@ -101,6 +105,18 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(ANIM_MELEE_IDLE, CharacterAnimStateEnum.Melee_idle);
                     StartCoroutine("StopMeleeIdle");
+                }
+
+                // Shoot
+                if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
+                {
+                    SetAnimation(ANIM_SHOOT_IDLE_UP, CharacterAnimStateEnum.Shoot_idle_up);
+                    StartCoroutine("StopShootIdleUp");
+                }
+                else if (Input.GetButtonDown("Gamepad_Shoot"))
+                {
+                    SetAnimation(ANIM_SHOOT_IDLE, CharacterAnimStateEnum.Shoot_idle);
+                    StartCoroutine("StopShootIdle");
                 }
             }
 
@@ -220,6 +236,18 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
                     StartCoroutine("StopMeleeJump");
+                }
+
+                // Shoot Jump
+                if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
+                {
+                    SetAnimation(ANIM_SHOOT_JUMP_UP, CharacterAnimStateEnum.Shoot_jump_up);
+                    StartCoroutine("StopShootJumpUp");
+                }
+                else if (Input.GetButtonDown("Gamepad_Shoot"))
+                {
+                    SetAnimation(ANIM_SHOOT_JUMP, CharacterAnimStateEnum.Shoot_jump);
+                    StartCoroutine("StopShootJump");
                 }
             }
 
@@ -557,6 +585,30 @@ public class CharacterScript : MonoBehaviour
     {
         yield return new WaitForSeconds(character.GetMeleeJumpForwardStopTime());
         SetAnimation(ANIM_FALL_FORWARD, CharacterAnimStateEnum.Fall_forward);
+    }
+
+    private IEnumerator StopShootIdle()
+    {
+        yield return new WaitForSeconds(character.GetShootIdleStopTime());
+        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+    }
+
+    private IEnumerator StopShootIdleUp()
+    {
+        yield return new WaitForSeconds(character.GetShootIdleUpStopTime());
+        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+    }
+
+    private IEnumerator StopShootJump()
+    {
+        yield return new WaitForSeconds(character.GetShootJumpStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+    }
+
+    private IEnumerator StopShootJumpUp()
+    {
+        yield return new WaitForSeconds(character.GetShootJumpUpStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
     }
 
 
