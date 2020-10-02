@@ -54,13 +54,13 @@ Once you are in *'TestScene'*, go to the **Hierarchy** window (usually the left 
 	- Increase: Game has earth-like physics
 	- Decrease: Game has moon-like physics
 
-##### Platform Friction:
-	- Default Value: 4
+##### (NOT WORKING PROPERLY - REMOVED) Platform Friction:
+	- Default Value: 1
 	- Increase: Characters won't be able to move when colliding with platforms
 	- Decrease: Characters will ice skate when colliding with platforms
 
-##### Character Friction:
-	- Default Value: 4
+##### (NOT WORKING PROPERLY - REMOVED) Character Friction:
+	- Default Value: 5
 	- Increase: Characters won't be able to move when colliding with platforms (alternative parameter)
 	- Decrease: Characters will ice skate when colliding with platforms (alternative parameter)
 
