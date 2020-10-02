@@ -29,6 +29,15 @@ TextureImporter:
   - first:
       213: -2070044374574505380
     second: Melee_Grd_6_5
+  - first:
+      213: -3460039276128136202
+    second: Melee_Grd_6_3
+  - first:
+      213: 8104809836084346150
+    second: Melee_Grd_6_4
+  - first:
+      213: -194045352498713802
+    second: Melee_Grd_6_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -133,8 +142,8 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -154,8 +163,8 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -175,8 +184,8 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -196,15 +205,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1a3af3ad099ef6b0800000000000000
-      internalID: -5260599030857450982
+      spriteID: 6f39b754c987bffc0800000000000000
+      internalID: -3460039276128136202
       vertices: []
       indices: 
       edges: []
@@ -217,15 +226,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9b5a3d6d67cb32ab0800000000000000
-      internalID: -5033972739873724999
+      spriteID: 62d36e3da911a7070800000000000000
+      internalID: 8104809836084346150
       vertices: []
       indices: 
       edges: []
@@ -238,15 +247,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c52e030eb99b543e0800000000000000
-      internalID: -2070044374574505380
+      spriteID: 63baffda7cc9e4df0800000000000000
+      internalID: -194045352498713802
       vertices: []
       indices: 
       edges: []
