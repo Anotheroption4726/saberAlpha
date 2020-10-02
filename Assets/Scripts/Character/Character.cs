@@ -83,7 +83,7 @@
         float arg_meleeIdleStopTime = 0.35f,
         float arg_meleeIdleUpStopTime = 0.35f,
         float arg_meleeIdleUpDiagonalStopTime = 0.4f,
-        float arg_meleeRunStopTime = 0.25f,
+        float arg_meleeRunStopTime = 0.25f, //0.25f
         float arg_meleeJumpStopTime = 0.45f,
         float arg_meleeJumpUpStopTime = 0.5f,
         float arg_meleeJumpForwardStopTime = 0.5f,

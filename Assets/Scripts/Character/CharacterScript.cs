@@ -600,9 +600,9 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator StopMeleeRun()
     {
         yield return new WaitForSeconds(character.GetMeleeRunStopTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-        //SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-        //StartCoroutine("StopSlide");
+        //SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+        SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
+        StartCoroutine("StopSlide");
     }
 
     private IEnumerator StopMeleeJump()
