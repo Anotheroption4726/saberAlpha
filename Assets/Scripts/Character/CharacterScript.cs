@@ -34,6 +34,7 @@ public class CharacterScript : MonoBehaviour
     const string ANIM_MELEE_IDLE_UP = "Chara_Melee_idle_up";
     const string ANIM_MELEE_RUN = "Chara_Melee_run";
     const string ANIM_MELEE_JUMP = "Chara_Melee_jump";
+    const string ANIM_MELEE_JUMP_UP = "Chara_Melee_jump_up";
     const string ANIM_MELEE_JUMP_FORWARD = "Chara_Melee_jump_forward";
 
     //  Getters and Setters
@@ -210,7 +211,12 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 // Melee Jump
-                if (Input.GetButtonDown("Gamepad_Melee"))
+                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+                {
+                    SetAnimation(ANIM_MELEE_JUMP_UP, CharacterAnimStateEnum.Melee_jump_up);
+                    StartCoroutine("StopMeleeJumpUp");
+                }
+                else if (Input.GetButtonDown("Gamepad_Melee"))
                 {
                     SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
                     StartCoroutine("StopMeleeJump");
@@ -538,6 +544,12 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator StopMeleeJump()
     {
         yield return new WaitForSeconds(character.GetMeleeJumpStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+    }
+
+    private IEnumerator StopMeleeJumpUp()
+    {
+        yield return new WaitForSeconds(character.GetMeleeJumpUpStopTime());
         SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
     }
 

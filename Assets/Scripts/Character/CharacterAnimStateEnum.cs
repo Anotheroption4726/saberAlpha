@@ -18,5 +18,6 @@
     Melee_idle_up,
     Melee_run,
     Melee_jump,
+    Melee_jump_up,
     Melee_jump_forward,
 }

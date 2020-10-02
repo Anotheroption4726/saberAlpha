@@ -44,6 +44,7 @@
     private float meleeIdleUpStopTime;
     private float meleeRunStopTime;
     private float meleeJumpStopTime;
+    private float meleeJumpUpStopTime;
     private float meleeJumpForwardStopTime;
 
 
@@ -72,6 +73,7 @@
         float arg_meleeIdleUpStopTime = 0.35f,
         float arg_meleeRunStopTime = 0.25f,
         float arg_meleeJumpStopTime = 0.45f,
+        float arg_meleeJumpUpStopTime = 0.5f,
         float arg_meleeJumpForwardStopTime = 0.5f
     )
     {
@@ -97,6 +99,7 @@
         meleeIdleUpStopTime = arg_meleeIdleUpStopTime;
         meleeRunStopTime = arg_meleeRunStopTime;
         meleeJumpStopTime = arg_meleeJumpStopTime;
+        meleeJumpUpStopTime = arg_meleeJumpUpStopTime;
         meleeJumpForwardStopTime = arg_meleeJumpForwardStopTime;
     }
 
@@ -225,6 +228,11 @@
     public float GetMeleeJumpStopTime()
     {
         return meleeJumpStopTime;
+    }
+
+    public float GetMeleeJumpUpStopTime()
+    {
+        return meleeJumpUpStopTime;
     }
 
     public float GetMeleeJumpForwardStopTime()
