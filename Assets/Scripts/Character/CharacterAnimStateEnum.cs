@@ -20,7 +20,7 @@
     Melee_run,
     Melee_jump,
     Melee_jump_up,
-    Melee_jump_forward,
+    Melee_jump_down,
     Shoot_idle,
     Shoot_idle_up,
     Shoot_idle_up_diagonal,
