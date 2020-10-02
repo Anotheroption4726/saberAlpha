@@ -80,7 +80,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Crawl
-                else if (ReturnVerticalInput() < 0)
+                if (ReturnVerticalInput() < 0)
                 {
                     SetAnimation(ANIM_CRAWL_IDLE, CharacterAnimStateEnum.Crawl_idle);
                 }
