@@ -36,7 +36,9 @@ public class CharacterScript : MonoBehaviour
     const string ANIM_MELEE_RUN = "Chara_Melee_run";
     const string ANIM_MELEE_JUMP = "Chara_Melee_jump";
     const string ANIM_MELEE_JUMP_UP = "Chara_Melee_jump_up";
+    const string ANIM_MELEE_JUMP_UP_DIAGONAL = "Chara_Melee_jump_up_diagonal";
     const string ANIM_MELEE_JUMP_DOWN = "Chara_Melee_jump_down";
+    const string ANIM_MELEE_JUMP_DOWN_DIAGONAL = "Chara_Melee_jump_down_diagonal";
     const string ANIM_SHOOT_IDLE = "Chara_Shoot_idle";
     const string ANIM_SHOOT_IDLE_UP = "Chara_Shoot_idle_up";
     const string ANIM_SHOOT_IDLE_UP_DIAGONAL = "Chara_Shoot_idle_up_diagonal";
@@ -242,7 +244,17 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 // Melee Jump
-                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+                {
+                    SetAnimation(ANIM_MELEE_JUMP_UP_DIAGONAL, CharacterAnimStateEnum.Melee_jump_up_diagonal);
+                    StartCoroutine("StopMeleeJumpUpDiagonal");
+                }
+                else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
+                {
+                    SetAnimation(ANIM_MELEE_JUMP_DOWN_DIAGONAL, CharacterAnimStateEnum.Melee_jump_down_diagonal);
+                    StartCoroutine("StopMeleeJumpDownDiagonal");
+                }
+                else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
                 {
                     SetAnimation(ANIM_MELEE_JUMP_UP, CharacterAnimStateEnum.Melee_jump_up);
                     StartCoroutine("StopMeleeJumpUp");
@@ -608,9 +620,21 @@ public class CharacterScript : MonoBehaviour
         SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
     }
 
+    private IEnumerator StopMeleeJumpUpDiagonal()
+    {
+        yield return new WaitForSeconds(character.GetMeleeJumpUpDiagonalStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+    }
+
     private IEnumerator StopMeleeJumpDown()
     {
         yield return new WaitForSeconds(character.GetMeleeJumpDownStopTime());
+        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+    }
+
+    private IEnumerator StopMeleeJumpDownDiagonal()
+    {
+        yield return new WaitForSeconds(character.GetMeleeJumpDownDiagonalStopTime());
         SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
     }
 

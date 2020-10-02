@@ -46,7 +46,9 @@
     private float meleeRunStopTime;
     private float meleeJumpStopTime;
     private float meleeJumpUpStopTime;
+    private float meleeJumpUpDiagonalStopTime;
     private float meleeJumpDownStopTime;
+    private float meleeJumpDownDiagonalStopTime;
 
     // Shoot Parameters
     private float shootIdleStopTime;
@@ -68,7 +70,7 @@
         float arg_idleJump_movementSpeed = 10,
         float arg_forwardJump_horizontalForce = 250,
         float arg_forwardJump_stopSlideForce = 1500,
-        float arg_forwardJump_horizontalAirDrag = 0.97f,    //0.997f
+        float arg_forwardJump_horizontalAirDrag = 0.97f,
         float arg_fallMaxSpeed_velocityValue = 60,
         float arg_onTheGround_duration = 2,
         float arg_onTheGround_StandUpTime = 0.5f,
@@ -86,7 +88,9 @@
         float arg_meleeRunStopTime = 0.25f, //0.25f
         float arg_meleeJumpStopTime = 0.45f,
         float arg_meleeJumpUpStopTime = 0.5f,
+        float arg_meleeJumpUpDiagonalStopTime = 0.5f,
         float arg_meleeJumpDownStopTime = 0.5f,
+        float arg_meleeJumpDownDiagonalStopTime = 0.5f,
         float arg_shootIdleStopTime = 0.4f,
         float arg_shootIdleUpStopTime = 0.4f,
         float arg_shootIdleUpDiagonalStopTime = 0.4f,
@@ -121,7 +125,9 @@
         meleeRunStopTime = arg_meleeRunStopTime;
         meleeJumpStopTime = arg_meleeJumpStopTime;
         meleeJumpUpStopTime = arg_meleeJumpUpStopTime;
+        meleeJumpUpDiagonalStopTime = arg_meleeJumpUpDiagonalStopTime;
         meleeJumpDownStopTime = arg_meleeJumpDownStopTime;
+        meleeJumpDownDiagonalStopTime = arg_meleeJumpDownDiagonalStopTime;
         shootIdleStopTime = arg_shootIdleStopTime;
         shootIdleUpStopTime = arg_shootIdleUpStopTime;
         shootIdleUpDiagonalStopTime = arg_shootIdleUpDiagonalStopTime;
@@ -269,9 +275,19 @@
         return meleeJumpUpStopTime;
     }
 
+    public float GetMeleeJumpUpDiagonalStopTime()
+    {
+        return meleeJumpUpDiagonalStopTime;
+    }
+
     public float GetMeleeJumpDownStopTime()
     {
         return meleeJumpDownStopTime;
+    }
+
+    public float GetMeleeJumpDownDiagonalStopTime()
+    {
+        return meleeJumpDownDiagonalStopTime;
     }
 
     public float GetShootIdleStopTime()
