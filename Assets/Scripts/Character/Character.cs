@@ -19,7 +19,6 @@
     //  On the Ground Parameters
     private float timer_onTheGround_duration;
     private float timer_onTheGround_StandUpTime;
-    private bool trigger_onTheGround_isOntheGround = false;
 
     //  Crawl Parameters
     private float fixed_crawl_movementSpeed;
@@ -28,7 +27,6 @@
     private float impulse_groundSlide_horizontalForce;
     private float timer_groundSlide_startTime;
     private float timer_groundSlide_duration;
-    private bool trigger_groundSlide_canGroundSlide = false;
 
     //  WallSlide Parameters
     private float ratio_wallSlide_holdGravity;
@@ -37,7 +35,6 @@
     private float impulse_wallJump_verticalForce;
     private float impulse_wallJump_horizontalForce;
     private float timer_wallJump_restrainDuration;
-    private bool trigger_wallJump_hasWallJumped = false;
 
     // Melee Parameters
     private float meleeIdleStopTime;
@@ -190,11 +187,6 @@
         return timer_onTheGround_StandUpTime;
     }
 
-    public bool GetOnTheGroundIsOntheGround()
-    {
-        return trigger_onTheGround_isOntheGround;
-    }
-
     public float GetCrawlMovementSpeed()
     {
         return fixed_crawl_movementSpeed;
@@ -215,11 +207,6 @@
         return timer_groundSlide_duration;
     }
 
-    public bool GetGroundSlideCanGroundSlide()
-    {
-        return trigger_groundSlide_canGroundSlide;
-    }
-
     public float GetWallSlideHoldGravity()
     {
         return ratio_wallSlide_holdGravity;
@@ -238,11 +225,6 @@
     public float GetWallJumpRestrainDuration()
     {
         return timer_wallJump_restrainDuration;
-    }
-
-    public bool GetWallJumpHasWallJumped()
-    {
-        return trigger_wallJump_hasWallJumped;
     }
 
     public float GetMeleeIdleStopTime()
@@ -328,22 +310,5 @@
     public float GetShootJumpDownDiagonalStopTime()
     {
         return shootJumpDownDiagonalStopTime;
-    }
-
-
-    //  Setters
-    public void SetOnTheGroundIsOntheGround(bool arg_isOntheGround)
-    {
-        trigger_onTheGround_isOntheGround = arg_isOntheGround;
-    }
-
-    public void SetGroundSlideCanGroundSlide(bool arg_canGroundSlide)
-    {
-        trigger_groundSlide_canGroundSlide = arg_canGroundSlide;
-    }
-
-    public void SetWallJumpHasWallJumped(bool arg_hasWallJumped)
-    {
-        trigger_wallJump_hasWallJumped = arg_hasWallJumped;
     }
 }

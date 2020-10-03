@@ -16,6 +16,9 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
+    private bool trigger_onTheGround_isOntheGround = false;
+    private bool trigger_groundSlide_canGroundSlide = false;
+    private bool trigger_wallJump_hasWallJumped = false;
 
     //  Getters and Setters
     public Character GetCharacter()
@@ -113,7 +116,7 @@ public class CharacterScript : MonoBehaviour
             else if (animState.Equals(CharacterAnimStateEnum.Chara_Run))
             {
                 //  CanGroundSlide Timer
-                if (!character.GetGroundSlideCanGroundSlide())
+                if (!trigger_groundSlide_canGroundSlide)
                 {
                     StartCoroutine("CanGroundSlide");
                 }
@@ -147,7 +150,7 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (character.GetGroundSlideCanGroundSlide() && ReturnVerticalInput() < 0)
+                    else if (trigger_groundSlide_canGroundSlide && ReturnVerticalInput() < 0)
                     {
                         SetAnimation(CharacterAnimStateEnum.Chara_Groundslide);
                         StartCoroutine("StopGroundSlide");
@@ -306,12 +309,12 @@ public class CharacterScript : MonoBehaviour
                 IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsColliding() && !character.GetOnTheGroundIsOntheGround())
+                if (groundChecker.GetIsColliding() && !trigger_onTheGround_isOntheGround)
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
                     StartCoroutine("Ontheground");
-                    character.SetOnTheGroundIsOntheGround(false);
+                    trigger_onTheGround_isOntheGround = false;
                 }
             }
 
@@ -460,7 +463,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Jump Left
-                if (!character.GetWallJumpHasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
+                if (!trigger_wallJump_hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
                     SetDirection(-directionInt);
 
@@ -513,21 +516,21 @@ public class CharacterScript : MonoBehaviour
     private IEnumerator CanGroundSlide()
     {
         yield return new WaitForSeconds(character.GetGroundSlideStartTime());
-        character.SetGroundSlideCanGroundSlide(true);
+        trigger_groundSlide_canGroundSlide = true;
     }
 
     private IEnumerator StopGroundSlide()
     {
         yield return new WaitForSeconds(character.GetGroundSlideDuration());
         SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
-        character.SetGroundSlideCanGroundSlide(false);
+        trigger_groundSlide_canGroundSlide = false;
     }
 
     private IEnumerator WallJumpTimer()
     {
-        character.SetWallJumpHasWallJumped(true);
+        trigger_wallJump_hasWallJumped = true;
         yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
-        character.SetWallJumpHasWallJumped(false);
+        trigger_wallJump_hasWallJumped = false;
     }
 
     private IEnumerator Ontheground()
@@ -541,7 +544,7 @@ public class CharacterScript : MonoBehaviour
     {
         yield return new WaitForSeconds(character.GetOnTheGroundStandUpTime());
         SetAnimation(CharacterAnimStateEnum.Chara_Idle);
-        character.SetOnTheGroundIsOntheGround(false);
+        trigger_onTheGround_isOntheGround = false;
     }
 
     private IEnumerator StopMeleeRun()
