@@ -112,10 +112,10 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Chara_Run))
             {
-                //  CanRunSlide Timer
-                if (!character.GetRunSlideCanRunSlide())
+                //  CanGroundSlide Timer
+                if (!character.GetGroundSlideCanGroundSlide())
                 {
-                    StartCoroutine("CanRunSlide");
+                    StartCoroutine("CanGroundSlide");
                 }
 
                 //  Run
@@ -147,11 +147,11 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Run Slide
-                    else if (character.GetRunSlideCanRunSlide() && ReturnVerticalInput() < 0)
+                    else if (character.GetGroundSlideCanGroundSlide() && ReturnVerticalInput() < 0)
                     {
                         SetAnimation(CharacterAnimStateEnum.Chara_Run_slide);
-                        StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetRunSlideHorizontalForce(), 0));
+                        StartCoroutine("StopGroundSlide");
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetGroundSlideHorizontalForce(), 0));
                     }
                 }
 
@@ -510,17 +510,17 @@ public class CharacterScript : MonoBehaviour
         SetAnimation(arg_animState);
     }
 
-    private IEnumerator CanRunSlide()
+    private IEnumerator CanGroundSlide()
     {
-        yield return new WaitForSeconds(character.GetRunSlideStartTime());
-        character.SetRunSlideCanRunSlide(true);
+        yield return new WaitForSeconds(character.GetGroundSlideStartTime());
+        character.SetGroundSlideCanGroundSlide(true);
     }
 
-    private IEnumerator StopRunSlide()
+    private IEnumerator StopGroundSlide()
     {
-        yield return new WaitForSeconds(character.GetRunSlideDuration());
+        yield return new WaitForSeconds(character.GetGroundSlideDuration());
         SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
-        character.SetRunSlideCanRunSlide(false);
+        character.SetGroundSlideCanGroundSlide(false);
     }
 
     private IEnumerator WallJumpTimer()

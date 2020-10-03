@@ -24,11 +24,11 @@
     //  Crawl Parameters
     private float fixed_crawl_movementSpeed;
 
-    //  Run Slide Parameters
-    private float impulse_runSlide_horizontalForce;
-    private float timer_runSlide_startTime;
-    private float timer_runSlide_duration;
-    private bool trigger_runSlide_canRunSlide = false;
+    //  Ground Slide Parameters
+    private float impulse_groundSlide_horizontalForce;
+    private float timer_groundSlide_startTime;
+    private float timer_groundSlide_duration;
+    private bool trigger_groundSlide_canGroundSlide = false;
 
     //  WallSlide Parameters
     private float ratio_wallSlide_holdGravity;
@@ -75,9 +75,9 @@
         float arg_onTheGround_duration = 2,
         float arg_onTheGround_StandUpTime = 0.5f,
         float arg_crawl_movementSpeed = 10,
-        float arg_runSlide_horizontalForce = 2500,
-        float arg_runSlide_startTime = 0.75f,
-        float arg_runSlide_duration = 0.25f,
+        float arg_groundSlide_horizontalForce = 2500,
+        float arg_groundSlide_startTime = 0.75f,
+        float arg_groundSlide_duration = 0.25f,
         float arg_wallSlide_holdGravity = 0.125f,
         float arg_wallJump_verticalForce = 800,
         float arg_wallJump_horizontalForce = 1500,
@@ -112,9 +112,9 @@
         timer_onTheGround_duration = arg_onTheGround_duration;
         timer_onTheGround_StandUpTime = arg_onTheGround_StandUpTime;
         fixed_crawl_movementSpeed = arg_crawl_movementSpeed;
-        impulse_runSlide_horizontalForce = arg_runSlide_horizontalForce;
-        timer_runSlide_startTime = arg_runSlide_startTime;
-        timer_runSlide_duration = arg_runSlide_duration;
+        impulse_groundSlide_horizontalForce = arg_groundSlide_horizontalForce;
+        timer_groundSlide_startTime = arg_groundSlide_startTime;
+        timer_groundSlide_duration = arg_groundSlide_duration;
         ratio_wallSlide_holdGravity = arg_wallSlide_holdGravity;
         impulse_wallJump_verticalForce = arg_wallJump_verticalForce;
         impulse_wallJump_horizontalForce = arg_wallJump_horizontalForce;
@@ -200,24 +200,24 @@
         return fixed_crawl_movementSpeed;
     }
 
-    public float GetRunSlideHorizontalForce()
+    public float GetGroundSlideHorizontalForce()
     {
-        return impulse_runSlide_horizontalForce;
+        return impulse_groundSlide_horizontalForce;
     }
 
-    public float GetRunSlideStartTime()
+    public float GetGroundSlideStartTime()
     {
-        return timer_runSlide_startTime;
+        return timer_groundSlide_startTime;
     }
 
-    public float GetRunSlideDuration()
+    public float GetGroundSlideDuration()
     {
-        return timer_runSlide_duration;
+        return timer_groundSlide_duration;
     }
 
-    public bool GetRunSlideCanRunSlide()
+    public bool GetGroundSlideCanGroundSlide()
     {
-        return trigger_runSlide_canRunSlide;
+        return trigger_groundSlide_canGroundSlide;
     }
 
     public float GetWallSlideHoldGravity()
@@ -337,9 +337,9 @@
         trigger_onTheGround_isOntheGround = arg_isOntheGround;
     }
 
-    public void SetRunSlideCanRunSlide(bool arg_canRunSlide)
+    public void SetGroundSlideCanGroundSlide(bool arg_canGroundSlide)
     {
-        trigger_runSlide_canRunSlide = arg_canRunSlide;
+        trigger_groundSlide_canGroundSlide = arg_canGroundSlide;
     }
 
     public void SetWallJumpHasWallJumped(bool arg_hasWallJumped)
