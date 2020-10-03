@@ -118,7 +118,7 @@ public class CharacterScript : MonoBehaviour
                 //  CanGroundSlide Timer
                 if (!trigger_groundSlide_canGroundSlide)
                 {
-                    StartCoroutine("CanGroundSlide");
+                    StartCoroutine(CanGroundSlide());
                 }
 
                 //  Run
@@ -149,11 +149,11 @@ public class CharacterScript : MonoBehaviour
                         }
                     }
 
-                    // Run Slide
+                    // Ground Slide
                     else if (trigger_groundSlide_canGroundSlide && ReturnVerticalInput() < 0)
                     {
                         SetAnimation(CharacterAnimStateEnum.Chara_Groundslide);
-                        StartCoroutine("StopGroundSlide");
+                        StartCoroutine(StopGroundSlide());
                         physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetGroundSlideHorizontalForce(), 0));
                     }
                 }
@@ -175,7 +175,7 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetButtonDown("Gamepad_Melee"))
                 {
                     SetAnimation(CharacterAnimStateEnum.Chara_Melee_run);
-                    StartCoroutine("StopMeleeRun");
+                    StartCoroutine(StopMeleeRun());
                 }
             }
 
@@ -313,7 +313,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
-                    StartCoroutine("Ontheground");
+                    StartCoroutine(Ontheground());
                     trigger_onTheGround_isOntheGround = false;
                 }
             }
@@ -472,7 +472,7 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(directionInt * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
                     SetAnimation(CharacterAnimStateEnum.Chara_Jump_forward);
-                    StartCoroutine("WallJumpTimer");
+                    StartCoroutine(WallJumpTimer());
                 }
 
                 //  No more wall
@@ -537,7 +537,7 @@ public class CharacterScript : MonoBehaviour
     {
         yield return new WaitForSeconds(character.GetOnTheGroundDuration());
         SetAnimation(CharacterAnimStateEnum.Chara_Ontheground_standup);
-        StartCoroutine("OnthegroundStandup");
+        StartCoroutine(OnthegroundStandup());
     }
 
     private IEnumerator OnthegroundStandup()
