@@ -149,7 +149,7 @@ public class CharacterScript : MonoBehaviour
                     // Run Slide
                     else if (character.GetGroundSlideCanGroundSlide() && ReturnVerticalInput() < 0)
                     {
-                        SetAnimation(CharacterAnimStateEnum.Chara_Run_slide);
+                        SetAnimation(CharacterAnimStateEnum.Chara_Groundslide);
                         StartCoroutine("StopGroundSlide");
                         physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetGroundSlideHorizontalForce(), 0));
                     }
