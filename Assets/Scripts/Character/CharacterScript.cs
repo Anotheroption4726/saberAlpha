@@ -446,6 +446,15 @@ public class CharacterScript : MonoBehaviour
 
 
             //
+            //  Groundslide actions & Events
+            //
+            if (animState.Equals(CharacterAnimStateEnum.Chara_Groundslide))
+            {
+                
+            }
+
+
+            //
             //  Wallslide actions & Events
             //
             if (animState.Equals(CharacterAnimStateEnum.Chara_Wallslide))
