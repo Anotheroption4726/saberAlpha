@@ -215,7 +215,7 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                 }
 
-                JumpAttackActions(CharacterAnimStateEnum.Chara_Fall_normal);
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_normal);
             }
 
 
@@ -247,7 +247,7 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation(CharacterAnimStateEnum.Chara_Fall_maxspeed);
                 }
 
-                JumpAttackActions(CharacterAnimStateEnum.Chara_Fall_normal);
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_normal);
             }
 
 
@@ -294,7 +294,7 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation(CharacterAnimStateEnum.Chara_Fall_forward);
                 }
 
-                JumpAttackActions(CharacterAnimStateEnum.Chara_Fall_forward);
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_forward);
             }
 
 
@@ -337,7 +337,35 @@ public class CharacterScript : MonoBehaviour
                     SetAnimation(CharacterAnimStateEnum.Chara_Fall_maxspeed);
                 }
 
-                JumpAttackActions(CharacterAnimStateEnum.Chara_Fall_forward);
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_forward);
+            }
+
+
+            //
+            //  Melee and Shoot actions & Events
+            //
+            if (
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal)
+               )
+            {
+                //  Touch Ground
+                if (groundChecker.GetIsColliding())
+                {
+                    //  UNFINISHED BECAUSE BORING
+
+                    //physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                    //StopCoroutine("EndAnimationCoroutine");
+                    //SetAnimation(CharacterAnimStateEnum.Chara_Idle);
+                }
             }
 
 
@@ -461,9 +489,9 @@ public class CharacterScript : MonoBehaviour
 
 
     //
-    //  Jump attack actions
+    //  Jump melee & shoot actions
     //
-    private void JumpAttackActions(CharacterAnimStateEnum arg_animState)
+    private void JumpMeleeShootActions(CharacterAnimStateEnum arg_animState)
     {
         // Melee Jump
         if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
@@ -521,7 +549,7 @@ public class CharacterScript : MonoBehaviour
     }
 
 
-    //  Timer functions
+    //  Coroutines
     IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
     {
         yield return new WaitForSeconds(arg_time);
