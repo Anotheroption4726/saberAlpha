@@ -67,7 +67,7 @@
         float arg_idleJump_movementSpeed = 10,
         float arg_forwardJump_horizontalForce = 250,
         float arg_forwardJump_stopSlideForce = 1500,
-        float arg_forwardJump_horizontalAirDrag = 0.97f,
+        float arg_forwardJump_horizontalAirDrag = 0.97f, //0.97f
         float arg_fallMaxSpeed_velocityValue = 60,
         float arg_onTheGround_duration = 2,
         float arg_onTheGround_StandUpTime = 0.5f,
@@ -76,7 +76,7 @@
         float arg_groundSlide_startTime = 0.75f,
         float arg_groundSlide_duration = 0.5f,
         float arg_wallSlide_holdGravity = 0.125f,
-        float arg_wallJump_verticalForce = 800,
+        float arg_wallJump_verticalForce = 1500,
         float arg_wallJump_horizontalForce = 1500,
         float arg_wallJump_restrainDuration = 0.25f,
         float arg_meleeIdleStopTime = 0.35f,
