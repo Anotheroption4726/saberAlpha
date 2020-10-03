@@ -111,7 +111,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chara_shoot_jump_down_diagonal
+  m_Name: Chara_Shoot_jump_down_diagonal
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -479,7 +479,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chara_shoot_jump_up_diagonal
+  m_Name: Chara_Shoot_jump_up_diagonal
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -583,7 +583,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Chara_shoot_jump_down
+  m_Name: Chara_Shoot_jump_down
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
