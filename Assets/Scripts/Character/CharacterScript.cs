@@ -190,7 +190,7 @@ public class CharacterScript : MonoBehaviour
                 else if (!Input.anyKey && ReturnHorizontalInput() == 0)
                 {
                     SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-                    StartCoroutine("StopSlide");
+                    StartCoroutine(EndAnimationCoroutine(character.GetRunStopSlideTime(), ANIM_IDLE, CharacterAnimStateEnum.Idle));
                 }
 
                 //  Fall
@@ -403,7 +403,7 @@ public class CharacterScript : MonoBehaviour
                     {
                         //physicsManager.AddForceMethod(new Vector2(directionInt * character.GetForwardJumpStopSlideForce(), 0));
                         SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-                        StartCoroutine("StopSlide");
+                        StartCoroutine(EndAnimationCoroutine(character.GetRunStopSlideTime(), ANIM_IDLE, CharacterAnimStateEnum.Idle));
                     }
 
                     else if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
@@ -542,10 +542,10 @@ public class CharacterScript : MonoBehaviour
 
 
     //  Timer functions
-    private IEnumerator StopSlide()
+    IEnumerator EndAnimationCoroutine(float arg_time, string arg_animationName, CharacterAnimStateEnum arg_animState)
     {
-        yield return new WaitForSeconds(character.GetRunStopSlideTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+        yield return new WaitForSeconds(arg_time);
+        SetAnimation(arg_animationName, arg_animState);
     }
 
     private IEnumerator CanRunSlide()
@@ -605,7 +605,7 @@ public class CharacterScript : MonoBehaviour
         yield return new WaitForSeconds(character.GetMeleeRunStopTime());
         //SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
         SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-        StartCoroutine("StopSlide");
+        StartCoroutine(EndAnimationCoroutine(character.GetRunStopSlideTime(), ANIM_IDLE, CharacterAnimStateEnum.Idle));
     }
 
     private IEnumerator StopMeleeJump()
