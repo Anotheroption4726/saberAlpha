@@ -360,11 +360,8 @@ public class CharacterScript : MonoBehaviour
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
-                    //  UNFINISHED BECAUSE BORING
-
-                    //physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    //StopCoroutine("EndAnimationCoroutine");
-                    //SetAnimation(CharacterAnimStateEnum.Chara_Idle);
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                    SetAnimation(CharacterAnimStateEnum.Chara_Idle);
                 }
             }
 
@@ -552,6 +549,25 @@ public class CharacterScript : MonoBehaviour
     //  Coroutines
     IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
     {
+        if (
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down) ||
+                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal)
+               )
+        {
+            //  Touch Ground
+            if (groundChecker.GetIsColliding())
+            {
+                yield break;
+            }
+        }
         yield return new WaitForSeconds(arg_time);
         SetAnimation(arg_animState);
     }
