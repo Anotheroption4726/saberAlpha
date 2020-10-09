@@ -12,6 +12,7 @@
     Chara_Crawl_move,
     Chara_Wallslide,
     Chara_Groundslide,
+    Chara_Ontheground_start,
     Chara_Ontheground,
     Chara_Ontheground_standup,
     Chara_Melee_idle,

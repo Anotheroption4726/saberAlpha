@@ -262,8 +262,8 @@ public class CharacterScript : MonoBehaviour
                 if (groundChecker.GetIsColliding() && !trigger_onTheGround_isOntheGround)
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
-                    StartCoroutine(Ontheground());
+                    SetAnimation(CharacterAnimStateEnum.Chara_Ontheground_start);
+                    StartCoroutine(OnthegroundStart());
                     trigger_onTheGround_isOntheGround = false;
                 }
             }
@@ -529,6 +529,13 @@ public class CharacterScript : MonoBehaviour
         trigger_wallJump_hasWallJumped = true;
         yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
         trigger_wallJump_hasWallJumped = false;
+    }
+
+    private IEnumerator OnthegroundStart()
+    {
+        yield return new WaitForSeconds(character.GetOnTheGroundStartTime());
+        SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
+        StartCoroutine(Ontheground());
     }
 
     private IEnumerator Ontheground()

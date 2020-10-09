@@ -17,6 +17,7 @@
     private float threshold_fallMaxSpeed_velocityValue;
 
     //  On the Ground Parameters
+    private float timer_onTheGround_StartTime;
     private float timer_onTheGround_duration;
     private float timer_onTheGround_StandUpTime;
 
@@ -69,6 +70,7 @@
         float arg_forwardJump_stopSlideForce = 1500,
         float arg_forwardJump_horizontalAirDrag = 0.97f, //0.97f
         float arg_fallMaxSpeed_velocityValue = 60,
+        float arg_onTheGround_StartTime = 0.25f,
         float arg_onTheGround_duration = 2,
         float arg_onTheGround_StandUpTime = 0.5f,
         float arg_crawl_movementSpeed = 10,
@@ -106,6 +108,7 @@
         impulse_forwardJump_stopSlideForce = arg_forwardJump_stopSlideForce;
         ratio_forwardJump_horizontalAirDrag = arg_forwardJump_horizontalAirDrag;
         threshold_fallMaxSpeed_velocityValue = arg_fallMaxSpeed_velocityValue;
+        timer_onTheGround_StartTime = arg_onTheGround_StartTime;
         timer_onTheGround_duration = arg_onTheGround_duration;
         timer_onTheGround_StandUpTime = arg_onTheGround_StandUpTime;
         fixed_crawl_movementSpeed = arg_crawl_movementSpeed;
@@ -175,6 +178,11 @@
     public float GetFallMaxSpeedVelocityValue()
     {
         return threshold_fallMaxSpeed_velocityValue;
+    }
+
+    public float GetOnTheGroundStartTime()
+    {
+        return timer_onTheGround_StartTime;
     }
 
     public float GetOnTheGroundDuration()
