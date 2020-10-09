@@ -256,7 +256,7 @@ public class CharacterScript : MonoBehaviour
             //
             else if (animState.Equals(CharacterAnimStateEnum.Chara_Fall_maxspeed))
             {
-                IdleJumpMovement();
+                //IdleJumpMovement();
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding() && !trigger_onTheGround_isOntheGround)
@@ -485,67 +485,6 @@ public class CharacterScript : MonoBehaviour
     }
 
 
-    //
-    //  Jump melee & shoot actions
-    //
-    private void JumpMeleeShootActions(CharacterAnimStateEnum arg_animState)
-    {
-        // Melee Jump
-        if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal);
-            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpUpDiagonalStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal);
-            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpDownDiagonalStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up);
-            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpUpStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down);
-            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpDownStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Melee"))
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump);
-            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpStopTime(), arg_animState));
-        }
-
-        // Shoot Jump
-        if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal);
-            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpUpDiagonalStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal);
-            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpDownDiagonalStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up);
-            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpUpStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0)
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down);
-            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpDownStopTime(), arg_animState));
-        }
-        else if (Input.GetButtonDown("Gamepad_Shoot"))
-        {
-            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
-            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpStopTime(), arg_animState));
-        }
-    }
-
-
     //  Coroutines
     IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
     {
@@ -709,6 +648,65 @@ public class CharacterScript : MonoBehaviour
         if (!Input.anyKey && ReturnHorizontalInput() == 0)
         {
             physicsManager.HorizontalDrag(character.GetForwardJumpHorizontalAirDrag());
+        }
+    }
+
+
+    //  Jump melee & shoot actions
+    private void JumpMeleeShootActions(CharacterAnimStateEnum arg_animState)
+    {
+        // Melee Jump
+        if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal);
+            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpUpDiagonalStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal);
+            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpDownDiagonalStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up);
+            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpUpStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down);
+            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpDownStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee"))
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump);
+            StartCoroutine(EndAnimationCoroutine(character.GetMeleeJumpStopTime(), arg_animState));
+        }
+
+        // Shoot Jump
+        if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal);
+            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpUpDiagonalStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal);
+            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpDownDiagonalStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up);
+            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpUpStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0)
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down);
+            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpDownStopTime(), arg_animState));
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot"))
+        {
+            SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
+            StartCoroutine(EndAnimationCoroutine(character.GetShootJumpStopTime(), arg_animState));
         }
     }
 }
