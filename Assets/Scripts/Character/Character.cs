@@ -17,18 +17,17 @@
     private float threshold_fallMaxSpeed_velocityValue;
 
     //  On the Ground Parameters
+    private float timer_onTheGround_StartTime;
     private float timer_onTheGround_duration;
     private float timer_onTheGround_StandUpTime;
-    private bool trigger_onTheGround_isOntheGround = false;
 
     //  Crawl Parameters
     private float fixed_crawl_movementSpeed;
 
-    //  Run Slide Parameters
-    private float impulse_runSlide_horizontalForce;
-    private float timer_runSlide_startTime;
-    private float timer_runSlide_duration;
-    private bool trigger_runSlide_canRunSlide = false;
+    //  Ground Slide Parameters
+    private float impulse_groundSlide_horizontalForce;
+    private float timer_groundSlide_startTime;
+    private float timer_groundSlide_duration;
 
     //  WallSlide Parameters
     private float ratio_wallSlide_holdGravity;
@@ -37,7 +36,6 @@
     private float impulse_wallJump_verticalForce;
     private float impulse_wallJump_horizontalForce;
     private float timer_wallJump_restrainDuration;
-    private bool trigger_wallJump_hasWallJumped = false;
 
     // Melee Parameters
     private float meleeIdleStopTime;
@@ -46,7 +44,9 @@
     private float meleeRunStopTime;
     private float meleeJumpStopTime;
     private float meleeJumpUpStopTime;
+    private float meleeJumpUpDiagonalStopTime;
     private float meleeJumpDownStopTime;
+    private float meleeJumpDownDiagonalStopTime;
 
     // Shoot Parameters
     private float shootIdleStopTime;
@@ -68,16 +68,17 @@
         float arg_idleJump_movementSpeed = 10,
         float arg_forwardJump_horizontalForce = 250,
         float arg_forwardJump_stopSlideForce = 1500,
-        float arg_forwardJump_horizontalAirDrag = 0.97f,    //0.997f
+        float arg_forwardJump_horizontalAirDrag = 0.97f, //0.97f
         float arg_fallMaxSpeed_velocityValue = 60,
+        float arg_onTheGround_StartTime = 0.25f,
         float arg_onTheGround_duration = 2,
         float arg_onTheGround_StandUpTime = 0.5f,
         float arg_crawl_movementSpeed = 10,
-        float arg_runSlide_horizontalForce = 2500,
-        float arg_runSlide_startTime = 0.75f,
-        float arg_runSlide_duration = 0.25f,
+        float arg_groundSlide_horizontalForce = 2000,
+        float arg_groundSlide_startTime = 0.75f,
+        float arg_groundSlide_duration = 0.5f,
         float arg_wallSlide_holdGravity = 0.125f,
-        float arg_wallJump_verticalForce = 800,
+        float arg_wallJump_verticalForce = 1500,
         float arg_wallJump_horizontalForce = 1500,
         float arg_wallJump_restrainDuration = 0.25f,
         float arg_meleeIdleStopTime = 0.35f,
@@ -86,7 +87,9 @@
         float arg_meleeRunStopTime = 0.25f, //0.25f
         float arg_meleeJumpStopTime = 0.45f,
         float arg_meleeJumpUpStopTime = 0.5f,
+        float arg_meleeJumpUpDiagonalStopTime = 0.5f,
         float arg_meleeJumpDownStopTime = 0.5f,
+        float arg_meleeJumpDownDiagonalStopTime = 0.5f,
         float arg_shootIdleStopTime = 0.4f,
         float arg_shootIdleUpStopTime = 0.4f,
         float arg_shootIdleUpDiagonalStopTime = 0.4f,
@@ -105,12 +108,13 @@
         impulse_forwardJump_stopSlideForce = arg_forwardJump_stopSlideForce;
         ratio_forwardJump_horizontalAirDrag = arg_forwardJump_horizontalAirDrag;
         threshold_fallMaxSpeed_velocityValue = arg_fallMaxSpeed_velocityValue;
+        timer_onTheGround_StartTime = arg_onTheGround_StartTime;
         timer_onTheGround_duration = arg_onTheGround_duration;
         timer_onTheGround_StandUpTime = arg_onTheGround_StandUpTime;
         fixed_crawl_movementSpeed = arg_crawl_movementSpeed;
-        impulse_runSlide_horizontalForce = arg_runSlide_horizontalForce;
-        timer_runSlide_startTime = arg_runSlide_startTime;
-        timer_runSlide_duration = arg_runSlide_duration;
+        impulse_groundSlide_horizontalForce = arg_groundSlide_horizontalForce;
+        timer_groundSlide_startTime = arg_groundSlide_startTime;
+        timer_groundSlide_duration = arg_groundSlide_duration;
         ratio_wallSlide_holdGravity = arg_wallSlide_holdGravity;
         impulse_wallJump_verticalForce = arg_wallJump_verticalForce;
         impulse_wallJump_horizontalForce = arg_wallJump_horizontalForce;
@@ -121,7 +125,9 @@
         meleeRunStopTime = arg_meleeRunStopTime;
         meleeJumpStopTime = arg_meleeJumpStopTime;
         meleeJumpUpStopTime = arg_meleeJumpUpStopTime;
+        meleeJumpUpDiagonalStopTime = arg_meleeJumpUpDiagonalStopTime;
         meleeJumpDownStopTime = arg_meleeJumpDownStopTime;
+        meleeJumpDownDiagonalStopTime = arg_meleeJumpDownDiagonalStopTime;
         shootIdleStopTime = arg_shootIdleStopTime;
         shootIdleUpStopTime = arg_shootIdleUpStopTime;
         shootIdleUpDiagonalStopTime = arg_shootIdleUpDiagonalStopTime;
@@ -174,6 +180,11 @@
         return threshold_fallMaxSpeed_velocityValue;
     }
 
+    public float GetOnTheGroundStartTime()
+    {
+        return timer_onTheGround_StartTime;
+    }
+
     public float GetOnTheGroundDuration()
     {
         return timer_onTheGround_duration;
@@ -184,34 +195,24 @@
         return timer_onTheGround_StandUpTime;
     }
 
-    public bool GetOnTheGroundIsOntheGround()
-    {
-        return trigger_onTheGround_isOntheGround;
-    }
-
     public float GetCrawlMovementSpeed()
     {
         return fixed_crawl_movementSpeed;
     }
 
-    public float GetRunSlideHorizontalForce()
+    public float GetGroundSlideHorizontalForce()
     {
-        return impulse_runSlide_horizontalForce;
+        return impulse_groundSlide_horizontalForce;
     }
 
-    public float GetRunSlideStartTime()
+    public float GetGroundSlideStartTime()
     {
-        return timer_runSlide_startTime;
+        return timer_groundSlide_startTime;
     }
 
-    public float GetRunSlideDuration()
+    public float GetGroundSlideDuration()
     {
-        return timer_runSlide_duration;
-    }
-
-    public bool GetRunSlideCanRunSlide()
-    {
-        return trigger_runSlide_canRunSlide;
+        return timer_groundSlide_duration;
     }
 
     public float GetWallSlideHoldGravity()
@@ -232,11 +233,6 @@
     public float GetWallJumpRestrainDuration()
     {
         return timer_wallJump_restrainDuration;
-    }
-
-    public bool GetWallJumpHasWallJumped()
-    {
-        return trigger_wallJump_hasWallJumped;
     }
 
     public float GetMeleeIdleStopTime()
@@ -269,9 +265,19 @@
         return meleeJumpUpStopTime;
     }
 
+    public float GetMeleeJumpUpDiagonalStopTime()
+    {
+        return meleeJumpUpDiagonalStopTime;
+    }
+
     public float GetMeleeJumpDownStopTime()
     {
         return meleeJumpDownStopTime;
+    }
+
+    public float GetMeleeJumpDownDiagonalStopTime()
+    {
+        return meleeJumpDownDiagonalStopTime;
     }
 
     public float GetShootIdleStopTime()
@@ -312,22 +318,5 @@
     public float GetShootJumpDownDiagonalStopTime()
     {
         return shootJumpDownDiagonalStopTime;
-    }
-
-
-    //  Setters
-    public void SetOnTheGroundIsOntheGround(bool arg_isOntheGround)
-    {
-        trigger_onTheGround_isOntheGround = arg_isOntheGround;
-    }
-
-    public void SetRunSlideCanRunSlide(bool arg_canRunSlide)
-    {
-        trigger_runSlide_canRunSlide = arg_canRunSlide;
-    }
-
-    public void SetWallJumpHasWallJumped(bool arg_hasWallJumped)
-    {
-        trigger_wallJump_hasWallJumped = arg_hasWallJumped;
     }
 }
