@@ -11,7 +11,7 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private Transform bulletSpawnPoint_6;
+    [SerializeField] private Transform bulletSpawnPoint_horizontal;
 
     //  Animations
     private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
@@ -588,6 +588,7 @@ public class CharacterScript : MonoBehaviour
         }
 
         directionInt = arg_direction;
+        bulletSpawnPoint_horizontal.localPosition = new Vector3(directionInt * bulletSpawnPoint_horizontal.transform.localPosition.x, bulletSpawnPoint_horizontal.transform.localPosition.y, bulletSpawnPoint_horizontal.transform.localPosition.z);
     }
 
 
@@ -666,7 +667,7 @@ public class CharacterScript : MonoBehaviour
     IEnumerator SpawnBulletCoroutine(float arg_time)
     {
         yield return new WaitForSeconds(arg_time);
-        Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(transform.forward));
+        Instantiate(bullet, bulletSpawnPoint_horizontal.position, Quaternion.LookRotation(directionInt * transform.forward));
     }
 
 

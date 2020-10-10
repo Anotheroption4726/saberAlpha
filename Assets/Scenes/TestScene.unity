@@ -502,7 +502,7 @@ GameObject:
   m_Component:
   - component: {fileID: 87705587}
   m_Layer: 0
-  m_Name: BulletSpawnPoint_6
+  m_Name: BulletSpawnPoint_horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1159,7 +1159,7 @@ MonoBehaviour:
   rightWallChecker: {fileID: 660427003}
   leftWallChecker: {fileID: 1084149480}
   bullet: {fileID: 7798801615197491969, guid: a8af592b08f31ee44b45236f7f0a8604, type: 3}
-  bulletSpawnPoint_6: {fileID: 87705587}
+  bulletSpawnPoint_horizontal: {fileID: 87705587}
   sprite: {fileID: 1767468241}
   animator: {fileID: 1767468243}
 --- !u!61 &370792730
