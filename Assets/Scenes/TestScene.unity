@@ -3106,7 +3106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameType: 0
-  timeScale: 1
+  timeScale: 0.2
   gravityScale: 46.5
   runMovementSpeed_fixed: 40
   runStopSlideTime_timer: 0.13
@@ -4637,7 +4637,7 @@ SpriteRenderer:
   m_SortingLayerID: 1496664437
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 9220792091929997993, guid: fb661d49813b1bb4898d647f4f502da4,
+  m_Sprite: {fileID: 5220411317018194310, guid: 3221077529f85c84282fb8d6f628690d,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

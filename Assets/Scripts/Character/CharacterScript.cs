@@ -729,6 +729,7 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
             StartCoroutine(EndAnimationCoroutine(character.GetShootJumpStopTime(), arg_animState));
+            StartCoroutine(SpawnBulletCoroutine(character.GetBulletSpawnDelay()));
         }
     }
 }
