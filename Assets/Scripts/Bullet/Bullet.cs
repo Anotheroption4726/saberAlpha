@@ -3,7 +3,7 @@
     private int bulletMovementSpeed;
     private float bulletAppearAnimationTime;
 
-    public Bullet(int arg_bulletMovementSpeed = 500, float arg_bulletAppearAnimationTime = 0.5f)
+    public Bullet(int arg_bulletMovementSpeed = 10, float arg_bulletAppearAnimationTime = 0.5f)
     {
         bulletMovementSpeed = arg_bulletMovementSpeed;
         bulletAppearAnimationTime = arg_bulletAppearAnimationTime;

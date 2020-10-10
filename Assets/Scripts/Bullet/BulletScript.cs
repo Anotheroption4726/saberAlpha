@@ -20,8 +20,8 @@ public class BulletScript : MonoBehaviour
         SetAnimation(BulletAnimStateEnum.Bullet_Appear);
         StartCoroutine(EndAnimationCoroutine(bullet.GetBulletAppearAnimationTime(), BulletAnimStateEnum.Bullet_Travel));
 
-        //rigidbody.AddForce(new Vector2(bullet.GetBulletMovementSpeed(), 0));
-        rigidbody.velocity = new Vector2(bullet.GetBulletMovementSpeed()/50, 0);
+        //rigidbody.AddForce(new Vector2(bullet.GetBulletMovementSpeed()*50, 0));
+        rigidbody.velocity = new Vector2(bullet.GetBulletMovementSpeed(), 0);
     }
 
     //  Coroutines
