@@ -95,7 +95,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
                     StartCoroutine(EndAnimationCoroutine(character.GetShootIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
-                    var loc_bullet = Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(-transform.forward));
+                    Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(transform.forward));
                 }
 
                 //  Run
