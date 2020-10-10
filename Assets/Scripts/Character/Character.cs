@@ -57,6 +57,7 @@
     private float shootJumpUpDiagonalStopTime;
     private float shootJumpDownStopTime;
     private float shootJumpDownDiagonalStopTime;
+    private float bulletSpawnDelay;
 
 
     //  Constructor
@@ -97,7 +98,8 @@
         float arg_shootJumpUpStopTime = 0.4f,
         float arg_shootJumpUpDiagonalStopTime = 0.3f,
         float arg_shootJumpDownStopTime = 0.3f,
-        float arg_shootJumpDownDiagonalStopTime = 0.3f
+        float arg_shootJumpDownDiagonalStopTime = 0.3f,
+        float arg_bulletSpawnDelay = 0.07f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;
@@ -136,7 +138,8 @@
         shootJumpUpDiagonalStopTime = arg_shootJumpUpDiagonalStopTime;
         shootJumpDownStopTime = arg_shootJumpDownStopTime;
         shootJumpDownDiagonalStopTime = arg_shootJumpDownDiagonalStopTime;
-}
+        bulletSpawnDelay = arg_bulletSpawnDelay;
+    }
 
 
     //  Getters
@@ -318,5 +321,10 @@
     public float GetShootJumpDownDiagonalStopTime()
     {
         return shootJumpDownDiagonalStopTime;
+    }
+
+    public float GetBulletSpawnDelay()
+    {
+        return bulletSpawnDelay;
     }
 }

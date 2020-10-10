@@ -95,7 +95,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
                     StartCoroutine(EndAnimationCoroutine(character.GetShootIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
-                    Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(transform.forward));
+                    StartCoroutine(SpawnBulletCoroutine(character.GetBulletSpawnDelay()));
                 }
 
                 //  Run
@@ -659,6 +659,14 @@ public class CharacterScript : MonoBehaviour
         {
             physicsManager.HorizontalDrag(character.GetForwardJumpHorizontalAirDrag());
         }
+    }
+
+
+    //  Spawn bullet delay coroutine
+    IEnumerator SpawnBulletCoroutine(float arg_time)
+    {
+        yield return new WaitForSeconds(arg_time);
+        Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(transform.forward));
     }
 
 
