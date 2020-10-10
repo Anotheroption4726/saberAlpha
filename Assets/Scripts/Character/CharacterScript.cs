@@ -18,7 +18,6 @@ public class CharacterScript : MonoBehaviour
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private Animator animator;
-    private bool trigger_onTheGround_isOntheGround = false;
     private bool trigger_groundSlide_canGroundSlide = false;
     private bool trigger_wallJump_hasWallJumped = false;
 
@@ -272,12 +271,10 @@ public class CharacterScript : MonoBehaviour
                 //IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsColliding() && !trigger_onTheGround_isOntheGround)
+                if (groundChecker.GetIsColliding())
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
                     SetAnimation(CharacterAnimStateEnum.Chara_Ontheground_start);
-                    StartCoroutine(OnthegroundStart());
-                    trigger_onTheGround_isOntheGround = false;
                 }
             }
 
@@ -544,27 +541,6 @@ public class CharacterScript : MonoBehaviour
         trigger_wallJump_hasWallJumped = false;
     }
 
-    private IEnumerator OnthegroundStart()
-    {
-        yield return new WaitForSeconds(character.GetOnTheGroundStartTime());
-        SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
-        StartCoroutine(Ontheground());
-    }
-
-    private IEnumerator Ontheground()
-    {
-        yield return new WaitForSeconds(character.GetOnTheGroundDuration());
-        SetAnimation(CharacterAnimStateEnum.Chara_Ontheground_standup);
-        StartCoroutine(OnthegroundStandup());
-    }
-
-    private IEnumerator OnthegroundStandup()
-    {
-        yield return new WaitForSeconds(character.GetOnTheGroundStandUpTime());
-        SetAnimation(CharacterAnimStateEnum.Chara_Idle);
-        trigger_onTheGround_isOntheGround = false;
-    }
-
     private IEnumerator StopMeleeRun()
     {
         yield return new WaitForSeconds(character.GetMeleeRunStopTime());
@@ -575,7 +551,7 @@ public class CharacterScript : MonoBehaviour
 
 
     //  Animation functions
-    private void SetAnimation(CharacterAnimStateEnum arg_charaAnimStateEnum)
+    public void SetAnimation(CharacterAnimStateEnum arg_charaAnimStateEnum)
     {
         if (animState == arg_charaAnimStateEnum)
         {
