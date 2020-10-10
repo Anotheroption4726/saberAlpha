@@ -136,7 +136,7 @@
         shootJumpUpDiagonalStopTime = arg_shootJumpUpDiagonalStopTime;
         shootJumpDownStopTime = arg_shootJumpDownStopTime;
         shootJumpDownDiagonalStopTime = arg_shootJumpDownDiagonalStopTime;
-}
+    }
 
 
     //  Getters

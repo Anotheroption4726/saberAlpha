@@ -10,6 +10,8 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private CharacterCollideCheckScript groundChecker;
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
+    [SerializeField] private Transform bulletSpawnPoint_horizontal;
+    private float bulletSpawnPointPosition_horizontal;
 
     //  Animations
     private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
@@ -26,6 +28,16 @@ public class CharacterScript : MonoBehaviour
         return character;
     }
 
+    public int GetDirectionInt()
+    {
+        return directionInt;
+    }
+
+    public Transform GetBulletSpawnPoint_horizontal()
+    {
+        return bulletSpawnPoint_horizontal;
+    }
+
     public void SetCharacter(Character arg_character)
     {
         character = arg_character;
@@ -36,6 +48,7 @@ public class CharacterScript : MonoBehaviour
     private void Awake()
     {
         physicsManager = GetComponent<CharacterPhysicsManagerScript>();
+        bulletSpawnPointPosition_horizontal = bulletSpawnPoint_horizontal.localPosition.x;
     }
 
 
@@ -585,6 +598,7 @@ public class CharacterScript : MonoBehaviour
         }
 
         directionInt = arg_direction;
+        bulletSpawnPoint_horizontal.localPosition = new Vector3(directionInt * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
     }
 
 

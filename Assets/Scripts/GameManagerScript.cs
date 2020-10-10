@@ -71,7 +71,7 @@ public class GameManagerScript : MonoBehaviour
             else
             {
                 pauseIcon.enabled = false;
-                Time.timeScale = gameParameters.GetTimeScale();
+                Time.timeScale = 1.0f;
                 Game.SetGamePaused(false);
             }
             
