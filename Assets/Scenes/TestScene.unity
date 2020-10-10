@@ -1158,7 +1158,6 @@ MonoBehaviour:
   groundChecker: {fileID: 205447510}
   rightWallChecker: {fileID: 660427003}
   leftWallChecker: {fileID: 1084149480}
-  bullet: {fileID: 7798801615197491969, guid: a8af592b08f31ee44b45236f7f0a8604, type: 3}
   bulletSpawnPoint_horizontal: {fileID: 87705587}
   sprite: {fileID: 1767468241}
   animator: {fileID: 1767468243}
@@ -4591,6 +4590,7 @@ GameObject:
   - component: {fileID: 1767468242}
   - component: {fileID: 1767468241}
   - component: {fileID: 1767468243}
+  - component: {fileID: 1767468244}
   m_Layer: 0
   m_Name: Display
   m_TagString: Untagged
@@ -4682,6 +4682,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1767468244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1767468240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d55b367cbecbf044faa46a186df971da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterScript: {fileID: 370792729}
+  bullet: {fileID: 7798801615197491969, guid: a8af592b08f31ee44b45236f7f0a8604, type: 3}
 --- !u!1 &1823564837
 GameObject:
   m_ObjectHideFlags: 0

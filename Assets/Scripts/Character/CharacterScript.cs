@@ -10,7 +10,6 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private CharacterCollideCheckScript groundChecker;
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
-    [SerializeField] private GameObject bullet;
     [SerializeField] private Transform bulletSpawnPoint_horizontal;
     private float bulletSpawnPointPosition_horizontal;
 
@@ -27,6 +26,16 @@ public class CharacterScript : MonoBehaviour
     public Character GetCharacter()
     {
         return character;
+    }
+
+    public int GetDirectionInt()
+    {
+        return directionInt;
+    }
+
+    public Transform GetBulletSpawnPoint_horizontal()
+    {
+        return bulletSpawnPoint_horizontal;
     }
 
     public void SetCharacter(Character arg_character)
@@ -97,7 +106,6 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
                     StartCoroutine(EndAnimationCoroutine(character.GetShootIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
-                    StartCoroutine(SpawnBulletCoroutine(character.GetBulletSpawnDelay()));
                 }
 
                 //  Run
@@ -665,15 +673,6 @@ public class CharacterScript : MonoBehaviour
     }
 
 
-    //  Spawn bullet delay coroutine
-    IEnumerator SpawnBulletCoroutine(float arg_time)
-    {
-        yield return new WaitForSeconds(arg_time);
-        var loc_bullet = Instantiate(bullet, bulletSpawnPoint_horizontal.position, Quaternion.LookRotation(directionInt * transform.forward));
-        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(directionInt);
-    }
-
-
     //  Jump melee & shoot actions
     private void JumpMeleeShootActions(CharacterAnimStateEnum arg_animState)
     {
@@ -729,7 +728,6 @@ public class CharacterScript : MonoBehaviour
         {
             SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
             StartCoroutine(EndAnimationCoroutine(character.GetShootJumpStopTime(), arg_animState));
-            StartCoroutine(SpawnBulletCoroutine(character.GetBulletSpawnDelay()));
         }
     }
 }
