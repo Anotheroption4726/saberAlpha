@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(new Vector3(bullet.GetBulletMovementSpeed(), 0, 0) * Time.deltaTime);
+        transform.Translate(transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
     }
 
     //  Coroutines
