@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
+    private int directionInt = 1;
     private Bullet bullet = new Bullet();
     private BulletAnimStateEnum animState = BulletAnimStateEnum.Bullet_Appear;
     [SerializeField] private Animator animator;
@@ -15,9 +16,19 @@ public class BulletScript : MonoBehaviour
         StartCoroutine(EndAnimationCoroutine(bullet.GetBulletAppearAnimationTime(), BulletAnimStateEnum.Bullet_Travel));
     }
 
+    public int GetDirectionInt()
+    {
+        return directionInt;
+    }
+
+    public void SetDirectionInt(int arg_directionInt)
+    {
+        directionInt = arg_directionInt;
+    }
+
     private void Update()
     {
-        transform.Translate(transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
+        transform.Translate(directionInt * transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
     }
 
     //  Coroutines

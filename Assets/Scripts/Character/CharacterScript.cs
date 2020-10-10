@@ -12,6 +12,7 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
     [SerializeField] private GameObject bullet;
     [SerializeField] private Transform bulletSpawnPoint_horizontal;
+    private float bulletSpawnPointPosition_horizontal;
 
     //  Animations
     private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
@@ -38,6 +39,7 @@ public class CharacterScript : MonoBehaviour
     private void Awake()
     {
         physicsManager = GetComponent<CharacterPhysicsManagerScript>();
+        bulletSpawnPointPosition_horizontal = bulletSpawnPoint_horizontal.localPosition.x;
     }
 
 
@@ -588,7 +590,7 @@ public class CharacterScript : MonoBehaviour
         }
 
         directionInt = arg_direction;
-        bulletSpawnPoint_horizontal.localPosition = new Vector3(directionInt * bulletSpawnPoint_horizontal.transform.localPosition.x, bulletSpawnPoint_horizontal.transform.localPosition.y, bulletSpawnPoint_horizontal.transform.localPosition.z);
+        bulletSpawnPoint_horizontal.localPosition = new Vector3(directionInt * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
     }
 
 
@@ -667,7 +669,8 @@ public class CharacterScript : MonoBehaviour
     IEnumerator SpawnBulletCoroutine(float arg_time)
     {
         yield return new WaitForSeconds(arg_time);
-        Instantiate(bullet, bulletSpawnPoint_horizontal.position, Quaternion.LookRotation(directionInt * transform.forward));
+        var loc_bullet = Instantiate(bullet, bulletSpawnPoint_horizontal.position, Quaternion.LookRotation(directionInt * transform.forward));
+        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(directionInt);
     }
 
 
