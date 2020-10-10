@@ -10,6 +10,8 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private CharacterCollideCheckScript groundChecker;
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
+    [SerializeField] private GameObject bullet;
+    [SerializeField] private Transform bulletSpawnPoint_6;
 
     //  Animations
     private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
@@ -93,6 +95,7 @@ public class CharacterScript : MonoBehaviour
                 {
                     SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
                     StartCoroutine(EndAnimationCoroutine(character.GetShootIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
+                    var loc_bullet = Instantiate(bullet, bulletSpawnPoint_6.position, Quaternion.LookRotation(-transform.forward));
                 }
 
                 //  Run
