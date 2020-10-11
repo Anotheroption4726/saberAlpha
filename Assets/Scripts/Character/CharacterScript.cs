@@ -13,7 +13,9 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private CharacterAnimManagerScript animManager;
     [SerializeField] private Transform bulletSpawnPoint_horizontal;
+    [SerializeField] private Transform bulletSpawnPoint_up;
     private float bulletSpawnPointPosition_horizontal;
+    private float bulletSpawnPointPosition_up;
 
 
     //  Getters and Setters
@@ -32,6 +34,11 @@ public class CharacterScript : MonoBehaviour
         return bulletSpawnPoint_horizontal;
     }
 
+    public Transform GetBulletSpawnPoint_up()
+    {
+        return bulletSpawnPoint_up;
+    }
+
     public void SetCharacter(Character arg_character)
     {
         character = arg_character;
@@ -42,6 +49,7 @@ public class CharacterScript : MonoBehaviour
     private void Awake()
     {
         bulletSpawnPointPosition_horizontal = bulletSpawnPoint_horizontal.localPosition.x;
+        bulletSpawnPointPosition_up = bulletSpawnPoint_up.localPosition.x;
     }
 
 
@@ -497,6 +505,7 @@ public class CharacterScript : MonoBehaviour
 
         character.SetDirectionInt(arg_direction);
         bulletSpawnPoint_horizontal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
+        bulletSpawnPoint_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_up, bulletSpawnPoint_up.localPosition.y, bulletSpawnPoint_up.localPosition.z);
     }
 
     private int ReturnHorizontalInput()

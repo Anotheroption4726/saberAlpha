@@ -66,6 +66,12 @@ public class CharacterAnimManagerScript : MonoBehaviour
         loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
     }
 
+    private void Shoot_SpawnBulletUp()
+    {
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_up().position, Quaternion.LookRotation(characterScript.GetCharacter().GetDirectionInt() * transform.forward));
+        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
+    }
+
 
     // Coroutines
     public IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)

@@ -310,6 +310,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &50564509
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 50564510}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint_up
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &50564510
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 50564509}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 2.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1833329595}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &65773765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,9 +1189,10 @@ MonoBehaviour:
   groundChecker: {fileID: 205447510}
   rightWallChecker: {fileID: 660427003}
   leftWallChecker: {fileID: 1084149480}
+  sprite: {fileID: 1767468241}
   animManager: {fileID: 1767468244}
   bulletSpawnPoint_horizontal: {fileID: 87705587}
-  sprite: {fileID: 1767468241}
+  bulletSpawnPoint_up: {fileID: 50564510}
 --- !u!61 &370792730
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3105,7 +3136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d3a829bef3c334db57303e8585fe95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameType: 0
+  gameType: 1
   timeScale: 0.2
   gravityScale: 46.5
   runMovementSpeed_fixed: 40
@@ -4638,7 +4669,7 @@ SpriteRenderer:
   m_SortingLayerID: 1496664437
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5220411317018194310, guid: 3221077529f85c84282fb8d6f628690d,
+  m_Sprite: {fileID: -7590124971005039588, guid: 10bafaf0c48af9f44bafefb299b64d98,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4834,6 +4865,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 87705587}
+  - {fileID: 50564510}
   m_Father: {fileID: 370792728}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
