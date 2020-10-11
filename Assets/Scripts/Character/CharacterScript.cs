@@ -17,8 +17,7 @@ public class CharacterScript : MonoBehaviour
     //  Animations
     private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
-    private bool trigger_groundSlide_canGroundSlide = false;
-    private bool trigger_wallJump_hasWallJumped = false;
+
 
     //  Getters and Setters
     public Character GetCharacter()
@@ -131,9 +130,9 @@ public class CharacterScript : MonoBehaviour
             else if (animManager.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Run))
             {
                 //  CanGroundSlide Timer
-                if (!trigger_groundSlide_canGroundSlide)
+                if (!animManager.GetTrigger_groundSlide_canGroundSlide())
                 {
-                    StartCoroutine(CanGroundSlide());
+                    StartCoroutine(animManager.CanGroundSlide());
                 }
 
                 //  Run
@@ -165,10 +164,10 @@ public class CharacterScript : MonoBehaviour
                     }
 
                     // Ground Slide
-                    else if (trigger_groundSlide_canGroundSlide && ReturnVerticalInput() < 0)
+                    else if (animManager.GetTrigger_groundSlide_canGroundSlide() && ReturnVerticalInput() < 0)
                     {
                         animManager.SetAnimation(CharacterAnimStateEnum.Chara_Groundslide);
-                        StartCoroutine(StopGroundSlide());
+                        StartCoroutine(animManager.StopGroundSlide());
                         physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetGroundSlideHorizontalForce(), 0));
                     }
                 }
@@ -190,7 +189,7 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetButtonDown("Gamepad_Melee"))
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_run);
-                    StartCoroutine(StopMeleeRun());
+                    StartCoroutine(animManager.StopMeleeRun());
                 }
             }
 
@@ -455,7 +454,7 @@ public class CharacterScript : MonoBehaviour
                 }
 
                 //  Jump Left
-                if (!trigger_wallJump_hasWallJumped && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
+                if (!animManager.GetTrigger_wallJump_hasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
                 {
                     SetDirection(-directionInt);
 
@@ -464,7 +463,7 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(directionInt * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Jump_forward);
-                    StartCoroutine(WallJumpTimer());
+                    StartCoroutine(animManager.WallJumpTimer());
                 }
 
                 //  No more wall
@@ -498,35 +497,7 @@ public class CharacterScript : MonoBehaviour
     }
 
 
-    //  Coroutines
-    
-    private IEnumerator CanGroundSlide()
-    {
-        yield return new WaitForSeconds(character.GetGroundSlideStartTime());
-        trigger_groundSlide_canGroundSlide = true;
-    }
-
-    private IEnumerator StopGroundSlide()
-    {
-        yield return new WaitForSeconds(character.GetGroundSlideDuration());
-        animManager.SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
-        trigger_groundSlide_canGroundSlide = false;
-    }
-
-    private IEnumerator WallJumpTimer()
-    {
-        trigger_wallJump_hasWallJumped = true;
-        yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
-        trigger_wallJump_hasWallJumped = false;
-    }
-
-    private IEnumerator StopMeleeRun()
-    {
-        yield return new WaitForSeconds(character.GetMeleeRunStopTime());
-        //SetAnimation(CharacterAnimStateEnum.Idle);
-        animManager.SetAnimation(CharacterAnimStateEnum.Chara_Slide);
-        StartCoroutine(animManager.EndAnimationCoroutine(character.GetRunStopSlideTime(), CharacterAnimStateEnum.Chara_Idle));
-    }
+    //  Player Input
 
     private void SetDirection(int arg_direction)
     {
@@ -543,8 +514,6 @@ public class CharacterScript : MonoBehaviour
         bulletSpawnPoint_horizontal.localPosition = new Vector3(directionInt * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
     }
 
-
-    //  Player Input
     private int ReturnHorizontalInput()
     {
         int loc_horizonalInputValue;
