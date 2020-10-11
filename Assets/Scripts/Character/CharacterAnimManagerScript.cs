@@ -7,6 +7,15 @@ public class CharacterAnimManagerScript : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject bullet;
 
+    private CharacterAnimStateEnum animStateAfterJumpAttack;
+
+
+    // Setters
+    public void SetAnimStateAfterJumpAttack(CharacterAnimStateEnum arg_animStateAfterJumpAttack)
+    {
+        animStateAfterJumpAttack = arg_animStateAfterJumpAttack;
+    }
+
 
     //  Change Animation and state
     public void SetAnimation(CharacterAnimStateEnum arg_charaAnimStateEnum)
@@ -21,7 +30,7 @@ public class CharacterAnimManagerScript : MonoBehaviour
     }
 
 
-    // Animation Frames triggers
+    // OntheGround animation frame triggers
     private void OnTheGround()
     {
         SetAnimation(CharacterAnimStateEnum.Chara_Ontheground);
@@ -31,6 +40,24 @@ public class CharacterAnimManagerScript : MonoBehaviour
     private void OnTheGroundStandUp()
     {
         SetAnimation(CharacterAnimStateEnum.Chara_Idle);
+    }
+
+
+    // Attack animation frame triggers
+    private void attackIdleEnd()
+    {
+        SetAnimation(CharacterAnimStateEnum.Chara_Idle);
+    }
+
+    private void attackJumpEnd()
+    {
+        SetAnimation(animStateAfterJumpAttack);
+    }
+
+    private void meleeRunEnd()
+    {
+        SetAnimation(CharacterAnimStateEnum.Chara_Slide);
+        StartCoroutine(EndAnimationCoroutine(characterScript.GetCharacter().GetRunStopSlideTime(), CharacterAnimStateEnum.Chara_Idle));
     }
 
     private void Shoot_SpawnBullet()
@@ -66,30 +93,10 @@ public class CharacterAnimManagerScript : MonoBehaviour
         SetAnimation(arg_animState);
     }
 
-    public IEnumerator CanGroundSlide()
-    {
-        yield return new WaitForSeconds(characterScript.GetCharacter().GetGroundSlideStartTime());
-        characterScript.GetCharacter().SetTrigger_groundSlide_canGroundSlide(true);
-    }
-
     public IEnumerator StopGroundSlide()
     {
         yield return new WaitForSeconds(characterScript.GetCharacter().GetGroundSlideDuration());
         SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
         characterScript.GetCharacter().SetTrigger_groundSlide_canGroundSlide(false);
-    }
-
-    public IEnumerator WallJumpTimer()
-    {
-        characterScript.GetCharacter().SetTrigger_wallJump_hasWallJumped(true);
-        yield return new WaitForSeconds(characterScript.GetCharacter().GetWallJumpRestrainDuration());
-        characterScript.GetCharacter().SetTrigger_wallJump_hasWallJumped(false);
-    }
-
-    public IEnumerator StopMeleeRun()
-    {
-        yield return new WaitForSeconds(characterScript.GetCharacter().GetMeleeRunStopTime());
-        SetAnimation(CharacterAnimStateEnum.Chara_Slide);
-        StartCoroutine(EndAnimationCoroutine(characterScript.GetCharacter().GetRunStopSlideTime(), CharacterAnimStateEnum.Chara_Idle));
     }
 }

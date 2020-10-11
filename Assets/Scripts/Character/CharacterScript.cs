@@ -71,34 +71,28 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle_up_diagonal);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeIdleUpDiagonalStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
                 else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle_up);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeIdleUpStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
                 else if (Input.GetButtonDown("Gamepad_Melee"))
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
 
                 // Shoot
                 else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle_up_diagonal);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootIdleUpDiagonalStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
                 else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle_up);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootIdleUpStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
                 else if (Input.GetButtonDown("Gamepad_Shoot"))
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
-                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootIdleStopTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
 
                 //  Run
@@ -124,7 +118,7 @@ public class CharacterScript : MonoBehaviour
                 //  CanGroundSlide Timer
                 if (!character.GetTrigger_groundSlide_canGroundSlide())
                 {
-                    StartCoroutine(animManager.CanGroundSlide());
+                    StartCoroutine(CanGroundSlide());
                 }
 
                 //  Run
@@ -181,7 +175,6 @@ public class CharacterScript : MonoBehaviour
                 if (Input.GetButtonDown("Gamepad_Melee"))
                 {
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_run);
-                    StartCoroutine(animManager.StopMeleeRun());
                 }
             }
 
@@ -455,7 +448,7 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
                     physicsManager.AddForceMethod(new Vector2(character.GetDirectionInt() * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
                     animManager.SetAnimation(CharacterAnimStateEnum.Chara_Jump_forward);
-                    StartCoroutine(animManager.WallJumpTimer());
+                    StartCoroutine(WallJumpTimer());
                 }
 
                 //  No more wall
@@ -547,6 +540,21 @@ public class CharacterScript : MonoBehaviour
     }
 
 
+    //  Coroutines
+    public IEnumerator CanGroundSlide()
+    {
+        yield return new WaitForSeconds(character.GetGroundSlideCanStartTime());
+        character.SetTrigger_groundSlide_canGroundSlide(true);
+    }
+
+    public IEnumerator WallJumpTimer()
+    {
+        character.SetTrigger_wallJump_hasWallJumped(true);
+        yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
+        character.SetTrigger_wallJump_hasWallJumped(false);
+    }
+
+
     //  Physics & Movement
     private void IdleJumpMovement()
     {
@@ -583,54 +591,54 @@ public class CharacterScript : MonoBehaviour
         if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeJumpUpDiagonalStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeJumpDownDiagonalStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeJumpUpStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeJumpDownStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Melee"))
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetMeleeJumpStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
 
         // Shoot Jump
         if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootJumpUpDiagonalStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootJumpDownDiagonalStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootJumpUpStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0)
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootJumpDownStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
         else if (Input.GetButtonDown("Gamepad_Shoot"))
         {
             animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
-            StartCoroutine(animManager.EndAnimationCoroutine(character.GetShootJumpStopTime(), arg_animState));
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
     }
 }
