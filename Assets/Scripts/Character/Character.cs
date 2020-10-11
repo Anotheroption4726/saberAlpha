@@ -1,5 +1,11 @@
 ﻿public class Character
 {
+    // States and Triggers
+    private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
+    private int directionInt = 1;
+    private bool trigger_groundSlide_canGroundSlide = false;
+    private bool trigger_wallJump_hasWallJumped = false;
+
     //  Run Parameters
     private float fixed_run_movementSpeed;
     private float timer_run_stopSlideTime;
@@ -134,6 +140,26 @@
 
 
     //  Getters
+    public CharacterAnimStateEnum GetAnimState()
+    {
+        return animState;
+    }
+
+    public int GetDirectionInt()
+    {
+        return directionInt;
+    }
+
+    public bool GetTrigger_groundSlide_canGroundSlide()
+    {
+        return trigger_groundSlide_canGroundSlide;
+    }
+
+    public bool GetTrigger_wallJump_hasWallJumped()
+    {
+        return trigger_wallJump_hasWallJumped;
+    }
+
     public float GetRunMovementSpeed()
     {
         return fixed_run_movementSpeed;
@@ -302,5 +328,27 @@
     public float GetShootJumpDownDiagonalStopTime()
     {
         return shootJumpDownDiagonalStopTime;
+    }
+
+
+    // Setters
+    public void SetAnimState(CharacterAnimStateEnum arg_animState)
+    {
+        animState = arg_animState;
+    }
+
+    public void SetDirectionInt(int arg_directionInt)
+    {
+        directionInt = arg_directionInt;
+    }
+
+    public void SetTrigger_groundSlide_canGroundSlide(bool arg_trigger_groundSlide_canGroundSlide)
+    {
+        trigger_groundSlide_canGroundSlide = arg_trigger_groundSlide_canGroundSlide;
+    }
+
+    public void SetTrigger_wallJump_hasWallJumped(bool arg_trigger_wallJump_hasWallJumped)
+    {
+        trigger_wallJump_hasWallJumped = arg_trigger_wallJump_hasWallJumped;
     }
 }

@@ -7,43 +7,17 @@ public class CharacterAnimManagerScript : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject bullet;
 
-    private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Chara_Idle;
-    private bool trigger_groundSlide_canGroundSlide = false;
-    private bool trigger_wallJump_hasWallJumped = false;
-
-
-    //  Getters and Setters
-    public CharacterAnimStateEnum GetAnimState()
-    {
-        return animState;
-    }
-
-    public bool GetTrigger_groundSlide_canGroundSlide()
-    {
-        return trigger_groundSlide_canGroundSlide;
-    }
-
-    public bool GetTrigger_wallJump_hasWallJumped()
-    {
-        return trigger_wallJump_hasWallJumped;
-    }
-
-    public void SetAnimState(CharacterAnimStateEnum arg_animState)
-    {
-        animState = arg_animState;
-    }
-
 
     //  Change Animation and state
     public void SetAnimation(CharacterAnimStateEnum arg_charaAnimStateEnum)
     {
-        if (animState == arg_charaAnimStateEnum)
+        if (characterScript.GetCharacter().GetAnimState() == arg_charaAnimStateEnum)
         {
             return;
         }
 
         animator.Play(arg_charaAnimStateEnum.ToString());
-        animState = arg_charaAnimStateEnum;
+        characterScript.GetCharacter().SetAnimState(arg_charaAnimStateEnum);
     }
 
 
@@ -61,8 +35,8 @@ public class CharacterAnimManagerScript : MonoBehaviour
 
     private void Shoot_SpawnBullet()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, Quaternion.LookRotation(characterScript.GetDirectionInt() * transform.forward));
-        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetDirectionInt());
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, Quaternion.LookRotation(characterScript.GetCharacter().GetDirectionInt() * transform.forward));
+        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
     }
 
 
@@ -70,16 +44,16 @@ public class CharacterAnimManagerScript : MonoBehaviour
     public IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
     {
         if (
-                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down) ||
-                    animState.Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal)
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_up) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_down) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down) ||
+                    characterScript.GetCharacter().GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal)
                )
         {
             //  Touch Ground
@@ -95,21 +69,21 @@ public class CharacterAnimManagerScript : MonoBehaviour
     public IEnumerator CanGroundSlide()
     {
         yield return new WaitForSeconds(characterScript.GetCharacter().GetGroundSlideStartTime());
-        trigger_groundSlide_canGroundSlide = true;
+        characterScript.GetCharacter().SetTrigger_groundSlide_canGroundSlide(true);
     }
 
     public IEnumerator StopGroundSlide()
     {
         yield return new WaitForSeconds(characterScript.GetCharacter().GetGroundSlideDuration());
         SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
-        trigger_groundSlide_canGroundSlide = false;
+        characterScript.GetCharacter().SetTrigger_groundSlide_canGroundSlide(false);
     }
 
     public IEnumerator WallJumpTimer()
     {
-        trigger_wallJump_hasWallJumped = true;
+        characterScript.GetCharacter().SetTrigger_wallJump_hasWallJumped(true);
         yield return new WaitForSeconds(characterScript.GetCharacter().GetWallJumpRestrainDuration());
-        trigger_wallJump_hasWallJumped = false;
+        characterScript.GetCharacter().SetTrigger_wallJump_hasWallJumped(false);
     }
 
     public IEnumerator StopMeleeRun()
