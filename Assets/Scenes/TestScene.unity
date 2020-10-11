@@ -1155,12 +1155,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce14483e21a56145a824a77536816d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  physicsManager: {fileID: 370792733}
   groundChecker: {fileID: 205447510}
   rightWallChecker: {fileID: 660427003}
   leftWallChecker: {fileID: 1084149480}
+  animManager: {fileID: 1767468244}
   bulletSpawnPoint_horizontal: {fileID: 87705587}
   sprite: {fileID: 1767468241}
-  animator: {fileID: 1767468243}
 --- !u!61 &370792730
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4695,6 +4696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterScript: {fileID: 370792729}
+  animator: {fileID: 1767468243}
   bullet: {fileID: 7798801615197491969, guid: a8af592b08f31ee44b45236f7f0a8604, type: 3}
 --- !u!1 &1823564837
 GameObject:
