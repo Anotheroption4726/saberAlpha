@@ -497,10 +497,12 @@ public class CharacterScript : MonoBehaviour
         if (arg_direction > 0)
         {
             sprite.flipX = false;
+            bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, 0, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
         }
         else
         {
             sprite.flipX = true;
+            bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, -180, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
         }
 
         character.SetDirectionInt(arg_direction);

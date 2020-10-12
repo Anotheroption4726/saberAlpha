@@ -46,16 +46,15 @@ public class BulletScript : MonoBehaviour
     //  Update
     private void Update()
     {
-        //Debug.Log(charaShootAnimState);
         //transform.Translate(directionInt * transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
 
         if (charaShootAnimState == CharacterAnimStateEnum.Chara_Shoot_idle || charaShootAnimState == CharacterAnimStateEnum.Chara_Shoot_jump)
         {
-            transform.Translate(directionInt * transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
+            //transform.Translate(directionInt * transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
         }
         else if (charaShootAnimState == CharacterAnimStateEnum.Chara_Shoot_idle_up)
         {
-            transform.Translate(transform.up * bullet.GetBulletMovementSpeed() * Time.deltaTime);
+            //transform.Translate(transform.up * bullet.GetBulletMovementSpeed() * Time.deltaTime);
         }
     }
 

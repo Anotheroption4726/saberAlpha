@@ -3,11 +3,19 @@ using UnityEngine;
 
 public class CharacterAnimManagerScript : MonoBehaviour
 {
-    [SerializeField] CharacterScript characterScript;
+    [SerializeField] GameObject characterGameObject;
     [SerializeField] private Animator animator;
     [SerializeField] private GameObject bullet;
 
+    CharacterScript characterScript;
     private CharacterAnimStateEnum animStateAfterJumpAttack;
+
+
+    //  Awake function
+    private void Awake()
+    {
+        characterScript = characterGameObject.GetComponent<CharacterScript>();
+    }
 
 
     // Setters
@@ -62,16 +70,15 @@ public class CharacterAnimManagerScript : MonoBehaviour
 
     private void Shoot_SpawnBullet()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, Quaternion.LookRotation(characterScript.GetCharacter().GetDirectionInt() * transform.forward));
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, characterScript.GetBulletSpawnPoint_horizontal().rotation);
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
         loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
     }
 
     private void Shoot_SpawnBulletUp()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_up().position, Quaternion.LookRotation(transform.forward));
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_up().position, characterScript.GetBulletSpawnPoint_up().rotation);
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
-        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
     }
 
 
