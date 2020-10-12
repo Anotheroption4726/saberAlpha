@@ -3240,25 +3240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameType: 1
   timeScale: 1
-  gravityScale: 46.5
-  runMovementSpeed_fixed: 40
-  runStopSlideTime_timer: 0.13
-  idleJumpVerticalForce_impulse: 1200
-  idleJumpMovementSpeed_fixed: 10
-  forwardJumpHorizontalForce_impulse: 250
-  forwardJumpStopSlideForce_impulse: 1500
-  forwardJumpHorizontalAirDrag_ratio: 0.97
-  fallMaxSpeedVelocityValue_threshold: 60
-  onTheGroundDuration_timer: 2
-  onTheGroundStandUpTime_timer: 0.5
-  crawlMovementSpeed_fixed: 10
-  runSlideHorizontalForce_impulse: 2500
-  runSlideStartTime_timer: 0.75
-  runSlideDuration_timer: 0.25
-  wallSlideHoldGravity_ratio: 0.125
-  wallJumpVerticalForce_impulse: 800
-  wallJumpHorizontalForce_impulse: 1500
-  wallJumpRestrainDuration_timer: 0.25
+  gravityScale: 60
 --- !u!1 &1084149478
 GameObject:
   m_ObjectHideFlags: 0

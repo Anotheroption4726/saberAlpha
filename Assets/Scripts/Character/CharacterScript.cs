@@ -446,7 +446,7 @@ public class CharacterScript : MonoBehaviour
                     physicsManager.SetRigidBodyGravity(character.GetWallSlideHoldGravity());
                 }
 
-                //  Jump Left
+                //  Jump
                 if (!character.GetTrigger_wallJump_hasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && character.GetDirectionInt() > 0) || (ReturnHorizontalInput() >= 0 && character.GetDirectionInt() < 0)))
                 {
                     SetDirection(-character.GetDirectionInt());
