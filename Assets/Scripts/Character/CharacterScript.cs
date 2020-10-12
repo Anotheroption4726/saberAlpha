@@ -106,7 +106,7 @@ public class CharacterScript : MonoBehaviour
                 //  Run
                 else if (ReturnHorizontalInput() != 0)
                 {
-                    //animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
                 }
 
                 //  Jump

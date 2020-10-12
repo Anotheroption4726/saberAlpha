@@ -72,7 +72,6 @@ public class CharacterAnimManagerScript : MonoBehaviour
     {
         var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, characterScript.GetBulletSpawnPoint_horizontal().rotation);
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
-        loc_bullet.GetComponent<BulletScript>().SetDirectionInt(characterScript.GetCharacter().GetDirectionInt());
     }
 
     private void Shoot_SpawnBulletUp()

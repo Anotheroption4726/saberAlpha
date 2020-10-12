@@ -3239,7 +3239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameType: 1
-  timeScale: 0.2
+  timeScale: 1
   gravityScale: 60
 --- !u!1 &1084149478
 GameObject:
