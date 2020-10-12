@@ -1295,6 +1295,7 @@ MonoBehaviour:
   animManager: {fileID: 1767468244}
   bulletSpawnPoint_horizontal: {fileID: 87705587}
   bulletSpawnPoint_up: {fileID: 50564510}
+  bulletSpawnPoint_up_diagonal: {fileID: 894555034}
 --- !u!61 &370792730
 BoxCollider2D:
   m_ObjectHideFlags: 0
