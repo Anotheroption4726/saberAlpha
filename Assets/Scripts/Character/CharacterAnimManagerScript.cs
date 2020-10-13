@@ -70,32 +70,27 @@ public class CharacterAnimManagerScript : MonoBehaviour
 
     private void Shoot_SpawnBulletHorizontal()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, characterScript.GetBulletSpawnPoint_horizontal().rotation);
-        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_horizontal().position, characterScript.GetBulletSpawnPoint_horizontal().rotation);
     }
 
     private void Shoot_SpawnBulletIdleUp()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_idle_up().position, characterScript.GetBulletSpawnPoint_idle_up().rotation);
-        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_idle_up().position, characterScript.GetBulletSpawnPoint_idle_up().rotation);
     }
 
     private void Shoot_SpawnBulletJumpUp()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_up().position, characterScript.GetBulletSpawnPoint_jump_up().rotation);
-        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_up().position, characterScript.GetBulletSpawnPoint_jump_up().rotation);
     }
 
     private void Shoot_SpawnBulletIdleUpDiagonal()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_idle_up_diagonal().position, characterScript.GetBulletSpawnPoint_idle_up_diagonal().rotation);
-        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_idle_up_diagonal().position, characterScript.GetBulletSpawnPoint_idle_up_diagonal().rotation);
     }
 
     private void Shoot_SpawnBulletJumpUpDiagonal()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_up_diagonal().position, characterScript.GetBulletSpawnPoint_jump_up_diagonal().rotation);
-        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_up_diagonal().position, characterScript.GetBulletSpawnPoint_jump_up_diagonal().rotation);
     }
 
 

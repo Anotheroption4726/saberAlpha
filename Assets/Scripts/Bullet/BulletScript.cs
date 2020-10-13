@@ -5,7 +5,6 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     [SerializeField] private Animator animator;
-    private CharacterAnimStateEnum charaShootAnimState;
     private Bullet bullet = new Bullet();
     private BulletAnimStateEnum animState = BulletAnimStateEnum.Bullet_Appear;
 
@@ -15,20 +14,6 @@ public class BulletScript : MonoBehaviour
     {
         SetAnimation(BulletAnimStateEnum.Bullet_Appear);
         StartCoroutine(EndAnimationCoroutine(bullet.GetBulletAppearAnimationTime(), BulletAnimStateEnum.Bullet_Travel));
-    }
-
-
-    //  Getters
-    public CharacterAnimStateEnum GetCharaShootAnimState()
-    {
-        return charaShootAnimState;
-    }
-
-
-    //  Setters
-    public void SetCharaShootAnimState(CharacterAnimStateEnum arg_charaShootAnimState)
-    {
-        charaShootAnimState = arg_charaShootAnimState;
     }
 
 
