@@ -16,10 +16,12 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private Transform bulletSpawnPoint_idle_up;
     [SerializeField] private Transform bulletSpawnPoint_jump_up;
     [SerializeField] private Transform bulletSpawnPoint_idle_up_diagonal;
+    [SerializeField] private Transform bulletSpawnPoint_jump_up_diagonal;
     private float bulletSpawnPointPosition_horizontal;
     private float bulletSpawnPointPosition_idle_up;
     private float bulletSpawnPointPosition_jump_up;
     private float bulletSpawnPointPosition_idle_up_diagonal;
+    private float bulletSpawnPointPosition_jump_up_diagonal;
 
 
     //  Getters and Setters
@@ -53,6 +55,11 @@ public class CharacterScript : MonoBehaviour
         return bulletSpawnPoint_idle_up_diagonal;
     }
 
+    public Transform GetBulletSpawnPoint_jump_up_diagonal()
+    {
+        return bulletSpawnPoint_jump_up_diagonal;
+    }
+
     public void SetCharacter(Character arg_character)
     {
         character = arg_character;
@@ -66,6 +73,7 @@ public class CharacterScript : MonoBehaviour
         bulletSpawnPointPosition_idle_up = bulletSpawnPoint_idle_up.localPosition.x;
         bulletSpawnPointPosition_jump_up = bulletSpawnPoint_jump_up.localPosition.x;
         bulletSpawnPointPosition_idle_up_diagonal = bulletSpawnPoint_idle_up_diagonal.localPosition.x;
+        bulletSpawnPointPosition_jump_up_diagonal = bulletSpawnPoint_jump_up_diagonal.localPosition.x;
     }
 
 
@@ -515,12 +523,14 @@ public class CharacterScript : MonoBehaviour
             sprite.flipX = false;
             bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
             bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
+            bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
         }
         else
         {
             sprite.flipX = true;
             bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
             bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
+            bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
         }
 
         character.SetDirectionInt(arg_direction);
@@ -528,6 +538,7 @@ public class CharacterScript : MonoBehaviour
         bulletSpawnPoint_idle_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up, bulletSpawnPoint_idle_up.localPosition.y, bulletSpawnPoint_idle_up.localPosition.z);
         bulletSpawnPoint_jump_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up, bulletSpawnPoint_jump_up.localPosition.y, bulletSpawnPoint_jump_up.localPosition.z);
         bulletSpawnPoint_idle_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up_diagonal, bulletSpawnPoint_idle_up_diagonal.localPosition.y, bulletSpawnPoint_idle_up_diagonal.localPosition.z);
+        bulletSpawnPoint_jump_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up_diagonal, bulletSpawnPoint_jump_up_diagonal.localPosition.y, bulletSpawnPoint_jump_up_diagonal.localPosition.z);
     }
 
     private int ReturnHorizontalInput()
