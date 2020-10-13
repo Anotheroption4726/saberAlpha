@@ -41,6 +41,11 @@ public class CharacterScript : MonoBehaviour
         return bulletSpawnPoint_up;
     }
 
+    public Transform GetBulletSpawnPoint_up_diagonal()
+    {
+        return bulletSpawnPoint_up_diagonal;
+    }
+
     public void SetCharacter(Character arg_character)
     {
         character = arg_character;
@@ -109,7 +114,7 @@ public class CharacterScript : MonoBehaviour
                 //  Run
                 else if (ReturnHorizontalInput() != 0)
                 {
-                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
+                    //animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
                 }
 
                 //  Jump

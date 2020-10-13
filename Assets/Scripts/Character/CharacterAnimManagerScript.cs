@@ -80,6 +80,12 @@ public class CharacterAnimManagerScript : MonoBehaviour
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
     }
 
+    private void Shoot_SpawnBulletUpDiagonal()
+    {
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_up_diagonal().position, characterScript.GetBulletSpawnPoint_up_diagonal().rotation);
+        loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+    }
+
 
     // Coroutines
     public IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
