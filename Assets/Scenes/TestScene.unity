@@ -1380,6 +1380,7 @@ MonoBehaviour:
   bulletSpawnPoint_idle_up_diagonal: {fileID: 894555034}
   bulletSpawnPoint_jump_up_diagonal: {fileID: 369351509}
   bulletSpawnPoint_jump_down: {fileID: 463261024}
+  bulletSpawnPoint_jump_down_diagonal: {fileID: 2043901726}
 --- !u!61 &370792730
 BoxCollider2D:
   m_ObjectHideFlags: 0

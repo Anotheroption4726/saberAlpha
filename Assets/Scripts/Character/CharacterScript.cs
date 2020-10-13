@@ -18,12 +18,14 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private Transform bulletSpawnPoint_idle_up_diagonal;
     [SerializeField] private Transform bulletSpawnPoint_jump_up_diagonal;
     [SerializeField] private Transform bulletSpawnPoint_jump_down;
+    [SerializeField] private Transform bulletSpawnPoint_jump_down_diagonal;
     private float bulletSpawnPointPosition_horizontal;
     private float bulletSpawnPointPosition_idle_up;
     private float bulletSpawnPointPosition_jump_up;
     private float bulletSpawnPointPosition_idle_up_diagonal;
     private float bulletSpawnPointPosition_jump_up_diagonal;
     private float bulletSpawnPointPosition_jump_down;
+    private float bulletSpawnPointPosition_jump_down_diagonal;
 
 
     //  Getters and Setters
@@ -67,6 +69,11 @@ public class CharacterScript : MonoBehaviour
         return bulletSpawnPoint_jump_down;
     }
 
+    public Transform GetBulletSpawnPoint_jump_down_diagonal()
+    {
+        return bulletSpawnPoint_jump_down_diagonal;
+    }
+
     public void SetCharacter(Character arg_character)
     {
         character = arg_character;
@@ -82,6 +89,7 @@ public class CharacterScript : MonoBehaviour
         bulletSpawnPointPosition_idle_up_diagonal = bulletSpawnPoint_idle_up_diagonal.localPosition.x;
         bulletSpawnPointPosition_jump_up_diagonal = bulletSpawnPoint_jump_up_diagonal.localPosition.x;
         bulletSpawnPointPosition_jump_down = bulletSpawnPoint_jump_down.localPosition.x;
+        bulletSpawnPointPosition_jump_down_diagonal = bulletSpawnPoint_jump_down_diagonal.localPosition.x;
     }
 
 
@@ -548,6 +556,7 @@ public class CharacterScript : MonoBehaviour
         bulletSpawnPoint_idle_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up_diagonal, bulletSpawnPoint_idle_up_diagonal.localPosition.y, bulletSpawnPoint_idle_up_diagonal.localPosition.z);
         bulletSpawnPoint_jump_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up_diagonal, bulletSpawnPoint_jump_up_diagonal.localPosition.y, bulletSpawnPoint_jump_up_diagonal.localPosition.z);
         bulletSpawnPoint_jump_down.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_down, bulletSpawnPoint_jump_down.localPosition.y, bulletSpawnPoint_jump_down.localPosition.z);
+        bulletSpawnPoint_jump_down_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_down_diagonal, bulletSpawnPoint_jump_down_diagonal.localPosition.y, bulletSpawnPoint_jump_down_diagonal.localPosition.z);
     }
 
     private int ReturnHorizontalInput()

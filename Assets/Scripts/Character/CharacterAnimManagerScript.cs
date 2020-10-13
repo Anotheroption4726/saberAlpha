@@ -98,6 +98,11 @@ public class CharacterAnimManagerScript : MonoBehaviour
         Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_down().position, characterScript.GetBulletSpawnPoint_jump_down().rotation);
     }
 
+    private void Shoot_SpawnBulletJumpDownDiagonal()
+    {
+        Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_down_diagonal().position, characterScript.GetBulletSpawnPoint_jump_down_diagonal().rotation);
+    }
+
 
     // Coroutines
     public IEnumerator EndAnimationCoroutine(float arg_time, CharacterAnimStateEnum arg_animState)
