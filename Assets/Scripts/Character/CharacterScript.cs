@@ -501,7 +501,9 @@ public class CharacterScript : MonoBehaviour
         {
             Debug.Log(bulletSpawnPoint_up_diagonal.localRotation.y);
             sprite.flipX = false;
-            bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, 0, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
+            //bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, 0, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
+            bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
+
             //bulletSpawnPoint_up_diagonal.localRotation = new Quaternion(bulletSpawnPoint_up_diagonal.localRotation.x, 0, bulletSpawnPoint_up_diagonal.localRotation.z, bulletSpawnPoint_up_diagonal.localRotation.w);
             //bulletSpawnPoint_up_diagonal.rotation *= Quaternion.Euler(0, 180f, 0);
             //bulletSpawnPoint_up_diagonal.rotation = Quaternion.Euler(0, -180, 0);
@@ -511,7 +513,9 @@ public class CharacterScript : MonoBehaviour
         {
             Debug.Log(bulletSpawnPoint_up_diagonal.localRotation.y);
             sprite.flipX = true;
-            bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, -180, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
+            //bulletSpawnPoint_horizontal.localRotation = new Quaternion(bulletSpawnPoint_horizontal.localRotation.x, -180, bulletSpawnPoint_horizontal.localRotation.z, bulletSpawnPoint_horizontal.localRotation.w);
+            bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
+
             //bulletSpawnPoint_up_diagonal.localRotation = new Quaternion(bulletSpawnPoint_up_diagonal.localRotation.x, -180, bulletSpawnPoint_up_diagonal.localRotation.z, bulletSpawnPoint_up_diagonal.localRotation.w);
             //bulletSpawnPoint_up_diagonal.rotation *= Quaternion.Euler(0, 180f, 0);
             //bulletSpawnPoint_up_diagonal.rotation = Quaternion.Euler(0, -180, 0);
