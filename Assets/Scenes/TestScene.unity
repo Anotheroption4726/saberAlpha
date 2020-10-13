@@ -1377,7 +1377,7 @@ MonoBehaviour:
   bulletSpawnPoint_horizontal: {fileID: 87705587}
   bulletSpawnPoint_idle_up: {fileID: 50564510}
   bulletSpawnPoint_jump_up: {fileID: 539921571}
-  bulletSpawnPoint_jump_up_diagonal: {fileID: 369351509}
+  bulletSpawnPoint_idle_up_diagonal: {fileID: 894555034}
 --- !u!61 &370792730
 BoxCollider2D:
   m_ObjectHideFlags: 0
