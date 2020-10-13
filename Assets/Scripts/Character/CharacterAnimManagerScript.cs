@@ -86,10 +86,15 @@ public class CharacterAnimManagerScript : MonoBehaviour
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
     }
 
-    private void Shoot_SpawnBulletUpDiagonal()
+    private void Shoot_SpawnBulletIdleUpDiagonal()
     {
-        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_up_diagonal().position, characterScript.GetBulletSpawnPoint_up_diagonal().rotation);
+        var loc_bullet = Instantiate(bullet, characterScript.GetBulletSpawnPoint_jump_up_diagonal().position, characterScript.GetBulletSpawnPoint_jump_up_diagonal().rotation);
         loc_bullet.GetComponent<BulletScript>().SetCharaShootAnimState(characterScript.GetCharacter().GetAnimState());
+    }
+
+    private void Shoot_SpawnBulletJumpUpDiagonal()
+    {
+        
     }
 
 
