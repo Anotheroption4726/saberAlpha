@@ -88,7 +88,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.06666667
-    functionName: Shoot_SpawnBulletUp
+    functionName: Shoot_SpawnBulletIdleUp
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

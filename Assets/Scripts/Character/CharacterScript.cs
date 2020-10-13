@@ -13,10 +13,12 @@ public class CharacterScript : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
     [SerializeField] private CharacterAnimManagerScript animManager;
     [SerializeField] private Transform bulletSpawnPoint_horizontal;
-    [SerializeField] private Transform bulletSpawnPoint_up;
+    [SerializeField] private Transform bulletSpawnPoint_idle_up;
+    [SerializeField] private Transform bulletSpawnPoint_jump_up;
     [SerializeField] private Transform bulletSpawnPoint_up_diagonal;
     private float bulletSpawnPointPosition_horizontal;
-    private float bulletSpawnPointPosition_up;
+    private float bulletSpawnPointPosition_idle_up;
+    private float bulletSpawnPointPosition_jump_up;
     private float bulletSpawnPointPosition_up_diagonal;
 
 
@@ -36,9 +38,14 @@ public class CharacterScript : MonoBehaviour
         return bulletSpawnPoint_horizontal;
     }
 
-    public Transform GetBulletSpawnPoint_up()
+    public Transform GetBulletSpawnPoint_idle_up()
     {
-        return bulletSpawnPoint_up;
+        return bulletSpawnPoint_idle_up;
+    }
+
+    public Transform GetBulletSpawnPoint_jump_up()
+    {
+        return bulletSpawnPoint_jump_up;
     }
 
     public Transform GetBulletSpawnPoint_up_diagonal()
@@ -56,7 +63,8 @@ public class CharacterScript : MonoBehaviour
     private void Awake()
     {
         bulletSpawnPointPosition_horizontal = bulletSpawnPoint_horizontal.localPosition.x;
-        bulletSpawnPointPosition_up = bulletSpawnPoint_up.localPosition.x;
+        bulletSpawnPointPosition_idle_up = bulletSpawnPoint_idle_up.localPosition.x;
+        bulletSpawnPointPosition_jump_up = bulletSpawnPoint_jump_up.localPosition.x;
         bulletSpawnPointPosition_up_diagonal = bulletSpawnPoint_up_diagonal.localPosition.x;
     }
 
@@ -114,7 +122,7 @@ public class CharacterScript : MonoBehaviour
                 //  Run
                 else if (ReturnHorizontalInput() != 0)
                 {
-                    //animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
                 }
 
                 //  Jump
@@ -517,7 +525,8 @@ public class CharacterScript : MonoBehaviour
 
         character.SetDirectionInt(arg_direction);
         bulletSpawnPoint_horizontal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
-        bulletSpawnPoint_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_up, bulletSpawnPoint_up.localPosition.y, bulletSpawnPoint_up.localPosition.z);
+        bulletSpawnPoint_idle_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up, bulletSpawnPoint_idle_up.localPosition.y, bulletSpawnPoint_idle_up.localPosition.z);
+        bulletSpawnPoint_jump_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up, bulletSpawnPoint_jump_up.localPosition.y, bulletSpawnPoint_jump_up.localPosition.z);
         bulletSpawnPoint_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_up_diagonal, bulletSpawnPoint_up_diagonal.localPosition.y, bulletSpawnPoint_up_diagonal.localPosition.z);
     }
 
