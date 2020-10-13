@@ -540,6 +540,7 @@ public class CharacterScript : MonoBehaviour
             bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
             bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
             bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
+            bulletSpawnPoint_jump_down_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(1, 1, 0));
         }
         else
         {
@@ -547,6 +548,7 @@ public class CharacterScript : MonoBehaviour
             bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
             bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
             bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
+            bulletSpawnPoint_jump_down_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(1, -1, 0));
         }
 
         character.SetDirectionInt(arg_direction);
