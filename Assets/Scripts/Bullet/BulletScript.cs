@@ -4,49 +4,37 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    private int directionInt = 1;
+    [SerializeField] private BulletAnimManagerScript animManager;
     private Bullet bullet = new Bullet();
-    private BulletAnimStateEnum animState = BulletAnimStateEnum.Bullet_Appear;
-    [SerializeField] private Animator animator;
 
-    // Start
+
+    //  Start
     void Start()
     {
-        SetAnimation(BulletAnimStateEnum.Bullet_Appear);
-        StartCoroutine(EndAnimationCoroutine(bullet.GetBulletAppearAnimationTime(), BulletAnimStateEnum.Bullet_Travel));
+        animManager.SetAnimation(BulletAnimStateEnum.Bullet_Appear);
     }
 
-    public int GetDirectionInt()
-    {
-        return directionInt;
-    }
 
-    public void SetDirectionInt(int arg_directionInt)
-    {
-        directionInt = arg_directionInt;
-    }
-
+    //  Update
     private void Update()
     {
-        transform.Translate(directionInt * transform.right * bullet.GetBulletMovementSpeed() * Time.deltaTime);
-    }
-
-    //  Coroutines
-    IEnumerator EndAnimationCoroutine(float arg_time, BulletAnimStateEnum arg_animState)
-    {
-        yield return new WaitForSeconds(arg_time);
-        SetAnimation(arg_animState);
-    }
-
-    //  Animation functions
-    private void SetAnimation(BulletAnimStateEnum arg_bulletAnimStateEnum)
-    {
-        if (animState == arg_bulletAnimStateEnum)
+        if (!bullet.GetAnimState().Equals(BulletAnimStateEnum.Bullet_Explode))
         {
-            return;
+            transform.Translate(new Vector3(1, 0, 0) * bullet.GetBulletMovementSpeed() * Time.deltaTime);
         }
+    }
 
-        animator.Play(arg_bulletAnimStateEnum.ToString());
-        animState = arg_bulletAnimStateEnum;
+
+    //  OnCollision
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        animManager.SetAnimation(BulletAnimStateEnum.Bullet_Explode);
+    }
+
+
+    //
+    public Bullet GetBullet()
+    {
+        return bullet;
     }
 }

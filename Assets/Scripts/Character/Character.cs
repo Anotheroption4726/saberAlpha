@@ -61,10 +61,7 @@
         float arg_wallSlide_holdGravity = 0.125f,
         float arg_wallJump_verticalForce = 1500,
         float arg_wallJump_horizontalForce = 1500,
-        float arg_wallJump_restrainDuration = 0.25f,
-        float arg_shootIdleStopTime = 0.4f,
-        float arg_shootIdleUpStopTime = 0.4f,
-        float arg_shootIdleUpDiagonalStopTime = 0.4f
+        float arg_wallJump_restrainDuration = 0.25f
     )
     {
         fixed_run_movementSpeed = arg_run_movementSpeed;

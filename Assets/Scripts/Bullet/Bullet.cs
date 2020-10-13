@@ -1,12 +1,11 @@
 ﻿public class Bullet
 {
+    private BulletAnimStateEnum animState;
     private int bulletMovementSpeed;
-    private float bulletAppearAnimationTime;
 
-    public Bullet(int arg_bulletMovementSpeed = 75, float arg_bulletAppearAnimationTime = 0.5f)
+    public Bullet(int arg_bulletMovementSpeed = 75)
     {
         bulletMovementSpeed = arg_bulletMovementSpeed;
-        bulletAppearAnimationTime = arg_bulletAppearAnimationTime;
     }
 
     public float GetBulletMovementSpeed()
@@ -14,8 +13,13 @@
         return bulletMovementSpeed;
     }
 
-    public float GetBulletAppearAnimationTime()
+    public BulletAnimStateEnum GetAnimState()
     {
-        return bulletAppearAnimationTime;
+        return animState;
+    }
+
+    public void SetAnimState(BulletAnimStateEnum arg_animState)
+    {
+        animState = arg_animState;
     }
 }
