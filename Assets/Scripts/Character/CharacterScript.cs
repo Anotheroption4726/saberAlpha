@@ -6,41 +6,72 @@ public class CharacterScript : MonoBehaviour
     private Character character;
 
     //  Components
-    private CharacterPhysicsManagerScript physicsManager;
+    [SerializeField] private CharacterPhysicsManagerScript physicsManager;
     [SerializeField] private CharacterCollideCheckScript groundChecker;
     [SerializeField] private CharacterCollideCheckScript rightWallChecker;
     [SerializeField] private CharacterCollideCheckScript leftWallChecker;
-
-    //  Animations
-    private CharacterAnimStateEnum animState = CharacterAnimStateEnum.Idle;
-    private int directionInt = 1;
     [SerializeField] private SpriteRenderer sprite;
-    [SerializeField] private Animator animator;
-    const string ANIM_IDLE = "Chara_Idle";
-    const string ANIM_RUN = "Chara_Run";
-    const string ANIM_SLIDE = "Chara_Slide";
-    const string ANIM_JUMP = "Chara_Jump";
-    const string ANIM_JUMP_FORWARD = "Chara_Jump_forward";
-    const string ANIM_FALL_NORMAL = "Chara_Fall_normal";
-    const string ANIM_FALL_FORWARD = "Chara_Fall_forward";
-    const string ANIM_FALL_MAXSPEED = "Chara_Fall_maxspeed";
-    const string ANIM_CRAWL_IDLE = "Chara_Crawl_idle";
-    const string ANIM_CRAWL_MOVE = "Chara_Crawl_move";
-    const string ANIM_WALLSLIDE = "Chara_Wallslide";
-    const string ANIM_RUN_SLIDE = "Chara_Run_slide";
-    const string ANIM_ONTHEGROUND = "Chara_Ontheground";
-    const string ANIM_ONTHEGROUND_STANDUP = "Chara_Ontheground_standup";
-    const string ANIM_MELEE_IDLE = "Chara_Melee_idle";
-    const string ANIM_MELEE_IDLE_UP = "Chara_Melee_idle_up";
-    const string ANIM_MELEE_RUN = "Chara_Melee_run";
-    const string ANIM_MELEE_JUMP = "Chara_Melee_jump";
-    const string ANIM_MELEE_JUMP_UP = "Chara_Melee_jump_up";
-    const string ANIM_MELEE_JUMP_FORWARD = "Chara_Melee_jump_forward";
+    [SerializeField] private CharacterAnimManagerScript animManager;
+    [SerializeField] private Transform bulletSpawnPoint_horizontal;
+    [SerializeField] private Transform bulletSpawnPoint_idle_up;
+    [SerializeField] private Transform bulletSpawnPoint_jump_up;
+    [SerializeField] private Transform bulletSpawnPoint_idle_up_diagonal;
+    [SerializeField] private Transform bulletSpawnPoint_jump_up_diagonal;
+    [SerializeField] private Transform bulletSpawnPoint_jump_down;
+    [SerializeField] private Transform bulletSpawnPoint_jump_down_diagonal;
+    private float bulletSpawnPointPosition_horizontal;
+    private float bulletSpawnPointPosition_idle_up;
+    private float bulletSpawnPointPosition_jump_up;
+    private float bulletSpawnPointPosition_idle_up_diagonal;
+    private float bulletSpawnPointPosition_jump_up_diagonal;
+    private float bulletSpawnPointPosition_jump_down;
+    private float bulletSpawnPointPosition_jump_down_diagonal;
+
 
     //  Getters and Setters
     public Character GetCharacter()
     {
         return character;
+    }
+
+    public CharacterCollideCheckScript GetGroundChecker()
+    {
+        return groundChecker;
+    }
+
+    public Transform GetBulletSpawnPoint_horizontal()
+    {
+        return bulletSpawnPoint_horizontal;
+    }
+
+    public Transform GetBulletSpawnPoint_idle_up()
+    {
+        return bulletSpawnPoint_idle_up;
+    }
+
+    public Transform GetBulletSpawnPoint_jump_up()
+    {
+        return bulletSpawnPoint_jump_up;
+    }
+
+    public Transform GetBulletSpawnPoint_idle_up_diagonal()
+    {
+        return bulletSpawnPoint_idle_up_diagonal;
+    }
+
+    public Transform GetBulletSpawnPoint_jump_up_diagonal()
+    {
+        return bulletSpawnPoint_jump_up_diagonal;
+    }
+
+    public Transform GetBulletSpawnPoint_jump_down()
+    {
+        return bulletSpawnPoint_jump_down;
+    }
+
+    public Transform GetBulletSpawnPoint_jump_down_diagonal()
+    {
+        return bulletSpawnPoint_jump_down_diagonal;
     }
 
     public void SetCharacter(Character arg_character)
@@ -52,7 +83,13 @@ public class CharacterScript : MonoBehaviour
     //  Awake Function
     private void Awake()
     {
-        physicsManager = GetComponent<CharacterPhysicsManagerScript>();
+        bulletSpawnPointPosition_horizontal = bulletSpawnPoint_horizontal.localPosition.x;
+        bulletSpawnPointPosition_idle_up = bulletSpawnPoint_idle_up.localPosition.x;
+        bulletSpawnPointPosition_jump_up = bulletSpawnPoint_jump_up.localPosition.x;
+        bulletSpawnPointPosition_idle_up_diagonal = bulletSpawnPoint_idle_up_diagonal.localPosition.x;
+        bulletSpawnPointPosition_jump_up_diagonal = bulletSpawnPoint_jump_up_diagonal.localPosition.x;
+        bulletSpawnPointPosition_jump_down = bulletSpawnPoint_jump_down.localPosition.x;
+        bulletSpawnPointPosition_jump_down_diagonal = bulletSpawnPoint_jump_down_diagonal.localPosition.x;
     }
 
 
@@ -64,43 +101,59 @@ public class CharacterScript : MonoBehaviour
             //
             // Idle Actions & Events
             //
-            if (animState.Equals(CharacterAnimStateEnum.Idle))
+            if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Idle))
             {
-                //  Run
-                if (ReturnHorizontalInput() != 0)
-                {
-                    SetAnimation(ANIM_RUN, CharacterAnimStateEnum.Run);
-                }
-
-                //  Jump
-                else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
-                {
-                    SetAnimation(ANIM_JUMP, CharacterAnimStateEnum.Jump);
-                    physicsManager.AddForceMethod(Vector2.up * character.GetIdleJumpVerticalForce());
-                }
-
                 //  Crawl
                 if (ReturnVerticalInput() < 0)
                 {
-                    SetAnimation(ANIM_CRAWL_IDLE, CharacterAnimStateEnum.Crawl_idle);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Crawl_idle);
                 }
 
                 //  Fall
                 if (!groundChecker.GetIsColliding())
                 {
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
 
                 // Melee
-                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
                 {
-                    SetAnimation(ANIM_MELEE_IDLE_UP, CharacterAnimStateEnum.Melee_idle_up);
-                    StartCoroutine("StopMeleeUpIdle");
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle_up_diagonal);
+                }
+                else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle_up);
                 }
                 else if (Input.GetButtonDown("Gamepad_Melee"))
                 {
-                    SetAnimation(ANIM_MELEE_IDLE, CharacterAnimStateEnum.Melee_idle);
-                    StartCoroutine("StopMeleeIdle");
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_idle);
+                }
+
+                // Shoot
+                else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle_up_diagonal);
+                }
+                else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle_up);
+                }
+                else if (Input.GetButtonDown("Gamepad_Shoot"))
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_idle);
+                }
+
+                //  Run
+                else if (ReturnHorizontalInput() != 0)
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
+                }
+
+                //  Jump
+                else if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
+                {
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Jump);
+                    physicsManager.AddForceMethod(Vector2.up * character.GetIdleJumpVerticalForce());
                 }
             }
 
@@ -108,12 +161,12 @@ public class CharacterScript : MonoBehaviour
             //
             // Run Actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Run))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Run))
             {
-                //  CanRunSlide Timer
-                if (!character.GetRunSlideCanRunSlide())
+                //  CanGroundSlide Timer
+                if (!character.GetTrigger_groundSlide_canGroundSlide())
                 {
-                    StartCoroutine("CanRunSlide");
+                    StartCoroutine(CanGroundSlide());
                 }
 
                 //  Run
@@ -127,50 +180,49 @@ public class CharacterScript : MonoBehaviour
                     if ((Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && groundChecker.GetIsColliding())
                     {
                         //  Wallslide
-                        if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
+                        if ((character.GetDirectionInt() > 0 && rightWallChecker.GetIsColliding()) || (character.GetDirectionInt() < 0 && leftWallChecker.GetIsColliding()))
                         {
                             //NOT IN FIXEDUPDATE
                             physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
 
                             physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                            SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
+                            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                         }
 
                         // Forward Jump
                         else
                         {
-                            SetAnimation(ANIM_JUMP_FORWARD, CharacterAnimStateEnum.Jump_forward);
+                            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Jump_forward);
                             physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetForwardJumpHorizontalForce(), character.GetIdleJumpVerticalForce()));
                         }
                     }
 
-                    // Run Slide
-                    else if (character.GetRunSlideCanRunSlide() && ReturnVerticalInput() < 0)
+                    // Ground Slide
+                    else if (character.GetTrigger_groundSlide_canGroundSlide() && ReturnVerticalInput() < 0)
                     {
-                        SetAnimation(ANIM_RUN_SLIDE, CharacterAnimStateEnum.Run_slide);
-                        StartCoroutine("StopRunSlide");
-                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetRunSlideHorizontalForce(), 0));
+                        animManager.SetAnimation(CharacterAnimStateEnum.Chara_Groundslide);
+                        StartCoroutine(animManager.StopGroundSlide());
+                        physicsManager.AddForceMethod(new Vector2(loc_directionInt * character.GetGroundSlideHorizontalForce(), 0));
                     }
                 }
 
                 //  Stop Slide
                 else if (!Input.anyKey && ReturnHorizontalInput() == 0)
                 {
-                    SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-                    StartCoroutine("StopSlide");
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Slide);
+                    StartCoroutine(animManager.EndAnimationCoroutine(character.GetRunStopSlideTime(), CharacterAnimStateEnum.Chara_Idle));
                 }
 
                 //  Fall
                 if (!groundChecker.GetIsColliding())
                 {
-                    SetAnimation(ANIM_FALL_FORWARD, CharacterAnimStateEnum.Fall_forward);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_forward);
                 }
 
                 // Melee Run
                 if (Input.GetButtonDown("Gamepad_Melee"))
                 {
-                    SetAnimation(ANIM_MELEE_RUN, CharacterAnimStateEnum.Melee_run);
-                    StartCoroutine("StopMeleeRun");
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_run);
                 }
             }
 
@@ -178,13 +230,13 @@ public class CharacterScript : MonoBehaviour
             //
             //  Slide actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Slide))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Slide))
             {
                 //  Fall
                 if (!groundChecker.GetIsColliding())
                 {
-                    StopCoroutine("StopSlide");
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    StopCoroutine("EndAnimationCoroutine");
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
             }
 
@@ -192,7 +244,7 @@ public class CharacterScript : MonoBehaviour
             //
             // Idle Jump actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Jump))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Jump))
             {
                 physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 IdleJumpMovement();
@@ -200,34 +252,24 @@ public class CharacterScript : MonoBehaviour
                 //  Fall Animation
                 if (physicsManager.GetRigidbody().velocity.y < 0)
                 {
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
 
                 //  Wallslide
                 else if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                 }
 
-                // Melee Jump
-                if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
-                {
-                    SetAnimation(ANIM_MELEE_JUMP_UP, CharacterAnimStateEnum.Melee_jump_up);
-                    StartCoroutine("StopMeleeJumpUp");
-                }
-                else if (Input.GetButtonDown("Gamepad_Melee"))
-                {
-                    SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
-                    StartCoroutine("StopMeleeJump");
-                }
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_normal);
             }
 
 
             //
             // Idle Fall actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Fall_normal))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Fall_normal))
             {
                 physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 IdleJumpMovement();
@@ -236,45 +278,38 @@ public class CharacterScript : MonoBehaviour
                 if ((rightWallChecker.GetIsColliding() && ReturnHorizontalInput() > 0) || (leftWallChecker.GetIsColliding() && ReturnHorizontalInput() < 0))
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                 }
 
                 //  Touch Ground
                 if (groundChecker.GetIsColliding())
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Idle);
                 }
 
                 //  Maximum Speed
                 if (physicsManager.GetRigidbody().velocity.y < -character.GetFallMaxSpeedVelocityValue())
                 {
-                    SetAnimation(ANIM_FALL_MAXSPEED, CharacterAnimStateEnum.Fall_maxspeed);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_maxspeed);
                 }
 
-                // Melee Jump
-                if (Input.GetButtonDown("Gamepad_Melee"))
-                {
-                    SetAnimation(ANIM_MELEE_JUMP, CharacterAnimStateEnum.Melee_jump);
-                    StartCoroutine("StopMeleeJump");
-                }
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_normal);
             }
 
 
             //
             //  Fall maxspeed Action & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Fall_maxspeed))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Fall_maxspeed))
             {
-                IdleJumpMovement();
+                //IdleJumpMovement();
 
                 //  Touch Ground
-                if (groundChecker.GetIsColliding() && !character.GetOnTheGroundIsOntheGround())
+                if (groundChecker.GetIsColliding())
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_ONTHEGROUND, CharacterAnimStateEnum.Ontheground);
-                    StartCoroutine("Ontheground");
-                    character.SetOnTheGroundIsOntheGround(false);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Ontheground_start);
                 }
             }
 
@@ -282,50 +317,45 @@ public class CharacterScript : MonoBehaviour
             //
             //  Forward Jump actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Jump_forward))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Jump_forward))
             {
                 physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[1]);
                 SwitchDirectionForwardJump();
                 AirDrag();
 
                 //  Wallslide
-                if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
+                if ((character.GetDirectionInt() > 0 && rightWallChecker.GetIsColliding()) || (character.GetDirectionInt() < 0 && leftWallChecker.GetIsColliding()))
                 {
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
 
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                 }
 
                 //  Fall Animation
                 else if (physicsManager.GetRigidbody().velocity.y < 0)
                 {
-                    SetAnimation(ANIM_JUMP_FORWARD, CharacterAnimStateEnum.Fall_forward);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_forward);
                 }
 
-                // Melee Jump Forward
-                if (Input.GetButtonDown("Gamepad_Melee"))
-                {
-                    SetAnimation(ANIM_MELEE_JUMP_FORWARD, CharacterAnimStateEnum.Melee_jump_forward);
-                    StartCoroutine("StopMeleeJumpForward");
-                }
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_forward);
             }
 
 
             //
             // Forward Fall actions & Events
             //
-            else if (animState.Equals(CharacterAnimStateEnum.Fall_forward))
+            else if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Fall_forward))
             {
                 SwitchDirectionForwardJump();
                 AirDrag();
 
                 //  Wallslide
-                if ((directionInt > 0 && rightWallChecker.GetIsColliding()) || (directionInt < 0 && leftWallChecker.GetIsColliding()))
+                if ((character.GetDirectionInt() > 0 && rightWallChecker.GetIsColliding()) || (character.GetDirectionInt() < 0 && leftWallChecker.GetIsColliding()))
                 {
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
-                    SetAnimation(ANIM_WALLSLIDE, CharacterAnimStateEnum.Wallslide);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Wallslide);
                 }
 
                 //  Touch Ground
@@ -334,13 +364,13 @@ public class CharacterScript : MonoBehaviour
                     if (!Input.anyKey && ReturnHorizontalInput() == 0)
                     {
                         //physicsManager.AddForceMethod(new Vector2(directionInt * character.GetForwardJumpStopSlideForce(), 0));
-                        SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-                        StartCoroutine("StopSlide");
+                        animManager.SetAnimation(CharacterAnimStateEnum.Chara_Slide);
+                        StartCoroutine(animManager.EndAnimationCoroutine(character.GetRunStopSlideTime(), CharacterAnimStateEnum.Chara_Idle));
                     }
 
                     else if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                     {
-                        SetAnimation(ANIM_RUN, CharacterAnimStateEnum.Run);
+                        animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
                     }
 
                     physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
@@ -349,14 +379,34 @@ public class CharacterScript : MonoBehaviour
                 //  Maximum Speed
                 if (physicsManager.GetRigidbody().velocity.y < -character.GetFallMaxSpeedVelocityValue())
                 {
-                    SetAnimation(ANIM_FALL_MAXSPEED, CharacterAnimStateEnum.Fall_maxspeed);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_maxspeed);
                 }
 
-                // Melee Jump Forward
-                if (Input.GetButtonDown("Gamepad_Melee"))
+                JumpMeleeShootActions(CharacterAnimStateEnum.Chara_Fall_forward);
+            }
+
+
+            //
+            //  Melee and Shoot actions & Events
+            //
+            if (
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_up) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_down) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down) ||
+                    character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal)
+               )
+            {
+                //  Touch Ground
+                if (groundChecker.GetIsColliding())
                 {
-                    SetAnimation(ANIM_MELEE_JUMP_FORWARD, CharacterAnimStateEnum.Melee_jump_forward);
-                    StartCoroutine("StopMeleeJumpForward");
+                    physicsManager.SetRigidBodyMaterial(physicsManager.GetColliderMaterialTable()[0]);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Idle);
                 }
             }
 
@@ -364,24 +414,24 @@ public class CharacterScript : MonoBehaviour
             //
             //  Crawl idle actions & Events
             //
-            if (animState.Equals(CharacterAnimStateEnum.Crawl_idle))
+            if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Crawl_idle))
             {
                 //  Move
                 if (ReturnHorizontalInput() > 0 || ReturnHorizontalInput() < 0)
                 {
-                    SetAnimation(ANIM_CRAWL_MOVE, CharacterAnimStateEnum.Crawl_move);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Crawl_move);
                 }
 
                 //  Stand Up
                 else if (ReturnVerticalInput() >= 0)
                 {
-                    SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Idle);
                 }
 
                 //  Fall
                 if (!groundChecker.GetIsColliding())
                 {
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
             }
 
@@ -389,7 +439,7 @@ public class CharacterScript : MonoBehaviour
             //
             //  Crawl moving actions & Events
             //
-            if (animState.Equals(CharacterAnimStateEnum.Crawl_move))
+            if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Crawl_move))
             {
                 //  Move Crawl
                 if (ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
@@ -402,19 +452,19 @@ public class CharacterScript : MonoBehaviour
                 //  Stop
                 else if (ReturnHorizontalInput() == 0)
                 {
-                    SetAnimation(ANIM_CRAWL_IDLE, CharacterAnimStateEnum.Crawl_idle);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Crawl_idle);
                 }
 
                 //  Stand Up and Run
                 else if (ReturnVerticalInput() >= 0 && ReturnHorizontalInput() != 0)
                 {
-                    SetAnimation(ANIM_RUN, CharacterAnimStateEnum.Run);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Run);
                 }
 
                 //  Fall
                 if (!groundChecker.GetIsColliding())
                 {
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
             }
 
@@ -422,7 +472,7 @@ public class CharacterScript : MonoBehaviour
             //
             //  Wallslide actions & Events
             //
-            if (animState.Equals(CharacterAnimStateEnum.Wallslide))
+            if (character.GetAnimState().Equals(CharacterAnimStateEnum.Chara_Wallslide))
             {
                 //  Fall resistance
                 if (ReturnHorizontalInput() == 0)
@@ -430,42 +480,42 @@ public class CharacterScript : MonoBehaviour
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyGravity(1);
                 }
-                else if ((ReturnHorizontalInput() > 0 && directionInt > 0) || (ReturnHorizontalInput() < 0 && directionInt < 0))
+                else if ((ReturnHorizontalInput() > 0 && character.GetDirectionInt() > 0) || (ReturnHorizontalInput() < 0 && character.GetDirectionInt() < 0))
                 {
                     //NOT IN FIXEDUPDATE
                     physicsManager.SetRigidBodyGravity(character.GetWallSlideHoldGravity());
                 }
 
-                //  Jump Left
-                if (!character.GetWallJumpHasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && directionInt > 0) || (ReturnHorizontalInput() >= 0 && directionInt < 0)))
+                //  Jump
+                if (!character.GetTrigger_wallJump_hasWallJumped() && (Input.GetButtonDown("Keyboard_Jump") || Input.GetButtonDown("Gamepad_Jump")) && ((ReturnHorizontalInput() <= 0 && character.GetDirectionInt() > 0) || (ReturnHorizontalInput() >= 0 && character.GetDirectionInt() < 0)))
                 {
-                    SetDirection(-directionInt);
+                    SetDirection(-character.GetDirectionInt());
 
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
                     physicsManager.SetRigidBodyVelocity(new Vector2(physicsManager.GetRigidbody().velocity.x, 0));
-                    physicsManager.AddForceMethod(new Vector2(directionInt * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
-                    SetAnimation(ANIM_JUMP_FORWARD, CharacterAnimStateEnum.Jump_forward);
-                    StartCoroutine("WallJumpTimer");
+                    physicsManager.AddForceMethod(new Vector2(character.GetDirectionInt() * character.GetWallJumpHorizontalForce(), character.GetWallJumpVerticalForce()));
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Jump_forward);
+                    StartCoroutine(WallJumpTimer());
                 }
 
                 //  No more wall
-                else if ((directionInt > 0 && !rightWallChecker.GetIsColliding()) || (directionInt < 0 && !leftWallChecker.GetIsColliding()))
+                else if ((character.GetDirectionInt() > 0 && !rightWallChecker.GetIsColliding()) || (character.GetDirectionInt() < 0 && !leftWallChecker.GetIsColliding()))
                 {
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
 
                 //  Switch Direction
-                if ((directionInt > 0 && ReturnHorizontalInput() < 0) || (directionInt < 0 && ReturnHorizontalInput() > 0))
+                if ((character.GetDirectionInt() > 0 && ReturnHorizontalInput() < 0) || (character.GetDirectionInt() < 0 && ReturnHorizontalInput() > 0))
                 {
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
 
                     int loc_directionInt = ReturnHorizontalInput();
                     SetDirection(loc_directionInt);
-                    SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Fall_normal);
                 }
 
                 //  Touch Ground
@@ -473,121 +523,44 @@ public class CharacterScript : MonoBehaviour
                 {
                     //NOT IN FIXED UPDATE
                     physicsManager.SetRigidBodyGravity(1);
-                    SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
+                    animManager.SetAnimation(CharacterAnimStateEnum.Chara_Idle);
                 }
             }
         }
     }
 
 
-    //  Timer functions
-    private IEnumerator StopSlide()
-    {
-        yield return new WaitForSeconds(character.GetRunStopSlideTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-    }
-
-    private IEnumerator CanRunSlide()
-    {
-        yield return new WaitForSeconds(character.GetRunSlideStartTime());
-        character.SetRunSlideCanRunSlide(true);
-    }
-
-    private IEnumerator StopRunSlide()
-    {
-        yield return new WaitForSeconds(character.GetRunSlideDuration());
-        SetAnimation(ANIM_CRAWL_MOVE, CharacterAnimStateEnum.Crawl_move);
-        character.SetRunSlideCanRunSlide(false);
-    }
-
-    private IEnumerator WallJumpTimer()
-    {
-        character.SetWallJumpHasWallJumped(true);
-        yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
-        character.SetWallJumpHasWallJumped(false);
-    }
-
-    private IEnumerator Ontheground()
-    {
-        yield return new WaitForSeconds(character.GetOnTheGroundDuration());
-        SetAnimation(ANIM_ONTHEGROUND_STANDUP, CharacterAnimStateEnum.Ontheground_standup);
-        StartCoroutine("OnthegroundStandup");
-    }
-
-    private IEnumerator OnthegroundStandup()
-    {
-        yield return new WaitForSeconds(character.GetOnTheGroundStandUpTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-        character.SetOnTheGroundIsOntheGround(false);
-    }
-
-    private IEnumerator StopMeleeIdle()
-    {
-        yield return new WaitForSeconds(character.GetMeleeIdleStopTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-    }
-
-    private IEnumerator StopMeleeUpIdle()
-    {
-        yield return new WaitForSeconds(character.GetMeleeIdleUpStopTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-    }
-
-    private IEnumerator StopMeleeRun()
-    {
-        yield return new WaitForSeconds(character.GetMeleeRunStopTime());
-        SetAnimation(ANIM_IDLE, CharacterAnimStateEnum.Idle);
-        //SetAnimation(ANIM_SLIDE, CharacterAnimStateEnum.Slide);
-        //StartCoroutine("StopSlide");
-    }
-
-    private IEnumerator StopMeleeJump()
-    {
-        yield return new WaitForSeconds(character.GetMeleeJumpStopTime());
-        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
-    }
-
-    private IEnumerator StopMeleeJumpUp()
-    {
-        yield return new WaitForSeconds(character.GetMeleeJumpUpStopTime());
-        SetAnimation(ANIM_FALL_NORMAL, CharacterAnimStateEnum.Fall_normal);
-    }
-
-    private IEnumerator StopMeleeJumpForward()
-    {
-        yield return new WaitForSeconds(character.GetMeleeJumpForwardStopTime());
-        SetAnimation(ANIM_FALL_FORWARD, CharacterAnimStateEnum.Fall_forward);
-    }
-
-
-    //  Animation functions
-    private void SetAnimation(string arg_animationName, CharacterAnimStateEnum arg_charaAnimStateEnum)
-    {
-        if (animState == arg_charaAnimStateEnum)
-        {
-            return;
-        }
-
-        animator.Play(arg_animationName);
-        animState = arg_charaAnimStateEnum;
-    }
+    //  Player Input
 
     private void SetDirection(int arg_direction)
     {
         if (arg_direction > 0)
         {
             sprite.flipX = false;
+            bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1));
+            bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
+            bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(-1, 1, 0));
+            bulletSpawnPoint_jump_down_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(1, 1, 0));
         }
         else
         {
             sprite.flipX = true;
+            bulletSpawnPoint_horizontal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1));
+            bulletSpawnPoint_idle_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
+            bulletSpawnPoint_jump_up_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, -1), new Vector3(1, 1, 0));
+            bulletSpawnPoint_jump_down_diagonal.localRotation = Quaternion.LookRotation(new Vector3(0, 0, 1), new Vector3(1, -1, 0));
         }
 
-        directionInt = arg_direction;
+        character.SetDirectionInt(arg_direction);
+        bulletSpawnPoint_horizontal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_horizontal, bulletSpawnPoint_horizontal.localPosition.y, bulletSpawnPoint_horizontal.localPosition.z);
+        bulletSpawnPoint_idle_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up, bulletSpawnPoint_idle_up.localPosition.y, bulletSpawnPoint_idle_up.localPosition.z);
+        bulletSpawnPoint_jump_up.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up, bulletSpawnPoint_jump_up.localPosition.y, bulletSpawnPoint_jump_up.localPosition.z);
+        bulletSpawnPoint_idle_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_idle_up_diagonal, bulletSpawnPoint_idle_up_diagonal.localPosition.y, bulletSpawnPoint_idle_up_diagonal.localPosition.z);
+        bulletSpawnPoint_jump_up_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_up_diagonal, bulletSpawnPoint_jump_up_diagonal.localPosition.y, bulletSpawnPoint_jump_up_diagonal.localPosition.z);
+        bulletSpawnPoint_jump_down.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_down, bulletSpawnPoint_jump_down.localPosition.y, bulletSpawnPoint_jump_down.localPosition.z);
+        bulletSpawnPoint_jump_down_diagonal.localPosition = new Vector3(character.GetDirectionInt() * bulletSpawnPointPosition_jump_down_diagonal, bulletSpawnPoint_jump_down_diagonal.localPosition.y, bulletSpawnPoint_jump_down_diagonal.localPosition.z);
     }
 
-
-    //  Player Input
     private int ReturnHorizontalInput()
     {
         int loc_horizonalInputValue;
@@ -629,6 +602,21 @@ public class CharacterScript : MonoBehaviour
     }
 
 
+    //  Coroutines
+    public IEnumerator CanGroundSlide()
+    {
+        yield return new WaitForSeconds(character.GetGroundSlideCanStartTime());
+        character.SetTrigger_groundSlide_canGroundSlide(true);
+    }
+
+    public IEnumerator WallJumpTimer()
+    {
+        character.SetTrigger_wallJump_hasWallJumped(true);
+        yield return new WaitForSeconds(character.GetWallJumpRestrainDuration());
+        character.SetTrigger_wallJump_hasWallJumped(false);
+    }
+
+
     //  Physics & Movement
     private void IdleJumpMovement()
     {
@@ -642,9 +630,9 @@ public class CharacterScript : MonoBehaviour
 
     private void SwitchDirectionForwardJump()
     {
-        if (ReturnHorizontalInput() != 0 && ReturnHorizontalInput() != directionInt)
+        if (ReturnHorizontalInput() != 0 && ReturnHorizontalInput() != character.GetDirectionInt())
         {
-            SetDirection(-directionInt);
+            SetDirection(-character.GetDirectionInt());
             physicsManager.SwitchHorizontalDirection();
         }
     }
@@ -654,6 +642,65 @@ public class CharacterScript : MonoBehaviour
         if (!Input.anyKey && ReturnHorizontalInput() == 0)
         {
             physicsManager.HorizontalDrag(character.GetForwardJumpHorizontalAirDrag());
+        }
+    }
+
+
+    //  Jump melee & shoot actions
+    private void JumpMeleeShootActions(CharacterAnimStateEnum arg_animState)
+    {
+        // Melee Jump
+        if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up_diagonal);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down_diagonal);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() > 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_up);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee") && ReturnVerticalInput() < 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump_down);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Melee"))
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Melee_jump);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+
+        // Shoot Jump
+        if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0 && ReturnHorizontalInput() != 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up_diagonal);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0 && ReturnHorizontalInput() != 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down_diagonal);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() > 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_up);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot") && ReturnVerticalInput() < 0)
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump_down);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
+        }
+        else if (Input.GetButtonDown("Gamepad_Shoot"))
+        {
+            animManager.SetAnimation(CharacterAnimStateEnum.Chara_Shoot_jump);
+            animManager.SetAnimStateAfterJumpAttack(arg_animState);
         }
     }
 }

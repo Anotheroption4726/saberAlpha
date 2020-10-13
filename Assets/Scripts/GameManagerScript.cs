@@ -16,40 +16,9 @@ public class GameManagerScript : MonoBehaviour
         gameParameters = GetComponent<GameParametersScript>();
         Game.SetGameType(gameParameters.GetGameType());
         pauseIcon.enabled = false;
-
-        if (Game.GetGameType() == GameTypeEnum.NormalGame)
-        {
-            inGameCharacter.GetComponent<CharacterScript>().SetCharacter(new Character());
-        }
-
-        if (Game.GetGameType() == GameTypeEnum.TestGame)
-        {
-            Time.timeScale = gameParameters.GetTimeScale();
-            Physics2D.gravity = new Vector2(0, -gameParameters.GetGravityScale());
-
-            inGameCharacter.GetComponent<CharacterScript>().SetCharacter(
-                                                                            new Character(
-                                                                                            gameParameters.GetRunMovementSpeed(),
-                                                                                            gameParameters.GetRunStopSlideTime(),
-                                                                                            gameParameters.GetIdleJumpVerticalForce(),
-                                                                                            gameParameters.GetIdleJumpMovementSpeed(),
-                                                                                            gameParameters.GetForwardJumpHorizontalForce(),
-                                                                                            gameParameters.GetForwardJumpStopSlideForce(),
-                                                                                            gameParameters.GetForwardJumpHorizontalAirDrag(),
-                                                                                            gameParameters.GetFallMaxSpeedVelocityValue(),
-                                                                                            gameParameters.GetOnTheGroundDuration(),
-                                                                                            gameParameters.GetOnTheGroundStandUpTime(),
-                                                                                            gameParameters.GetCrawlMovementSpeed(),
-                                                                                            gameParameters.GetRunSlideHorizontalForce(),
-                                                                                            gameParameters.GetRunSlideStartTime(),
-                                                                                            gameParameters.GetRunSlideDuration(),
-                                                                                            gameParameters.GetWallSlideHoldGravity(),
-                                                                                            gameParameters.GetWallJumpVerticalForce(),
-                                                                                            gameParameters.GetWallJumpHorizontalForce(),
-                                                                                            gameParameters.GetWallJumpRestrainDuration()
-                                                                                         )
-                                                                        );
-        }
+        Time.timeScale = gameParameters.GetTimeScale();
+        Physics2D.gravity = new Vector2(0, -gameParameters.GetGravityScale());
+        inGameCharacter.GetComponent<CharacterScript>().SetCharacter(new Character());
     }
 
     private void Update()
@@ -71,7 +40,7 @@ public class GameManagerScript : MonoBehaviour
             else
             {
                 pauseIcon.enabled = false;
-                Time.timeScale = gameParameters.GetTimeScale();
+                Time.timeScale = 1.0f;
                 Game.SetGamePaused(false);
             }
             
