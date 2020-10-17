@@ -3965,7 +3965,7 @@ GameObject:
   - component: {fileID: 1271041737}
   - component: {fileID: 1271041736}
   m_Layer: 8
-  m_Name: Platform
+  m_Name: Platform_collision_test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
