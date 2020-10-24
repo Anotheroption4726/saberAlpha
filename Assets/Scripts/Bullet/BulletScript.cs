@@ -28,6 +28,7 @@ public class BulletScript : MonoBehaviour
     //  OnCollision
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Debug.Log("collision");
         animManager.SetAnimation(BulletAnimStateEnum.Bullet_Explode);
     }
 

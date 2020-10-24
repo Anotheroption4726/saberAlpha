@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletAnimManagerScript : MonoBehaviour
 {
+    [SerializeField] private GameObject bullet;
     [SerializeField] private BulletScript bulletScript;
     [SerializeField] private Animator animator;
 
@@ -12,6 +13,11 @@ public class BulletAnimManagerScript : MonoBehaviour
     private void BulletAppearEnd()
     {
         SetAnimation(BulletAnimStateEnum.Bullet_Travel);
+    }
+
+    private void BulletDestroyEnd()
+    {
+        Destroy(bullet);
     }
 
 
